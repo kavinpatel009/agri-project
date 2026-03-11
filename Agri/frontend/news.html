@@ -202,7 +202,7 @@
 <button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-const API_KEY = '989e1d3ea739812a1cf6347bb8b528f3';
+
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80';
 
 let currentQuery = 'agriculture India farming';
@@ -215,7 +215,7 @@ async function fetchNews(query, page = 1) {
     showSkeletons(grid);
 
     try {
-        const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=in&max=${PAGE_SIZE}&page=${page}&token=${API_KEY}`;
+        const url = `https://agri-project-ol6n.onrender.com/api/news?q=${encodeURIComponent(query)}&page=${page}`;
         const res = await fetch(url);
         const data = await res.json();
 
