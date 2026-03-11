@@ -646,6 +646,35 @@
         .footer-col p {
             text-align: left;
         }
+
+        /* Mobile Nav Fix */
+        @media (max-width: 768px) {
+            header nav {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                flex-wrap: nowrap !important;
+                padding: 10px 15px !important;
+            }
+            header nav .logo {
+                margin-bottom: 0 !important;
+            }
+            header nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0; right: 0;
+                background: #fff;
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+                z-index: 9999;
+                width: 100%;
+            }
+            header nav ul.active { display: flex !important; }
+            header .hamburger { display: block !important; }
+        }
     </style>
 </head>
 <body>
