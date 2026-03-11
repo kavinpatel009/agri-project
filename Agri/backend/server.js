@@ -12,20 +12,20 @@ const Contact = require("./models/Contact");
 
 const app = express();
 
-// CORS Configuration
+// CORS Configuration - Only allow exact production URL + local dev
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      'http://127.0.0.1:5500',
+      'https://agriverse-in.vercel.app',  // ✅ Only this - production
+      'http://127.0.0.1:5500',            // local dev
       'http://localhost:5500',
       'http://localhost:3000',
       'http://localhost:8080',
-      'https://bright-empanada-efc28c.netlify.app'
     ];
-    // Allow all vercel.app domains
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.warn('⛔ CORS blocked:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -43,10 +43,7 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/agri")
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api", weatherRoutes);  // weather & forecast & locations
-
-// Email Transporter
-// Resend API initialized above
+app.use("/api", weatherRoutes);
 
 // Contact Form Route
 app.post("/api/contact", async (req, res) => {
@@ -56,12 +53,10 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ error: "Name, email, and message are required" });
     }
 
-    // Save to MongoDB
     const newContact = new Contact({ name, email, phone, message });
     await newContact.save();
 
-        try {
-      // Send to admin
+    try {
       await resend.emails.send({
         from: "Agri-Verse <onboarding@resend.dev>",
         to: "kavinjpatel104@gmail.com",
@@ -81,10 +76,7 @@ app.post("/api/contact", async (req, res) => {
           </div>
         `,
       });
-
-      // Note: User confirmation requires verified domain on Resend paid plan
-
-      console.log("✅ Emails sent via Resend!");
+      console.log("✅ Email sent via Resend!");
     } catch (mailErr) {
       console.error("❌ Resend error:", mailErr.message);
     }
@@ -95,7 +87,6 @@ app.post("/api/contact", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 // Newsletter Route
 app.post("/api/newsletter", async (req, res) => {
@@ -131,6 +122,5 @@ app.post("/api/newsletter", async (req, res) => {
 // Health Check
 app.get("/", (req, res) => res.json({ message: "✅ Agri Backend Running!" }));
 
-// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
