@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeds | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse Seeds Guide - Find the best seeds for your farm. Vegetable, cereal and cash crop seed information.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --light: #F5F5F5;
+            --dark: #212121;
+            --gray: #757575;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .seeds-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+        
+        .seeds-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .seeds-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+        }
+
+        .seeds-container {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .seeds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .seed-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .seed-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .seed-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .seed-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .seed-card:hover .seed-img img {
+            transform: scale(1.05);
+        }
+
+        .seed-content {
+            padding: 1.5rem;
+        }
+
+        .seed-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .seed-type {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .seed-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .seed-details {
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--primary-dark);
+        }
+
+        .detail-value {
+            color: var(--gray);
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        /* Responsive styles */
+                @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1rem;
+                position: relative;
+            }
+            .logo { margin-bottom: 0; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0; right: 0;
+                background: #fff;
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                z-index: 999;
+                width: 100%;
+            }
+            nav ul.active, nav ul.open { display: flex; }
+            nav ul li { margin: 8px 0; }
+            .hamburger { display: flex !important; }
+
+            .seeds-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .seeds-hero p {
+                font-size: 1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .seeds-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5% 1.5rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    
+                /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: #2d6a4f;
+            padding: 9px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 15px 0 0 15px;
+            transition: all 0.3s;
+            border: 2px solid #2d6a4f;
+        }
+        .back-btn:hover { background: #2d6a4f; color: #fff; transform: translateX(-3px); }
+    
+        /* Hamburger Menu */
+        .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; transition:all 0.3s; display:block; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
+        @media(max-width:768px) {
+            .hamburger { display:flex; }
+            nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:#fff; box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
+            nav ul.open { display:flex; }
+            nav { position:relative; }
+        }
+        </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-btn">&#8592; Back</a>
+
+    <header>
+        <nav>
+            <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>Agri-Verse</span>
+            </div></a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html">Agri-News</a></li>
+                <li><a href="Feritlizer.html">Fertilizers</a></li>
+                <li><a href="youtube.html">Agri-Videos</a></li>
+                <li><a href="tools.html">Implements</a></li>
+                  
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="seeds-hero">
+            <h1>Seeds Information Center</h1>
+            <p>Discover the right seeds for your crops and learn how to cultivate them for optimal growth</p>
+        </section>
+
+        <section class="seeds-container">
+            <div class="section-title">
+                <h2>Types of Seeds</h2>
+                <p>Select the appropriate seeds based on your soil type, climate, and farming requirements</p>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search seeds...">
+                <select id="filterSelect" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="vegetable">Vegetables</option>
+                    <option value="fruit">Fruits</option>
+                    <option value="cereal">Cereals</option>
+                    <option value="legume">Legumes</option>
+                </select>
+            </div>
+
+            <div class="seeds-grid" id="seedsGrid">
+                <!-- Seed cards will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Agri-Verse</h3>
+                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+                <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Seeds.html">Seeds</a></li>
+                    <li><a href="Feritlizer.html">Fertilizers</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Planting Guides</a></li>
+                    <li><a href="#">Seasonal Calendar</a></li>
+                    <li><a href="#">Pest Control</a></li>
+                    <li><a href="#">Irrigation Tips</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
+                <form>
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by Agri-Verse Team</p>
+        </div>
+    </footer>
+
+    <script>
+        // Seed data
+        const seedsData = [
+            {
+                id: 1,
+                name: "Tomato Hybrid F1",
+                type: "vegetable",
+                image: "images/tomato.webp",
+                description: "High-yielding hybrid tomato with excellent disease resistance and uniform fruit size.",
+                season: "Spring, Summer",
+                daysToHarvest: "70-80 days",
+                spacing: "45-60 cm apart",
+                depth: "6 mm deep",
+                waterNeeds: "Regular, consistent watering",
+                sunlight: "Full sun (6-8 hours daily)"
+            },
+            {
+                id: 2,
+                name: "Basmati Rice",
+                type: "cereal",
+                image: "images/Rice.webp",
+                description: "Premium aromatic rice variety known for its long grains and distinctive fragrance.",
+                season: "Rainy (Kharif)",
+                daysToHarvest: "120-130 days",
+                spacing: "20 cm apart",
+                depth: "2-3 cm deep",
+                waterNeeds: "Needs standing water (flood irrigation)",
+                sunlight: "Full sun"
+            },
+            {
+                id: 3,
+                name: "Alphonso Mango",
+                type: "fruit",
+                image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                description: "The king of mangoes with rich, creamy texture and sweet, aromatic flavor.",
+                season: "Summer",
+                daysToHarvest: "4-5 years for fruiting",
+                spacing: "8-10 m apart",
+                depth: "Same as nursery pot",
+                waterNeeds: "Moderate, drought-tolerant once established",
+                sunlight: "Full sun"
+            },
+            {
+                id: 4,
+                name: "Chickpea (Kabuli)",
+                type: "legume",
+                image: "images/Chickpea-Kabuli-Chana.webp",
+                description: "High-protein legume that improves soil fertility through nitrogen fixation.",
+                season: "Winter (Rabi)",
+                daysToHarvest: "90-100 days",
+                spacing: "30 cm apart",
+                depth: "3-5 cm deep",
+                waterNeeds: "Light, well-drained soil",
+                sunlight: "Full sun"
+            },
+            {
+                id: 5,
+                name: "Okra (Bhindi)",
+                type: "vegetable",
+                image: "images/bhindi.jpg",
+                description: "Fast-growing warm season vegetable with high nutritional value.",
+                season: "Summer",
+                daysToHarvest: "50-60 days",
+                spacing: "30 cm apart",
+                depth: "1-2 cm deep",
+                waterNeeds: "Moderate, drought-tolerant",
+                sunlight: "Full sun"
+            },
+            {
+                id: 6,
+                name: "Strawberry",
+                type: "fruit",
+                image: "images/stra.jpg",
+                description: "Sweet, juicy berries perfect for small farms and home gardens.",
+                season: "Winter",
+                daysToHarvest: "60-90 days",
+                spacing: "30-45 cm apart",
+                depth: "Just cover the roots",
+                waterNeeds: "Regular, consistent moisture",
+                sunlight: "Full sun"
+            },
+            {
+                id: 7,
+                name: "Cucumber Hybrid F1",
+                type: "vegetable",
+                image: "images/cucmer-seeds.jpg",
+                description: "Fast-growing, high-yield hybrid cucumber with excellent disease resistance and uniform fruit shape.",
+                season: "Summer",
+                daysToHarvest: "50-60 days",
+                spacing: "30-45 cm apart",
+                depth: "12 mm deep",
+                waterNeeds: "Regular watering, keep soil moist",
+                sunlight: "Full sun (6-8 hours daily)"
+            },
+            {
+                id: 8,
+                name: "Bell Pepper Hybrid",
+                type: "vegetable",
+                image: "images/Capsicum.webp",
+                description: "High-yielding hybrid bell pepper with thick walls and vibrant color.",
+                season: "Spring,Summer",
+                daysToHarvest: "75-85 days",
+                spacing: "40-50 cm apart",
+                depth: "6 mm deep",
+                waterNeeds: "Moderate, avoid overwatering",
+                sunlight: "Full sun (6-8 hours daily)"
+            }
+        ];
+
+        // Display seeds
+        function displaySeeds(seeds) {
+            const seedsGrid = document.getElementById('seedsGrid');
+            seedsGrid.innerHTML = '';
+
+            if (seeds.length === 0) {
+                seedsGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:2rem; color:var(--gray)">No seeds found matching your criteria</p>';
+                return;
+            }
+
+            seeds.forEach(seed => {
+                const seedCard = document.createElement('div');
+                seedCard.className = 'seed-card';
+                seedCard.innerHTML = `
+                    <div class="seed-img">
+                        <img src="${seed.image}" alt="${seed.name}">
+                    </div>
+                    <div class="seed-content">
+                        <h3>${seed.name}</h3>
+                        <span class="seed-type">${seed.type.charAt(0).toUpperCase() + seed.type.slice(1)}</span>
+                        <p>${seed.description}</p>
+                        
+                        <div class="seed-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Planting Season:</span>
+                                <span class="detail-value">${seed.season}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Days to Harvest:</span>
+                                <span class="detail-value">${seed.daysToHarvest}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Spacing:</span>
+                                <span class="detail-value">${seed.spacing}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Planting Depth:</span>
+                                <span class="detail-value">${seed.depth}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Water Needs:</span>
+                                <span class="detail-value">${seed.waterNeeds}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Sunlight:</span>
+                                <span class="detail-value">${seed.sunlight}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                seedsGrid.appendChild(seedCard);
+            });
+        }
+
+        // Filter and search functionality
+        function filterSeeds() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filterValue = document.getElementById('filterSelect').value.toLowerCase();
+            
+            const filteredSeeds = seedsData.filter(seed => {
+                // Check if seed matches search term (name or description)
+                const matchesSearch = seed.name.toLowerCase().includes(searchTerm) || 
+                                     seed.description.toLowerCase().includes(searchTerm);
+                
+                // Check if seed matches filter
+                const matchesFilter = filterValue === 'all' || 
+                                    seed.type.toLowerCase() === filterValue;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            displaySeeds(filteredSeeds);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterSeeds);
+        document.getElementById('filterSelect').addEventListener('change', filterSeeds);
+
+        // Initial display
+        displaySeeds(seedsData);
+
+        // Check login status
+        function checkLoginStatus() {
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+            const authButtons = document.getElementById('auth-buttons');
+
+            if (token && userEmail) {
+                authButtons.innerHTML = `
+                    <div class="user-info">
+                        <span class="user-email">${userEmail}</span>
+                        <button class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <a href="login.html" class="btn">Login</a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+<button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>window.onscroll=function(){document.getElementById("backToTop").style.display=window.scrollY>300?"block":"none";};</script>
+
+<script>
+var hamburger = document.getElementById('hamburger');
+var navUl = document.querySelector('nav ul');
+if(hamburger && navUl) {
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navUl.classList.toggle('open');
+    });
+}
+</script>
+</body>
+</html>
