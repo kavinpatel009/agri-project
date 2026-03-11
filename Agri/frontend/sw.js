@@ -1,4 +1,4 @@
-const CACHE = 'agriverse-v2';
+const CACHE = 'agriverse-v3';
 const FILES = ['/', '/index.html', '/style.css', '/script.js', '/images/logoss.jpg'];
 
 self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))));
