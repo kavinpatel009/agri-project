@@ -14,624 +14,330 @@
     <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         :root {
             --primary: #4CAF50;
             --primary-dark: #388E3C;
             --secondary: #FFC107;
-            --light: #F5F5F5;
             --dark: #212121;
             --gray: #757575;
-            --card-bg: #ffffff;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --card-radius: 16px;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            background-color: #f9f9f9;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        /* Header Styles */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--secondary);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-        
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        nav ul li a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav ul li a:hover, nav ul li a.active {
-            color: var(--primary);
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-dark);
-        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins','Segoe UI',sans-serif; }
+        body { background:#f9f9f9; color:var(--dark); line-height:1.6; }
 
-        /* News Page Styles */
-        .news-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        
-        .news-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem 0;
-        }
-        
-        .news-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .news-header h2:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .news-header p {
-            color: var(--gray);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        header { background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
+        nav { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; max-width:1400px; margin:0 auto; }
+        .logo { font-size:1.8rem; font-weight:700; color:var(--primary); display:flex; align-items:center; }
+        .logo i { margin-right:10px; color:var(--secondary); }
+        nav ul { display:flex; list-style:none; align-items:center; }
+        nav ul li { margin-left:2rem; }
+        nav ul li a { text-decoration:none; color:var(--dark); font-weight:500; transition:color 0.3s; }
+        nav ul li a:hover { color:var(--primary); }
+        .btn { display:inline-block; background:var(--primary); color:#fff; padding:0.6rem 1.2rem; border-radius:4px; text-decoration:none; font-weight:500; transition:background 0.3s; border:none; cursor:pointer; }
+        .btn:hover { background:var(--primary-dark); }
 
-        .hero {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(56, 142, 60, 0.9)), 
-                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 1rem;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-            margin-bottom: 3rem;
-        }
+        .hero { background:linear-gradient(135deg,rgba(76,175,80,0.9),rgba(56,142,60,0.9)),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1350&q=80'); background-size:cover; background-position:center; height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#fff; padding:0 1rem; clip-path:polygon(0 0,100% 0,100% 90%,0 100%); margin-bottom:2rem; }
+        .hero h2 { font-size:2.5rem; margin-bottom:1rem; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .hero p { font-size:1.1rem; max-width:600px; }
 
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
+        /* Filter Tabs */
+        .filter-tabs { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:0 auto 2rem; max-width:900px; padding:0 1rem; }
+        .filter-btn { padding:8px 20px; border:2px solid var(--primary); border-radius:25px; background:transparent; color:var(--primary); font-weight:600; cursor:pointer; transition:all 0.3s; font-size:0.9rem; }
+        .filter-btn.active, .filter-btn:hover { background:var(--primary); color:#fff; }
 
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        
-        /* Article Styles */
-        .news-article {
-            display: flex;
-            height: 300px;
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none; /* Removes underline from the anchor tag */
-            color: inherit; /* Ensures text color is inherited */
-        }
-        
-        .news-article:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-        .article-image {
-            flex: 0 0 40%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .article-image:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
-            z-index: 1;
-        }
-        
-        .article-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .news-article:hover .article-image img {
-            transform: scale(1.05);
-        }
-        
-        .article-content {
-            flex: 1;
-            height: 100%;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .article-date {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .article-date i {
-            margin-right: 0.5rem;
-        }
-        
-        .article-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            line-height: 1.3;
-        }
-        
-        .article-excerpt {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            flex-grow: 1;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-        
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            color: var(--primary);
-            font-weight: 600;
-            transition: color 0.3s;
-            width: fit-content;
-            text-decoration: none;
-        }
-        
-        .read-more:hover {
-            color: var(--primary-dark);
-        }
-        
-        .read-more i {
-            margin-left: 0.5rem;
-            transition: transform 0.3s;
-        }
-        
-        .read-more:hover i {
-            transform: translateX(3px);
-        }
+        /* News Grid */
+        .news-container { max-width:1200px; margin:0 auto; padding:0 1.5rem 4rem; }
+        .news-grid { display:grid; grid-template-columns:1fr; gap:2rem; }
 
-        /* Footer Styles */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 5% 1.5rem;
-            margin-top: 5rem;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .footer-col h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .footer-col p {
-            margin-bottom: 1rem;
-            opacity: 0.8;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-            list-style: none;
-        }
-        
-        .footer-links a {
-            color: white;
-            opacity: 0.8;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        /* Article Card */
+        .news-article { display:flex; height:220px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.08); transition:transform 0.3s,box-shadow 0.3s; text-decoration:none; color:inherit; }
+        .news-article:hover { transform:translateY(-5px); box-shadow:0 12px 30px rgba(0,0,0,0.15); }
+        .article-image { flex:0 0 35%; overflow:hidden; position:relative; }
+        .article-image img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+        .news-article:hover .article-image img { transform:scale(1.05); }
+        .article-source-badge { position:absolute; top:10px; left:10px; background:var(--primary); color:#fff; font-size:0.75rem; padding:3px 10px; border-radius:20px; font-weight:600; z-index:1; }
+        .article-content { flex:1; padding:1.5rem; display:flex; flex-direction:column; overflow:hidden; }
+        .article-meta { display:flex; align-items:center; gap:12px; margin-bottom:0.6rem; flex-wrap:wrap; }
+        .article-date { color:var(--primary); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:5px; }
+        .article-tag { background:#e8f5e9; color:var(--primary-dark); font-size:0.75rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+        .article-content h3 { font-size:1.15rem; margin-bottom:0.6rem; color:var(--dark); line-height:1.4; }
+        .article-excerpt { color:var(--gray); font-size:0.9rem; line-height:1.6; flex-grow:1; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+        .read-more { display:inline-flex; align-items:center; gap:5px; color:var(--primary); font-weight:600; font-size:0.88rem; margin-top:0.8rem; }
+        .read-more:hover { color:var(--primary-dark); }
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .news-header h2 {
-                font-size: 2.5rem;
-            }
-            
-            .news-header p {
-                font-size: 1.1rem;
-            }
-        }
+        /* Skeleton Loader */
+        .skeleton { background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:8px; }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+        .skeleton-card { display:flex; height:220px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
+        .skeleton-img { flex:0 0 35%; }
+        .skeleton-body { flex:1; padding:1.5rem; display:flex; flex-direction:column; gap:12px; }
+        .skeleton-line { height:14px; border-radius:4px; }
 
-                @media (max-width: 768px) {
-            nav {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.8rem 1rem;
-                position: relative;
-            }
-            .logo { margin-bottom: 0; }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 65px;
-                left: 0; right: 0;
-                background: #fff;
-                padding: 15px 20px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                z-index: 999;
-                width: 100%;
-            }
-            nav ul.active, nav ul.open { display: flex; }
-            nav ul li { margin: 8px 0; }
-            .hamburger { display: flex !important; }
-            
-            .news-article {
-                height: auto;
-                flex-direction: column;
-            }
-            
-            .article-image {
-                flex: 1;
-                max-height: 250px;
-            }
-            
-            .news-header h2 {
-                font-size: 2rem;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .news-header h2 {
-                font-size: 1.8rem;
-            }
-            
-            .article-content h3 {
-                font-size: 1.3rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    
-                /* Back Button */
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            color: #2d6a4f;
-            padding: 9px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin: 15px 0 0 15px;
-            transition: all 0.3s;
-            border: 2px solid #2d6a4f;
-        }
-        .back-btn:hover { background: #2d6a4f; color: #fff; transform: translateX(-3px); }
-    
-        /* Hamburger Menu */
+        /* Error & Empty */
+        .news-error { text-align:center; padding:4rem 1rem; color:var(--gray); }
+        .news-error i { font-size:3rem; color:#ddd; margin-bottom:1rem; }
+
+        /* Pagination */
+        .pagination { display:flex; justify-content:center; gap:10px; margin-top:2.5rem; flex-wrap:wrap; }
+        .page-btn { padding:8px 18px; border:2px solid #ddd; border-radius:8px; background:#fff; cursor:pointer; font-weight:600; transition:all 0.3s; }
+        .page-btn.active, .page-btn:hover { border-color:var(--primary); background:var(--primary); color:#fff; }
+
+        /* Back Button */
+        .back-btn { display:inline-flex; align-items:center; gap:8px; background:transparent; color:#2d6a4f; padding:9px 20px; border-radius:25px; text-decoration:none; font-weight:600; font-size:0.9rem; margin:15px 0 0 15px; transition:all 0.3s; border:2px solid #2d6a4f; }
+        .back-btn:hover { background:#2d6a4f; color:#fff; }
+
+        /* Hamburger */
         .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
-        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; transition:all 0.3s; display:block; }
-        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,6px); }
-        .hamburger.active span:nth-child(2) { opacity:0; }
-        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; display:block; }
+
+        footer { background:var(--dark); color:#fff; padding:3rem 5% 1.5rem; margin-top:2rem; }
+        .footer-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; max-width:1400px; margin:0 auto; }
+        .footer-col h3 { font-size:1.3rem; margin-bottom:1.5rem; position:relative; padding-bottom:0.5rem; }
+        .footer-col h3::after { content:''; position:absolute; left:0; bottom:0; width:50px; height:2px; background:var(--primary); }
+        .footer-col p { margin-bottom:1rem; opacity:0.8; }
+        .footer-links li { margin-bottom:0.8rem; list-style:none; }
+        .footer-links a { color:#fff; opacity:0.8; text-decoration:none; transition:opacity 0.3s; }
+        .footer-links a:hover { opacity:1; }
+        .footer-bottom { text-align:center; padding-top:2rem; margin-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
+
         @media(max-width:768px) {
+            nav { position:relative; }
             .hamburger { display:flex; }
             nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:#fff; box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
             nav ul.open { display:flex; }
-            nav { position:relative; }
+            nav ul li { margin:0; }
+            .hero h2 { font-size:1.8rem; }
+            .news-article { height:auto; flex-direction:column; }
+            .article-image { flex:1; height:200px; }
         }
-        </style>
+    </style>
 </head>
 <body>
-    <a href="javascript:history.back()" class="back-btn">&#8592; Back</a>
 
-    <header>
-        <nav>
-            <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">
-                <i class="fas fa-tractor"></i>
-                <span>Agri-Verse</span>
-            </div></a>
-            <ul>
+<a href="javascript:history.back()" class="back-btn">&#8592; Back</a>
+
+<header>
+    <nav>
+        <a href="index.html" style="text-decoration:none;color:inherit;">
+            <div class="logo"><i class="fas fa-tractor"></i><span>Agri-Verse</span></div>
+        </a>
+        <ul id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Seeds.html">Seeds</a></li>
+            <li><a href="tools.html">Implements</a></li>
+            <li><a href="Feritlizer.html">Fertilizers</a></li>
+            <li><a href="weather.html">Weather</a></li>
+            <li id="auth-buttons"></li>
+        </ul>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </nav>
+</header>
+
+<div class="hero">
+    <h2>🌾 Latest Agriculture News</h2>
+    <p>Real-time farming news and updates from India</p>
+</div>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs">
+    <button class="filter-btn active" data-query="agriculture India farming">All News</button>
+    <button class="filter-btn" data-query="crop farming India seeds">Crops</button>
+    <button class="filter-btn" data-query="agriculture government policy India subsidy">Government</button>
+    <button class="filter-btn" data-query="weather rainfall India agriculture">Weather</button>
+    <button class="filter-btn" data-query="organic farming technology India">Technology</button>
+    <button class="filter-btn" data-query="mandi price crop market India">Market Price</button>
+</div>
+
+<div class="news-container">
+    <div class="news-grid" id="newsGrid">
+        <!-- Skeleton loaders -->
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>Agri-Verse</h3>
+            <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+            <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="Seeds.html">Seeds</a></li>
                 <li><a href="tools.html">Implements</a></li>
                 <li><a href="Feritlizer.html">Fertilizers</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li id="auth-buttons"></li>
+                <li><a href="weather.html">Weather</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </nav>
-    </header>
-
-    <div class="hero">
-        <h2>Latest Updates & Insights in Farming</h2>
-        <p>Stay Informed for Latest Farming News for your farming needs</p>
-    </div>
-        
-    <div class="news-container">
-        <!-- Article 1 -->
-        <a href="news-detail1.html" class="news-article">
-            <div class="article-image">
-                <img loading="lazy" src="images/mew11.jpg" alt="Vertical Farming">
-            </div>
-            <div class="article-content">
-                <span class="article-date"><i class="far fa-calendar-alt"></i> March 15, 2026</span>
-                <h3>India Considers Lowering Tariffs on U.S. Agricultural Imports</h3>
-                <p class="article-excerpt">In an effort to strengthen trade relations with the United States and prevent impending reciprocal tariffs, India has proposed reducing import duties on various U.S. agricultural products, including almonds, cranberries, and bourbon whiskey.</p>
-                <span class="read-more">Continue Reading<i class="fas fa-arrow-right"></i></span>
-            </div>
-        </a>
-        
-        <!-- Article 2 -->
-        <a href="news-detail1.html" class="news-article">
-            <div class="article-image">
-                <img loading="lazy" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef" alt="AI in Agriculture">
-            </div>
-            <div class="article-content">
-                <span class="article-date"><i class="far fa-calendar-alt"></i> January 10, 2026</span>
-                <h3>AI-Powered Crop Monitoring Gains Traction Among Indian Farmers</h3>
-                <p class="article-excerpt">Indian startups are developing affordable AI solutions that help small farmers detect crop diseases early, potentially increasing yields by 20-30%. The systems use smartphone cameras and machine learning to analyze plant health in real-time...</p>
-                <span class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></span>
-            </div>
-        </a>
-        
-        <!-- Article 3 -->
-        <a href="news-detail1.html" class="news-article">
-            <div class="article-image">
-                <img loading="lazy" src="images/India_Farming.jpg" alt="Organic Farming">
-            </div>
-            <div class="article-content">
-                <span class="article-date"><i class="far fa-calendar-alt"></i> February 5, 2026</span>
-                <h3>Government Announces New Organic Farming Subsidies and Training Programs</h3>
-                <p class="article-excerpt">The new policy will provide financial support to farmers transitioning to organic methods, with special focus on rice and wheat cultivation. The package includes training programs, certification assistance, and market linkage support...</p>
-                <span class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></span>
-            </div>
-        </a>
-        
-        <!-- Article 4 -->
-        <a href="news-detail1.html" class="news-article">
-            <div class="article-image">
-                <img loading="lazy" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352" alt="Sustainable Agriculture">
-            </div>
-            <div class="article-content">
-                <span class="article-date"><i class="far fa-calendar-alt"></i> March 1, 2026</span>
-                <h3>New Water Conservation Techniques Show Promise in Arid Regions</h3>
-                <p class="article-excerpt">Researchers have developed innovative water-saving techniques that could revolutionize farming in drought-prone areas. The methods combine traditional knowledge with modern technology to reduce water usage by up to 60%...</p>
-                <span class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></span>
-            </div>
-        </a>
-        
-        <!-- Article 5 -->
-        <a href="news-detail1.html" class="news-article">
-            <div class="article-image">
-                <img loading="lazy" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352" alt="Sustainable Agriculture">
-            </div>
-            <div class="article-content">
-                <span class="article-date"><i class="far fa-calendar-alt"></i> March 1, 2026</span>
-                <h3>New Water Conservation Techniques Show Promise in Arid Regions</h3>
-                <p class="article-excerpt">Researchers have developed innovative water-saving techniques that could revolutionize farming in drought-prone areas. The methods combine traditional knowledge with modern technology to reduce water usage by up to 60%...</p>
-                <span class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></span>
-            </div>
-        </a>
-    </div>
-
-    <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>Agri-Verse</h3>
-                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
-                <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
-            </div>
-            <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="Seeds.html">Seeds</a></li>
-                    <li><a href="tools.html">Implements</a></li>
-                    <li><a href="Feritlizer.html">Fertilizers</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Resources</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Equipment Guides</a></li>
-                    <li><a href="#">Maintenance Tips</a></li>
-                    <li><a href="#">Safety Procedures</a></li>
-                    <li><a href="#">Buying Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Newsletter</h3>
-                <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
-                <form>
-                    <input type="email" placeholder="Your Email" required>
-                    <button type="submit" class="btn">Subscribe</button>
-                </form>
-            </div>
         </div>
-        <div class="footer-bottom">
-            <p>Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by Agri-Verse Team</p>
+        <div class="footer-col">
+            <h3>Services</h3>
+            <ul class="footer-links">
+                <li><a href="weather.html">🌤️ Check Weather</a></li>
+                <li><a href="Seeds.html">🌱 Seeds Guide</a></li>
+                <li><a href="Feritlizer.html">🧪 Fertilizers</a></li>
+                <li><a href="tools.html">🚜 Implements</a></li>
+                <li><a href="farmingtypes.html">🌾 Farming Types</a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="footer-col">
+            <h3>Newsletter</h3>
+            <p>Subscribe for latest farming updates.</p>
+            <form id="newsletterForm">
+                <input type="email" id="newsletterEmail" placeholder="Your Email" required style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:4px;margin-bottom:8px;">
+                <button type="submit" class="btn" style="width:100%;">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Developed by Kavin Dobariya</p>
+    </div>
+</footer>
 
-    <script>
-        // Check login status
-        function checkLoginStatus() {
-            const token = localStorage.getItem('token');
-            const userEmail = localStorage.getItem('userEmail');
-            const authButtons = document.getElementById('auth-buttons');
-
-            if (token && userEmail) {
-                authButtons.innerHTML = `
-                    <div class="user-info" style="display: flex; align-items: center;">
-                        <span style="margin-right: 1rem; font-size: 0.9rem;">${userEmail}</span>
-                        <button onclick="logout()" style="background: none; border: none; color: var(--primary); cursor: pointer;">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-                    </div>
-                `;
-            } else {
-                authButtons.innerHTML = `
-                    <a href="login.html" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-                        <i class="fas fa-user"></i> Login
-                    </a>
-                `;
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('userEmail');
-            window.location.href = 'index.html';
-        }
-
-        // Initial check
-        document.addEventListener('DOMContentLoaded', checkLoginStatus);
-    </script>
 <button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<script>window.onscroll=function(){document.getElementById("backToTop").style.display=window.scrollY>300?"block":"none";};</script>
 
 <script>
-var hamburger = document.getElementById('hamburger');
-var navUl = document.querySelector('nav ul');
-if(hamburger && navUl) {
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navUl.classList.toggle('open');
-    });
+const API_KEY = '989e1d3ea739812a1cf6347bb8b528f3';
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80';
+
+let currentQuery = 'agriculture India farming';
+let currentPage = 1;
+const PAGE_SIZE = 8;
+
+// Fetch news from GNews API
+async function fetchNews(query, page = 1) {
+    const grid = document.getElementById('newsGrid');
+    showSkeletons(grid);
+
+    try {
+        const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=in&max=${PAGE_SIZE}&page=${page}&token=${API_KEY}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.articles || data.articles.length === 0) {
+            grid.innerHTML = `<div class="news-error"><i class="fas fa-newspaper"></i><p>No news found. Please try another category.</p></div>`;
+            document.getElementById('pagination').innerHTML = '';
+            return;
+        }
+
+        renderNews(data.articles, grid);
+        renderPagination(data.totalArticles || PAGE_SIZE, page);
+
+    } catch (err) {
+        grid.innerHTML = `<div class="news-error"><i class="fas fa-wifi"></i><p>Failed to load news. Please check your connection.</p></div>`;
+    }
 }
+
+function renderNews(articles, grid) {
+    grid.innerHTML = articles.map(article => {
+        const date = new Date(article.publishedAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+        const img = article.image || FALLBACK_IMG;
+        const source = article.source?.name || 'News';
+        const title = article.title || '';
+        const excerpt = article.description || '';
+        const url = article.url || '#';
+
+        return `
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="news-article">
+            <div class="article-image">
+                <img loading="lazy" src="${img}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'">
+                <span class="article-source-badge">${source}</span>
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="article-date"><i class="far fa-calendar-alt"></i> ${date}</span>
+                    <span class="article-tag">🌾 Agriculture</span>
+                </div>
+                <h3>${title}</h3>
+                <p class="article-excerpt">${excerpt}</p>
+                <span class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>`;
+    }).join('');
+}
+
+function renderPagination(total, current) {
+    const totalPages = Math.min(Math.ceil(total / PAGE_SIZE), 5);
+    if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+    let html = '';
+    for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+    }
+    document.getElementById('pagination').innerHTML = html;
+}
+
+function goToPage(page) {
+    currentPage = page;
+    fetchNews(currentQuery, page);
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+}
+
+function showSkeletons(grid) {
+    grid.innerHTML = Array(4).fill(`
+        <div class="skeleton-card">
+            <div class="skeleton skeleton-img"></div>
+            <div class="skeleton-body">
+                <div class="skeleton skeleton-line" style="width:40%"></div>
+                <div class="skeleton skeleton-line" style="width:85%"></div>
+                <div class="skeleton skeleton-line" style="width:70%"></div>
+                <div class="skeleton skeleton-line" style="width:55%"></div>
+            </div>
+        </div>`).join('');
+}
+
+// Filter tabs
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentQuery = this.dataset.query;
+        currentPage = 1;
+        fetchNews(currentQuery, 1);
+    });
+});
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('navMenu').classList.toggle('open');
+});
+
+// Back to top
+window.onscroll = function() {
+    document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+
+// Auth buttons
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+const authEl = document.getElementById('auth-buttons');
+if (isLoggedIn) {
+    const name = (user.name || 'User').split(' ')[0];
+    authEl.innerHTML = `<span style="background:#e8f5e9;color:#2e7d32;padding:6px 14px;border-radius:20px;font-weight:600;font-size:0.9rem;">👤 ${name}</span>`;
+} else {
+    authEl.innerHTML = `<a href="login.html" class="btn" style="padding:6px 16px;font-size:0.9rem;">Login</a>`;
+}
+
+// Newsletter
+document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    try {
+        await fetch('https://agri-project-ol6n.onrender.com/api/newsletter', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        alert('✅ Subscribed successfully!');
+        this.reset();
+    } catch { alert('Please try again.'); }
+});
+
+// Load news on start
+fetchNews(currentQuery, 1);
 </script>
 </body>
 </html>
