@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Script Loaded Successfully - Chalu ho gaya bhai!");
 
     const App = {
-        // Initialize all components
         init() {
             this.setupDropdowns();
             this.updateAuthButton();
@@ -10,19 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
             this.setupSmoothScrolling();
         },
 
-        // Dropdown functionality (kept for other dropdowns if needed)
         setupDropdowns() {
             document.querySelectorAll(".dropdown").forEach(dropdown => {
                 const button = dropdown.querySelector(".btn");
                 const content = dropdown.querySelector(".dropdown-content");
-                
                 button.addEventListener("click", (e) => {
                     e.stopPropagation();
                     content.style.display = content.style.display === "block" ? "none" : "block";
                 });
             });
-
-            // Close dropdowns when clicking outside
             document.addEventListener("click", () => {
                 document.querySelectorAll(".dropdown-content").forEach(content => {
                     content.style.display = "none";
@@ -30,9 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         },
 
-        // Setup all form event listeners
         setupEventListeners() {
-            // Login Form
             const loginForm = document.getElementById("loginForm");
             if (loginForm) {
                 loginForm.addEventListener("submit", (e) => {
@@ -41,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
-            // Register Form
             const registerForm = document.getElementById("registerForm");
             if (registerForm) {
                 registerForm.addEventListener("submit", (e) => {
@@ -50,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
 
-            // Contact Form (with null checks)
             const contactForm = document.getElementById("contactForm");
             if (contactForm) {
                 contactForm.addEventListener("submit", (e) => {
@@ -60,23 +50,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         },
 
-        // Handle registration
         async handleRegister() {
             const regBtn = document.querySelector("#registerForm button");
-            if(regBtn){regBtn.innerHTML='<span class="spinner"></span> Please wait...';regBtn.disabled=true;}
+            if (regBtn) { regBtn.innerHTML = '<span class="spinner"></span> Please wait...'; regBtn.disabled = true; }
             try {
-                // Get form values with null checks
                 const name = document.getElementById("name")?.value;
                 const email = document.getElementById("email")?.value;
                 const password = document.getElementById("password")?.value;
                 const confirmPassword = document.getElementById("confirmPassword")?.value;
 
                 if (!name || !email || !password || !confirmPassword) {
-                    throw new Error("Saare fields bharna zaroori hai!");
+                    throw new Error("Please fill in all required fields.");
                 }
-
                 if (password !== confirmPassword) {
-                    throw new Error("Password match nahi kar raha!");
+                    throw new Error("Passwords do not match. Please try again.");
                 }
 
                 const response = await fetch("https://agri-project-ol6n.onrender.com/api/auth/register", {
@@ -87,27 +74,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (!response.ok) {
                     const error = await response.json();
-                    throw new Error(error.message || "Register karne mein problem aa gayi");
+                    throw new Error(error.message || "Registration failed. Please try again.");
                 }
 
-                this.showMessage("Account ban gaya! Login page pe redirect ho rahe hain...", "green");
+                this.showMessage("Account created successfully! Redirecting to login...", "green");
                 setTimeout(() => window.location.href = "login.html", 1500);
             } catch (error) {
-                console.error("Register Error:", error);
                 this.showMessage(error.message, "red");
+                const regBtn = document.querySelector("#registerForm button");
+                if (regBtn) { regBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account'; regBtn.disabled = false; }
             }
         },
 
-        // Handle login
         async handleLogin() {
             const loginBtn = document.querySelector("#loginForm button");
-            if(loginBtn){loginBtn.innerHTML='<span class="spinner"></span> Logging in...';loginBtn.disabled=true;}
+            if (loginBtn) { loginBtn.innerHTML = '<span class="spinner"></span> Logging in...'; loginBtn.disabled = true; }
             try {
                 const email = document.getElementById("email")?.value;
                 const password = document.getElementById("password")?.value;
 
                 if (!email || !password) {
-                    throw new Error("Email aur password dono bharna padega");
+                    throw new Error("Please enter your email and password.");
                 }
 
                 const response = await fetch("https://agri-project-ol6n.onrender.com/api/auth/login", {
@@ -117,24 +104,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 if (!response.ok) {
-                    throw new Error((await response.json()).message || "Login nahi ho paya");
+                    throw new Error((await response.json()).message || "Login failed. Please check your credentials.");
                 }
-                
+
                 const data = await response.json();
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("isLoggedIn", "true");
 
-                this.showMessage("Login Success", "green");
+                this.showMessage("Login successful! Redirecting...", "green");
                 setTimeout(() => window.location.href = "index.html", 1500);
             } catch (error) {
-                console.error("Login Error:", error);
                 this.showMessage(error.message, "red");
                 this.clearAuthData();
+                const loginBtn = document.querySelector("#loginForm button");
+                if (loginBtn) { loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login'; loginBtn.disabled = false; }
             }
         },
 
-        // Update auth buttons based on login status
         updateAuthButton() {
             const authButton = document.getElementById("auth-button");
             if (!authButton) return;
@@ -150,12 +137,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <a href="#" id="logout-btn" class="btn" style="padding:6px 16px;font-size:0.9rem;">Logout</a>
                     </div>
                 `;
-                
-                // Add logout event listener
                 document.getElementById("logout-btn")?.addEventListener("click", (e) => this.handleLogout(e));
             } else {
                 authButton.innerHTML = `
-                    <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+                    <div style="display:flex;flex-direction:row;gap:10px;align-items:center;">
                         <a href="login.html" class="btn">Login</a>
                         <a href="signup.html" class="btn">Sign Up</a>
                     </div>
@@ -163,157 +148,121 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         },
 
-        // Clear auth data
         clearAuthData() {
             ["token", "user", "isLoggedIn"].forEach(item => localStorage.removeItem(item));
             sessionStorage.clear();
         },
 
-        // Handle logout
         async handleLogout(e) {
             e.preventDefault();
             this.clearAuthData();
-            this.showMessage("Logout ho gaya! Login page pe redirect ho rahe hain...", "green");
+            this.showMessage("Logged out successfully. Redirecting...", "green");
             setTimeout(() => window.location.href = "login.html", 1000);
         },
 
-        // Smooth scrolling for anchor links
         setupSmoothScrolling() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener("click", function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute("href"));
                     if (target) {
-                        window.scrollTo({ 
-                            top: target.offsetTop - 70, 
-                            behavior: "smooth" 
-                        });
+                        window.scrollTo({ top: target.offsetTop - 70, behavior: "smooth" });
                     }
                 });
             });
         },
 
-        // Show messages to user
         showMessage(message, color) {
             const messageElement = document.getElementById("message");
             if (messageElement) {
                 messageElement.textContent = message;
                 messageElement.style.color = color;
                 setTimeout(() => {
-                    if (messageElement.textContent === message) {
-                        messageElement.textContent = "";
-                    }
+                    if (messageElement.textContent === message) messageElement.textContent = "";
                 }, 5000);
             }
         },
 
-        // Contact form handling (unchanged)
         async handleContact() {
             try {
                 const nameInput = document.getElementById("name");
                 const emailInput = document.getElementById("email");
                 const phoneInput = document.getElementById("phone");
                 const messageInput = document.getElementById("message");
-                
+
                 this.clearContactErrors();
-                
+
                 if (!nameInput || !emailInput || !messageInput) {
-                    throw new Error("Form sahi se load nahi hua. Page refresh karo.");
+                    throw new Error("Form failed to load. Please refresh the page.");
                 }
-        
+
                 const name = nameInput.value.trim();
                 const email = emailInput.value.trim();
                 const phone = phoneInput?.value.trim() || "";
                 const message = messageInput.value.trim();
-        
+
                 let isValid = true;
-                
-                if (!name) {
-                    this.showError("name-error", "Naam bharo bhai!");
-                    isValid = false;
-                }
-                
-                if (!email) {
-                    this.showError("email-error", "Email zaroori hai");
-                    isValid = false;
-                } else if (!this.validateEmail(email)) {
-                    this.showError("email-error", "Sahi email daalo");
-                    isValid = false;
-                }
-                
-                if (phone && !this.validatePhone(phone)) {
-                    this.showError("phone-error", "Sahi phone number daalo");
-                    isValid = false;
-                }
-                
-                if (!message) {
-                    this.showError("message-error", "Message to likho!");
-                    isValid = false;
-                }
-                
-                if (!isValid) {
-                    throw new Error("Form mein errors hain");
-                }
-        
-                const formData = { name, email, phone, message };
-        
+
+                if (!name) { this.showError("name-error", "Please enter your name."); isValid = false; }
+                if (!email) { this.showError("email-error", "Email is required."); isValid = false; }
+                else if (!this.validateEmail(email)) { this.showError("email-error", "Please enter a valid email address."); isValid = false; }
+                if (phone && !this.validatePhone(phone)) { this.showError("phone-error", "Please enter a valid 10-digit phone number."); isValid = false; }
+                if (!message) { this.showError("message-error", "Please write a message."); isValid = false; }
+
+                if (!isValid) throw new Error("Please fix the errors above.");
+
+                const submitBtn = document.querySelector("#contactForm button[type='submit']");
+                if (submitBtn) { submitBtn.innerHTML = '<span class="spinner"></span> Sending...'; submitBtn.disabled = true; }
+
                 const response = await fetch("https://agri-project-ol6n.onrender.com/api/contact", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify({ name, email, phone, message })
                 });
-        
+
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.message || "Message send nahi hua. Baad mein try karo.");
+                    throw new Error(errorData.message || "Failed to send message. Please try again.");
                 }
-        
-                this.showFormMessage("Message Sent Successfully!","green");
+
+                this.showFormMessage("✅ Message sent successfully!", "green");
                 document.getElementById("contactForm").reset();
-                
+                if (submitBtn) { submitBtn.innerHTML = 'Send Message'; submitBtn.disabled = false; }
+
             } catch (error) {
-                console.error("Contact Error:", error);
                 this.showFormMessage(error.message, "error");
+                const submitBtn = document.querySelector("#contactForm button[type='submit']");
+                if (submitBtn) { submitBtn.innerHTML = 'Send Message'; submitBtn.disabled = false; }
             }
         },
-        
+
         clearContactErrors() {
-            document.querySelectorAll(".error-text").forEach(el => {
-                el.textContent = "";
-            });
+            document.querySelectorAll(".error-text").forEach(el => { el.textContent = ""; });
         },
-        
+
         showError(elementId, message) {
             const errorElement = document.getElementById(elementId);
-            if (errorElement) {
-                errorElement.textContent = message;
-            }
+            if (errorElement) errorElement.textContent = message;
         },
-        
+
         showFormMessage(message, type) {
             const messageElement = document.getElementById("form-message");
             if (messageElement) {
                 messageElement.textContent = message;
-                messageElement.className = type;
-                
-                setTimeout(() => {
-                    messageElement.textContent = "";
-                    messageElement.className = "";
-                }, 5000);
+                messageElement.style.color = type === "green" ? "#4CAF50" : "#e53e3e";
+                messageElement.style.marginTop = "10px";
+                setTimeout(() => { messageElement.textContent = ""; }, 5000);
             }
         },
-        
+
         validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         },
-        
+
         validatePhone(phone) {
-            const re = /^[0-9]{10}$/;
-            return re.test(phone);
+            return /^[0-9]{10}$/.test(phone);
         }
     };
 
-    // Start the app
     App.init();
 });
