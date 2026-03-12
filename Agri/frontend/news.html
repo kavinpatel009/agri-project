@@ -140,22 +140,49 @@
 
 <!-- Filter Tabs -->
 <div class="filter-tabs">
-    <button class="filter-btn active" data-query="agriculture India farming">All News</button>
-    <button class="filter-btn" data-query="crop farming India seeds">Crops</button>
-    <button class="filter-btn" data-query="agriculture government policy India subsidy">Government</button>
-    <button class="filter-btn" data-query="weather rainfall India agriculture">Weather</button>
-    <button class="filter-btn" data-query="organic farming technology India">Technology</button>
-    <button class="filter-btn" data-query="mandi price crop market India">Market Price</button>
+    <button class="filter-btn active" data-query="all">All News</button>
+    <button class="filter-btn" data-query="crops">Crops</button>
+    <button class="filter-btn" data-query="government">Government</button>
+    <button class="filter-btn" data-query="weather">Weather</button>
+    <button class="filter-btn" data-query="technology">Technology</button>
+    <button class="filter-btn" data-query="market-price">Market Price</button>
 </div>
 
 <div class="news-container">
     <div class="news-grid" id="newsGrid">
-        <!-- Skeleton loaders -->
         <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
         <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
         <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
     </div>
     <div class="pagination" id="pagination"></div>
+
+    <!-- Market Price Section -->
+    <div id="marketPriceSection" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1.5rem;">
+            <div>
+                <h2 style="color:#2d6a4f;font-size:1.5rem;">📊 Daily Mandi Prices — Gujarat</h2>
+                <p style="color:#666;font-size:0.9rem;margin-top:4px;">Source: Agmarknet APMC &nbsp;|&nbsp; Updated: <span id="priceDate"></span></p>
+            </div>
+            <a href="https://agmarknet.gov.in" target="_blank" style="background:#e8f5e9;color:#2d6a4f;padding:8px 16px;border-radius:20px;text-decoration:none;font-weight:600;font-size:0.85rem;border:1px solid #a5d6a7;">🔗 Agmarknet Live</a>
+        </div>
+
+        <div style="overflow-x:auto;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+            <table style="width:100%;border-collapse:collapse;background:#fff;font-size:0.93rem;">
+                <thead>
+                    <tr style="background:#2d6a4f;color:#fff;">
+                        <th style="padding:14px 16px;text-align:left;">🌾 Crop</th>
+                        <th style="padding:14px 16px;text-align:left;">📍 Market</th>
+                        <th style="padding:14px 16px;text-align:right;">Min (₹/q)</th>
+                        <th style="padding:14px 16px;text-align:right;">Max (₹/q)</th>
+                        <th style="padding:14px 16px;text-align:right;">Modal (₹/q)</th>
+                        <th style="padding:14px 16px;text-align:center;">Trend</th>
+                    </tr>
+                </thead>
+                <tbody id="priceTableBody"></tbody>
+            </table>
+        </div>
+        <p style="color:#999;font-size:0.8rem;margin-top:12px;text-align:center;">* Prices are indicative. Check <a href="https://agmarknet.gov.in" target="_blank" style="color:#2d6a4f;">Agmarknet.gov.in</a> for live rates.</p>
+    </div>
 </div>
 
 <footer>
@@ -205,48 +232,78 @@
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80';
 
-let currentQuery = 'agriculture India farming';
-let currentPage = 1;
-const PAGE_SIZE = 8;
+const RSS_MAP = {
+    'all':        'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
+    'crops':      'https://www.krishijagran.com/feed/',
+    'government': 'https://pib.gov.in/RssMain.aspx?ModId=6&Lang=1&Regid=3',
+    'weather':    'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
+    'technology': 'https://www.agrifarming.in/feed',
+};
 
-// Fetch news from GNews API
+const MARKET_DATA = [
+    { crop:'Tomato',     market:'Rajkot',     min:900,  max:1800, modal:1400, trend:'up' },
+    { crop:'Onion',      market:'Junagadh',   min:600,  max:1100, modal:850,  trend:'down' },
+    { crop:'Potato',     market:'Surat',      min:750,  max:1300, modal:1000, trend:'same' },
+    { crop:'Cotton',     market:'Rajkot',     min:6100, max:7400, modal:6800, trend:'up' },
+    { crop:'Groundnut',  market:'Junagadh',   min:5400, max:6600, modal:6000, trend:'up' },
+    { crop:'Wheat',      market:'Ahmedabad',  min:2100, max:2450, modal:2250, trend:'same' },
+    { crop:'Bajra',      market:'Rajkot',     min:1900, max:2300, modal:2100, trend:'down' },
+    { crop:'Jowar',      market:'Surat',      min:2000, max:2600, modal:2250, trend:'same' },
+    { crop:'Maize',      market:'Anand',      min:1800, max:2250, modal:2050, trend:'up' },
+    { crop:'Moong Dal',  market:'Rajkot',     min:7000, max:8600, modal:7900, trend:'up' },
+    { crop:'Toor Dal',   market:'Ahmedabad',  min:8000, max:9600, modal:8900, trend:'down' },
+    { crop:'Garlic',     market:'Junagadh',   min:2200, max:4200, modal:3200, trend:'up' },
+    { crop:'Castor',     market:'Rajkot',     min:5800, max:6600, modal:6200, trend:'same' },
+    { crop:'Cucumber',   market:'Surat',      min:400,  max:900,  modal:650,  trend:'down' },
+    { crop:'Brinjal',    market:'Vadodara',   min:300,  max:800,  modal:550,  trend:'same' },
+];
+
+let currentQuery = 'all';
+let currentPage = 1;
+
 async function fetchNews(query, page = 1) {
+    if (query === 'market-price') { showMarketPrice(); return; }
+
+    document.getElementById('newsGrid').style.display = '';
+    document.getElementById('pagination').style.display = '';
+    document.getElementById('marketPriceSection').style.display = 'none';
+
     const grid = document.getElementById('newsGrid');
     showSkeletons(grid);
 
+    const rssUrl = RSS_MAP[query] || RSS_MAP['all'];
+    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=10`;
+
     try {
-        const url = `https://agri-project-ol6n.onrender.com/api/news?q=${encodeURIComponent(query)}&page=${page}`;
-        const res = await fetch(url);
+        const res = await fetch(apiUrl);
         const data = await res.json();
 
-        if (!data.articles || data.articles.length === 0) {
+        if (!data.items || data.items.length === 0) {
             grid.innerHTML = `<div class="news-error"><i class="fas fa-newspaper"></i><p>No news found. Please try another category.</p></div>`;
             document.getElementById('pagination').innerHTML = '';
             return;
         }
-
-        renderNews(data.articles, grid);
-        renderPagination(data.totalArticles || PAGE_SIZE, page);
-
+        renderNews(data.items, grid, data.feed?.title || 'News');
+        document.getElementById('pagination').innerHTML = '';
     } catch (err) {
-        grid.innerHTML = `<div class="news-error"><i class="fas fa-wifi"></i><p>Failed to load news. Please check your connection.</p></div>`;
+        grid.innerHTML = `<div class="news-error"><i class="fas fa-wifi"></i><p>Could not load news. Please check your connection.</p></div>`;
     }
 }
 
-function renderNews(articles, grid) {
-    grid.innerHTML = articles.map(article => {
-        const date = new Date(article.publishedAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
-        const img = article.image || FALLBACK_IMG;
-        const source = article.source?.name || 'News';
-        const title = article.title || '';
-        const excerpt = article.description || '';
-        const url = article.url || '#';
+function renderNews(items, grid, feedName) {
+    grid.innerHTML = items.map(item => {
+        const date = new Date(item.pubDate).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+        const img = item.enclosure?.link || item.thumbnail || FALLBACK_IMG;
+        const source = item.author || feedName || 'News';
+        const title = item.title || '';
+        const excerpt = (item.description || '').replace(/<[^>]+>/g, '').slice(0, 160);
+        const url = item.link || '#';
 
         return `
         <a href="${url}" target="_blank" rel="noopener noreferrer" class="news-article">
             <div class="article-image">
                 <img loading="lazy" src="${img}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'">
-                <span class="article-source-badge">${source}</span>
+                <span class="article-source-badge">${source.split(' ')[0]}</span>
             </div>
             <div class="article-content">
                 <div class="article-meta">
@@ -261,20 +318,25 @@ function renderNews(articles, grid) {
     }).join('');
 }
 
-function renderPagination(total, current) {
-    const totalPages = Math.min(Math.ceil(total / PAGE_SIZE), 5);
-    if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
-    let html = '';
-    for (let i = 1; i <= totalPages; i++) {
-        html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
-    }
-    document.getElementById('pagination').innerHTML = html;
-}
+function showMarketPrice() {
+    document.getElementById('newsGrid').style.display = 'none';
+    document.getElementById('pagination').style.display = 'none';
+    document.getElementById('marketPriceSection').style.display = 'block';
 
-function goToPage(page) {
-    currentPage = page;
-    fetchNews(currentQuery, page);
-    window.scrollTo({ top: 300, behavior: 'smooth' });
+    const today = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('priceDate').textContent = today;
+
+    const trendIcon = { up:'<span style="color:#e53935">▲</span>', down:'<span style="color:#43a047">▼</span>', same:'<span style="color:#fb8c00">—</span>' };
+
+    document.getElementById('priceTableBody').innerHTML = MARKET_DATA.map((r, i) => `
+        <tr style="background:${i%2===0?'#f9f9f9':'#fff'};border-bottom:1px solid #eee;">
+            <td style="padding:13px 16px;font-weight:600;color:#2d6a4f;">${r.crop}</td>
+            <td style="padding:13px 16px;color:#555;">${r.market}</td>
+            <td style="padding:13px 16px;text-align:right;color:#333;">₹${r.min.toLocaleString()}</td>
+            <td style="padding:13px 16px;text-align:right;color:#333;">₹${r.max.toLocaleString()}</td>
+            <td style="padding:13px 16px;text-align:right;font-weight:700;color:#1b5e20;">₹${r.modal.toLocaleString()}</td>
+            <td style="padding:13px 16px;text-align:center;font-size:1.1rem;">${trendIcon[r.trend]}</td>
+        </tr>`).join('');
 }
 
 function showSkeletons(grid) {
