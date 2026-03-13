@@ -3,14 +3,9 @@
 <head>
     <link rel="canonical" href="https://agriverse-in.vercel.app/">
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png">
-    <meta name="theme-color" content="#2d6a4f">
     <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriVerse | Modern Farming Solutions</title>
-    <meta name="description" content="Agri-Verse - Empowering farmers with smart technology. Find seeds, fertilizers, implements, weather forecasts and latest agriculture news for Indian farmers.">
     <!-- Open Graph for Social Media Sharing -->
     <meta property="og:title" content="Agri-Verse | Modern Farming Solutions">
     <meta property="og:description" content="Empowering farmers with smart technology for sustainable agriculture.">
@@ -691,7 +686,7 @@
         <nav>
             <a href="index.html" style="text-decoration:none;">
             <div class="logo">
-                <img loading="lazy" src="images/logoss.jpg" height="55" width="55" style="object-fit:cover;">
+                <img src="images/logoss.jpg" height="55" width="55" style="object-fit:cover;">
                 <span>Agri-Verse</span>
             </div>
             </a>
@@ -747,7 +742,7 @@
                       <a href="#services" class="btn">Learn More</a>
                 </div>
                 <div class="about-image">
-                    <img loading="lazy" src="images/Agri Min che.jpg" alt="Farmers using AgriVerse technology">
+                    <img src="images/Agri Min che.jpg" alt="Farmers using AgriVerse technology">
                 </div>
             </div>
         </section>
@@ -760,7 +755,7 @@
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-img">
-                        <img loading="lazy" src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Smart Irrigation">
+                        <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Smart Irrigation">
                     </div>
                     <div class="service-content">
                         <h3>Fertilizers Information</h3>
@@ -771,7 +766,7 @@
                 
                 <div class="service-card">
                     <div class="service-img">
-                        <img loading="lazy" src="images/Seeds.png" alt="Soil Analysis">
+                        <img src="images/Seeds.png" alt="Soil Analysis">
                     </div>
                     <div class="service-content">
                         <h3>Seeds Information</h3>
@@ -783,7 +778,7 @@
 
                 <div class="service-card">
                     <div class="service-img">
-                        <img loading="lazy" src="images/India_Farming.jpg" alt="Weather Forecast">
+                        <img src="images/weather-service.jpg" alt="Weather Forecast" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
                     </div>
                     <div class="service-content">
                         <h3>🌤️ Weather Forecast</h3>
@@ -794,7 +789,7 @@
                 
                 <div class="service-card">
                     <div class="service-img">
-                        <img loading="lazy" src="images/farm-mechanization-1.jpg" alt="Crop Monitoring">
+                        <img src="images/farm-mechanization-1.jpg" alt="Crop Monitoring">
                     </div>
                     <div class="service-content">
                         <h3>Agricultural Implements</h3>
@@ -838,7 +833,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-img">
-                            <img loading="lazy" src="images/rajj.jpg" alt="Raj Patel">
+                            <img src="images/rajj.jpg" alt="Raj Patel">
                         </div>
                         <div class="author-info">
                             <h4>Raj Patel</h4>
@@ -853,7 +848,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-img">
-                            <img loading="lazy" src="images/jay.jpg" alt="Maria Gonzalez">
+                            <img src="images/jay.jpg" alt="Maria Gonzalez">
                         </div>
                         <div class="author-info">
                             <h4>Ketan Vaghasiya</h4>
@@ -868,7 +863,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-img">
-                            <img loading="lazy" src="images/vinay.jpg" alt="Kwame Osei">
+                            <img src="images/vinay.jpg" alt="Kwame Osei">
                         </div>
                         <div class="author-info">
                             <h4>Alpesh Dholariya</h4>
@@ -913,7 +908,7 @@
                             </div>
                             <div class="contact-text">
                                 <h4>Email Us</h4>
-                                <p><a href="mailto:agriverse009@gmail.com">agriverse009@gmail.com</a></p>
+                                <p><a href="mailto:kavinjpatel104@gmail.com">kavinjpatel104@gmail.com</a></p>
                                  
                             </div>
                         </div>
@@ -1083,9 +1078,9 @@ window.addEventListener('load', function() {
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function() {
-            console.log('PWA Ready!');
-        });
+        navigator.serviceWorker.register('/sw.js')
+            .then(function() { console.log('PWA Ready!'); })
+            .catch(function(err) { console.warn('SW skipped:', err); });
     });
 }
 </script>
