@@ -358,14 +358,26 @@
             object-fit: cover;
         }
         
+        .author-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+        }
         .author-info h4 {
             color: var(--primary-dark);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0;
+            white-space: nowrap;
         }
-        
+        .author-info h4::after {
+            content: ' —';
+            color: var(--gray);
+            font-weight: 400;
+        }
         .author-info p {
             color: var(--gray);
             font-size: 0.9rem;
+            margin-bottom: 0;
         }
         
         .contact {
