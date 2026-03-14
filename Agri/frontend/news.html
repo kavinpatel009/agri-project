@@ -1,1238 +1,1345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="canonical" href="https://agriverse-in.vercel.app/">
+    <link rel="canonical" href="https://agriverse-in.vercel.app/news.html">
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agri-Verse | Daily Mandi Prices, Weather, Agri News & Seeds Guide</title>
-    <!-- Open Graph for Social Media Sharing -->
-    <meta property="og:title" content="Agri-Verse | Daily Mandi Prices, Weather, Agri News & Seeds Guide">
-    <meta name="description" content="Agri-Verse is India's modern farming platform providing market updates, weather forecasts, agriculture news, and expert guidance on seeds and fertilizers to support smarter farming.">
-    <meta property="og:description" content="Agri-Verse is India's modern farming platform providing market updates, weather forecasts, agriculture news, and expert guidance on seeds and fertilizers to support smarter farming.">
-    <meta property="og:image" content="images/logoss.jpg">
-    <meta property="og:url" content="https://agriverse-in.vercel.app">
-    <meta property="og:type" content="website">
-    <meta name="keywords" content="mandi price, mandi bhav, Gujarat mandi, agri news, agriculture news, kisan, farming, weather, seeds, fertilizer, groundnut price, cotton price, tomato price, onion price, Ahmedabad mandi, Rajkot mandi, Junagadh mandi, krushi, kheti, bhav">
-    <meta name="robots" content="index, follow">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Agri-Verse",
-      "url": "https://agriverse-in.vercel.app",
-      "description": "Gujarat mandi prices for Tomato, Onion, Cotton, Groundnut and 50+ crops across 16 cities. Live weather, daily agri news, seeds guide and fertilizer info for Indian farmers.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://agriverse-in.vercel.app/news.html?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
+    <title>Agri-News | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse News - Latest agriculture news, farming tips and updates from India.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         :root {
             --primary: #4CAF50;
             --primary-dark: #388E3C;
             --secondary: #FFC107;
-            --light: #F5F5F5;
             --dark: #212121;
             --gray: #757575;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f9f9f9;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--secondary);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-        
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        #auth-button {
-            display: flex;
-            align-items: center;
-        }
-        
-        nav ul li a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 2rem;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin-bottom: 2rem;
-        }
-        
-        .hero-btns {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        section {
-            padding: 5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 3px;
-            background-color: var(--secondary);
-            bottom: -10px;
-            left: 25%;
-        }
-        
-        .section-title p {
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--primary-dark);
-        }
-        
-        .about-image {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        /* Services Slider */
-        .slider-wrapper {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-        .services-grid {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
-        }
-        .service-card {
-            width: 33.333%;
-            min-width: 33.333%;
-            flex-shrink: 0;
-            padding: 0 0.75rem;
-            box-sizing: border-box;
-        }
-        @media (max-width: 992px) {
-            .service-card { width: 50%; min-width: 50%; }
-        }
-        @media (max-width: 600px) {
-            .service-card { width: 100%; min-width: 100%; }
-        }
-        .slider-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            margin-top: 1.5rem;
-        }
-        .slider-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(76,175,80,0.3);
-        }
-        .slider-btn:hover { background: #388E3C; transform: scale(1.1); }
-        .slider-dots {
-            display: flex;
-            gap: 6px;
-        }
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #ddd;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .slider-dot.active { background: #4CAF50; }
-        
-        .service-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .service-img {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .service-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .service-card:hover .service-img img {
-            transform: scale(1.1);
-        }
-        
-        .service-content {
-            padding: 1.5rem;
-        }
-        
-        .service-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
-        }
-        
-        .service-content p {
-            color: var(--gray);
-            margin-bottom: 1rem;
-        }
-        
-        .stats {
-            background: linear-gradient(rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.9)), url('https://images.unsplash.com/photo-1535696588143-945e1379f1b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
-            padding: 4rem 0;
-            color: white;
-            text-align: center;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .stat-item h3 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-item p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .testimonials {
-            background-color: #f5f5f5;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        @media (max-width: 768px) {
-            .testimonial-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .testimonial-card {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .testimonial-card::before {
-            content: '"';
-            font-size: 5rem;
-            color: var(--primary);
-            opacity: 0.1;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-        }
-        
-        .testimonial-content {
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-            flex: 1;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            flex-wrap: nowrap;
-            gap: 10px;
-        }
-        
-        .author-img {
-            width: 50px;
-            height: 50px;
-            min-width: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-        
-        .author-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .author-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .author-info h4 {
-            color: var(--primary-dark);
-            margin-bottom: 0.2rem;
-        }
-        .author-info p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .contact {
-            background-color: white;
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-dark);
-        }
-        
-        .contact-details {
-            margin-bottom: 2rem;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-icon {
-            background-color: var(--primary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            flex-shrink: 0;
-        }
-        
-        .contact-text h4 {
-            margin-bottom: 0.3rem;
-        }
-        
-        .contact-text p, .contact-text a {
-            color: var(--gray);
-            text-decoration: none;
-        }
-        
-        .contact-text a:hover {
-            color: var(--primary);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            transition: background-color 0.3s;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        .contact-form .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .contact-form textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 5% 1.5rem;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .footer-col h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .footer-col p {
-            margin-bottom: 1rem;
-            opacity: 0.8;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-            list-style: none;
-        }
-        
-        .footer-links a {
-            color: white;
-            opacity: 0.8;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.8rem 1rem;
-            }
-            
-            .logo {
-                margin-bottom: 0;
-            }
-            
-            #auth-buttons {
-                display: none !important;
-            }
-            
-            nav ul {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            nav ul li {
-                margin: 0.5rem;
-            }
-            
-            .hero {
-                height: auto;
-                padding: 5rem 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            section {
-                padding: 3rem 1rem;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero-btns {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-        }
-         
-            /* Mobile Hamburger Menu */
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
-        @media (max-width: 768px) {
-            .hamburger { display: block; }
-            nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: #fff; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 999; }
-            nav ul.active { display: flex; }
-            nav ul li { margin: 10px 0; }
-        }
-        /* Back to Top */
-        #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: #fff; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.3rem; cursor: pointer; display: none; z-index: 999; box-shadow: 0 3px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
-        #backToTop:hover { background: #388E3C; transform: translateY(-3px); }
-        /* Loading Spinner */
-        .btn-loading { opacity: 0.7; pointer-events: none; }
-        .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.5); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins','Segoe UI',sans-serif; }
+        body { background:#f9f9f9; color:var(--dark); line-height:1.6; }
 
-        /* Home Search Bar */
-        .hero-search {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-        .hero-search input {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 30px;
-            width: 320px;
-            font-size: 1rem;
-            outline: none;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        .hero-search button {
-            padding: 12px 28px;
-            background: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .hero-search button:hover { background: #388E3C; transform: translateY(-2px); }
+        header { background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
+        nav { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; max-width:1400px; margin:0 auto; }
+        .logo { font-size:1.8rem; font-weight:700; color:var(--primary); display:flex; align-items:center; }
+        .logo i { margin-right:10px; color:var(--secondary); }
+        nav ul { display:flex; list-style:none; align-items:center; }
+        nav ul li { margin-left:2rem; }
+        nav ul li a { text-decoration:none; color:var(--dark); font-weight:500; transition:color 0.3s; }
+        nav ul li a:hover { color:var(--primary); }
+        .btn { display:inline-block; background:var(--primary); color:#fff; padding:0.6rem 1.2rem; border-radius:4px; text-decoration:none; font-weight:500; transition:background 0.3s; border:none; cursor:pointer; }
+        .btn:hover { background:var(--primary-dark); }
 
-        /* Page Loader */
-        #page-loader {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: #1b4332; z-index: 99999;
-            display: flex; align-items: center; justify-content: center;
-            flex-direction: column; gap: 15px;
-            transition: opacity 0.5s ease;
-        }
-        #page-loader.hide { opacity: 0; pointer-events: none; }
-        .loader-logo { font-size: 3rem; animation: grow 1s ease-in-out infinite alternate; }
-        @keyframes grow { from{transform:scale(0.8)} to{transform:scale(1.1)} }
-        .loader-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
-        .loader-bar-fill { height: 100%; background: #52b788; border-radius: 4px; animation: load 1.5s ease-in-out forwards; }
-        @keyframes load { from{width:0} to{width:100%} }
-        .loader-text { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+        .hero { background:linear-gradient(135deg,rgba(76,175,80,0.9),rgba(56,142,60,0.9)),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1350&q=80'); background-size:cover; background-position:center; height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:#fff; padding:0 1rem; clip-path:polygon(0 0,100% 0,100% 90%,0 100%); margin-bottom:2rem; }
+        .hero h2 { font-size:2.5rem; margin-bottom:1rem; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        .hero p { font-size:1.1rem; max-width:600px; }
 
-        /* Justify paragraphs */
-        .service-content p, .testimonial-content p, 
-        .about-text p, .contact-text p, .detail-content p {
-            text-align: justify;
-        }
-        /* Footer paragraph - left align */
-        .footer-col p {
-            text-align: left;
-        }
+        /* Filter Tabs */
+        .filter-tabs { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:0 auto 2rem; max-width:900px; padding:0 1rem; }
+        .filter-btn { padding:8px 20px; border:2px solid var(--primary); border-radius:25px; background:transparent; color:var(--primary); font-weight:600; cursor:pointer; transition:all 0.3s; font-size:0.9rem; }
+        .filter-btn.active, .filter-btn:hover { background:var(--primary); color:#fff; }
 
-        /* Mobile Nav Fix */
-        @media (max-width: 768px) {
-            header nav {
-                display: flex !important;
-                flex-direction: row !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                flex-wrap: nowrap !important;
-                padding: 10px 15px !important;
-            }
-            header nav .logo {
-                margin-bottom: 0 !important;
-            }
-            header nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0; right: 0;
-                background: #fff;
-                padding: 15px 20px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-                z-index: 9999;
-                width: 100%;
-            }
-            header nav ul.active { display: flex !important; }
-            header .hamburger { display: block !important; }
+        /* News Grid */
+        .news-container { max-width:1200px; margin:0 auto; padding:0 1.5rem 4rem; }
+        .news-grid { display:grid; grid-template-columns:1fr; gap:2rem; }
+
+        /* Article Card */
+        .news-article { display:flex; height:220px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.08); transition:transform 0.3s,box-shadow 0.3s; text-decoration:none; color:inherit; }
+        .news-article:hover { transform:translateY(-5px); box-shadow:0 12px 30px rgba(0,0,0,0.15); }
+        .article-image { flex:0 0 35%; overflow:hidden; position:relative; }
+        .article-image img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+        .news-article:hover .article-image img { transform:scale(1.05); }
+        .article-source-badge { position:absolute; top:10px; left:10px; background:var(--primary); color:#fff; font-size:0.75rem; padding:3px 10px; border-radius:20px; font-weight:600; z-index:1; }
+        .article-content { flex:1; padding:1.5rem; display:flex; flex-direction:column; overflow:hidden; }
+        .article-meta { display:flex; align-items:center; gap:12px; margin-bottom:0.6rem; flex-wrap:wrap; }
+        .article-date { color:var(--primary); font-weight:600; font-size:0.85rem; display:flex; align-items:center; gap:5px; }
+        .article-tag { background:#e8f5e9; color:var(--primary-dark); font-size:0.75rem; padding:2px 10px; border-radius:20px; font-weight:600; }
+        .article-content h3 { font-size:1.15rem; margin-bottom:0.6rem; color:var(--dark); line-height:1.4; }
+        .article-excerpt { color:var(--gray); font-size:0.9rem; line-height:1.6; flex-grow:1; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+        .read-more { display:inline-flex; align-items:center; gap:5px; color:var(--primary); font-weight:600; font-size:0.88rem; margin-top:0.8rem; }
+        .read-more:hover { color:var(--primary-dark); }
+
+        /* Skeleton Loader */
+        .skeleton { background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:8px; }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+        .skeleton-card { display:flex; height:220px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
+        .skeleton-img { flex:0 0 35%; }
+        .skeleton-body { flex:1; padding:1.5rem; display:flex; flex-direction:column; gap:12px; }
+        .skeleton-line { height:14px; border-radius:4px; }
+
+        /* Error & Empty */
+        .news-error { text-align:center; padding:4rem 1rem; color:var(--gray); }
+        .news-error i { font-size:3rem; color:#ddd; margin-bottom:1rem; }
+
+        /* Pagination */
+        .pagination { display:flex; justify-content:center; gap:10px; margin-top:2.5rem; flex-wrap:wrap; }
+        .page-btn { padding:8px 18px; border:2px solid #ddd; border-radius:8px; background:#fff; cursor:pointer; font-weight:600; transition:all 0.3s; }
+        .page-btn.active, .page-btn:hover { border-color:var(--primary); background:var(--primary); color:#fff; }
+
+        /* Back Button */
+        .back-btn { display:inline-flex; align-items:center; gap:8px; background:transparent; color:#2d6a4f; padding:9px 20px; border-radius:25px; text-decoration:none; font-weight:600; font-size:0.9rem; margin:15px 0 0 15px; transition:all 0.3s; border:2px solid #2d6a4f; }
+        .back-btn:hover { background:#2d6a4f; color:#fff; }
+
+        /* Hamburger */
+        .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; display:block; }
+
+        footer { background:var(--dark); color:#fff; padding:3rem 5% 1.5rem; margin-top:2rem; }
+        .footer-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; max-width:1400px; margin:0 auto; }
+        .footer-col h3 { font-size:1.3rem; margin-bottom:1.5rem; position:relative; padding-bottom:0.5rem; }
+        .footer-col h3::after { content:''; position:absolute; left:0; bottom:0; width:50px; height:2px; background:var(--primary); }
+        .footer-col p { margin-bottom:1rem; opacity:0.8; }
+        .footer-links li { margin-bottom:0.8rem; list-style:none; }
+        .footer-links a { color:#fff; opacity:0.8; text-decoration:none; transition:opacity 0.3s; }
+        .footer-links a:hover { opacity:1; }
+        .footer-bottom { text-align:center; padding-top:2rem; margin-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
+
+        @media(max-width:768px) {
+            nav { position:relative; }
+            .hamburger { display:flex; }
+            nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:#fff; box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
+            nav ul.open { display:flex; }
+            nav ul li { margin:0; }
+            .hero h2 { font-size:1.8rem; }
+            .news-article { height:auto; flex-direction:column; }
+            .article-image { flex:1; height:200px; }
         }
     </style>
 </head>
 <body>
-    <div id="page-loader">
-    <div class="loader-logo">🌿</div>
-    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
-    <div class="loader-text">Loading Agri-Verse...</div>
-</div>
+
+<a href="javascript:history.back()" class="back-btn">&#8592; Back</a>
+
 <header>
-        <nav>
-            <a href="index.html" style="text-decoration:none;">
-            <div class="logo">
-                <img src="images/logoss.jpg" height="55" width="55" style="object-fit:cover;">
-                <span>Agri-Verse</span>
+    <nav>
+        <a href="index.html" style="text-decoration:none;color:inherit;">
+            <div class="logo"><i class="fas fa-tractor"></i><span>Agri-Verse</span></div>
+        </a>
+        <ul id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Seeds.html">Seeds</a></li>
+            <li><a href="tools.html">Implements</a></li>
+            <li><a href="Feritlizer.html">Fertilizers</a></li>
+            <li><a href="weather.html">Weather</a></li>
+            <li id="auth-buttons"></li>
+        </ul>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </nav>
+</header>
+
+<div class="hero">
+    <h2>🌾 Latest Agriculture News</h2>
+    <p>Real-time farming news and updates from India</p>
+</div>
+
+<!-- Filter Tabs -->
+<div class="filter-tabs">
+    <button class="filter-btn active" data-query="all">All News</button>
+    <button class="filter-btn" data-query="crops">Crops</button>
+    <button class="filter-btn" data-query="government">Government</button>
+    <button class="filter-btn" data-query="weather">Weather</button>
+    <button class="filter-btn" data-query="technology">Technology</button>
+    <button class="filter-btn" data-query="market-price">Market Price</button>
+</div>
+
+<div class="news-container">
+    <div class="news-grid" id="newsGrid">
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line" style="width:40%"></div><div class="skeleton skeleton-line" style="width:80%"></div><div class="skeleton skeleton-line" style="width:90%"></div><div class="skeleton skeleton-line" style="width:60%"></div></div></div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+
+    <!-- Market Price Section -->
+    <div id="marketPriceSection" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1.2rem;">
+            <div>
+                <h2 style="color:#2d6a4f;font-size:1.5rem;">📊 <span id="lblTitle">Daily Mandi Prices — Gujarat</span></h2>
+                <p style="color:#666;font-size:0.9rem;margin-top:4px;"><span id="lblSource">Source: Agmarknet APMC</span> &nbsp;|&nbsp; <span id="lblUpdated">Updated:</span> <span id="priceDate"></span>
+                &nbsp;
+                <span id="liveDataBadge" style="display:none;background:#e8f5e9;color:#2d6a4f;padding:2px 8px;border-radius:10px;font-size:0.78rem;font-weight:600;">🟢 Live Data</span>
+                <span id="staticDataBadge" style="background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;font-size:0.78rem;font-weight:600;">📋 Indicative Data</span>
+            </p>
             </div>
-            </a>
-            <ul>
-                <!-- <li><a href="index.html">Home</a></li> -->
-                <!-- <li><a href="#about">About</a></li>
-                <li><a href="weather.html">Check Weather</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact">Contact</a></li> -->
-                <!-- <li><a href="signup.html" class="btn">Sign Up</a></li> -->
-                <!-- <li><a href="login.html" class="btn">Sign Up</a></li> -->
-                <li><a href="Feritlizer.html">Fertilizers</a></li>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <button onclick="toggleLang()" id="langBtn" style="background:#fff3e0;color:#e65100;padding:7px 16px;border-radius:20px;font-weight:700;font-size:0.85rem;border:2px solid #ffcc80;cursor:pointer;">🇮🇳 ગુજરાતી</button>
+                <button onclick="exportCSV()" style="background:#e3f2fd;color:#1565c0;padding:7px 16px;border-radius:20px;font-weight:600;font-size:0.85rem;border:1px solid #90caf9;cursor:pointer;">📥 Export CSV</button>
+                <a href="https://agmarknet.gov.in" target="_blank" style="background:#e8f5e9;color:#2d6a4f;padding:7px 16px;border-radius:20px;text-decoration:none;font-weight:600;font-size:0.85rem;border:1px solid #a5d6a7;">🔗 Agmarknet</a>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center;">
+            <input id="priceSearch" type="text" placeholder="🔍 Search crop..." oninput="renderPriceTable()" style="padding:7px 14px;border:2px solid #ddd;border-radius:20px;font-size:0.9rem;outline:none;width:180px;">
+            <select id="cityFilter" onchange="renderPriceTable()" style="padding:7px 14px;border:2px solid #ddd;border-radius:20px;font-size:0.9rem;outline:none;background:#fff;color:#333;">
+                <option value="">📍 All Cities</option>
+                <option>Ahmedabad</option><option>Rajkot</option><option>Junagadh</option>
+                <option>Surat</option><option>Vadodara</option><option>Anand</option>
+                <option>Mehsana</option><option>Amreli</option><option>Surendranagar</option>
+                <option>Bhavnagar</option><option>Gandhinagar</option><option>Bharuch</option>
+                <option>Navsari</option><option>Morbi</option><option>Botad</option><option>Porbandar</option>
+            </select>
+            <select id="categoryFilter" onchange="renderPriceTable()" style="padding:7px 14px;border:2px solid #ddd;border-radius:20px;font-size:0.9rem;outline:none;background:#fff;color:#333;">
+                <option value="">🌾 All Categories</option>
+                <option value="veg">Vegetables</option>
+                <option value="cereal">Cereals</option>
+                <option value="pulse">Pulses</option>
+                <option value="oilseed">Oilseeds</option>
+                <option value="fruit">Fruits</option>
+            </select>
+            <span id="priceCount" style="color:#888;font-size:0.85rem;"></span>
+            <button onclick="toggleView('grouped')" id="btnGrouped" style="padding:5px 14px;border-radius:15px;border:2px solid #2d6a4f;background:#2d6a4f;color:#fff;cursor:pointer;font-size:0.85rem;font-weight:600;">🌿 Grouped</button>
+                <button onclick="toggleView('flat')" id="btnFlat" style="padding:5px 14px;border-radius:15px;border:2px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:0.85rem;">📋 Flat</button>
+            </span>
+            <span id="paginationInfo" style="color:#888;font-size:0.85rem;margin-left:auto;"></span>
+            <div style="display:flex;gap:4px;">
+                <button id="prevPage" onclick="changePage(-1)" style="padding:5px 12px;border-radius:15px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:0.85rem;">‹ <span id="lblPrev">Prev</span></button>
+                <button id="nextPage" onclick="changePage(1)" style="padding:5px 12px;border-radius:15px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:0.85rem;"><span id="lblNext">Next</span> ›</button>
+            </div>
+        </div>
+
+        <div style="overflow-x:auto;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+            <table style="width:100%;border-collapse:collapse;background:#fff;font-size:0.93rem;">
+                <thead id="priceTableHead">
+                    <tr style="background:#2d6a4f;color:#fff;">
+                        <th colspan="2" style="padding:10px 16px;text-align:left;font-size:0.9rem;">🌿 <span id="thCropG">Crop</span></th>
+                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">Range (₹/100kg)</span></th>
+                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">Modal Price</span></th>
+                        <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thTrendG">Trend</span></th>
+                        <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thChgG">Change%</span></th>
+                        <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thUpdG">Updated</span></th>
+                    </tr>
+                </thead>
+                <tbody id="priceTableBody"></tbody>
+            </table>
+        </div>
+        <p style="color:#999;font-size:0.8rem;margin-top:12px;text-align:center;">* Prices are indicative. Check <a href="https://agmarknet.gov.in" target="_blank" style="color:#2d6a4f;">Agmarknet.gov.in</a> for live rates.</p>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>Agri-Verse</h3>
+            <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+            <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="Seeds.html">Seeds</a></li>
                 <li><a href="tools.html">Implements</a></li>
-                <li><a href="weather.html">Check-Weather</a></li>
-                <li><a href="news.html">Agri-News</a></li>
-                <li><a href="farmingtypes.html">Farming Types</a></li> 
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <!-- Dynamic auth button will be inserted here -->
-                <li id="auth-button"></li>
+                <li><a href="Feritlizer.html">Fertilizers</a></li>
+                <li><a href="weather.html">Weather</a></li>
             </ul>
-            <button class="hamburger" id="hamburger">☰</button>
-        </nav>
-    </header>
-    
-    <main>
-        <section class="hero">
-            <h1>Revolutionizing Agriculture with Smart Technology</h1>
-            <p>Empowering farmers with innovative solutions to increase yield, reduce waste, and optimize resources for sustainable farming.</p>
-            <div class="hero-btns">
-                <a href="signup.html" class="btn">Get Started</a>
-                <a href="#services" class="btn btn-outline">Our Services</a>
-            </div>
-            <div class="hero-search">
-                <input type="text" id="heroSearch" placeholder="🔍 Search Seeds, Fertilizers, Tools...">
-                <button onclick="heroSearchFn()">Search</button>
-            </div>
-        </section>
-
-        <section id="about">
-            <div class="section-title">
-                <h2>About Agri-Verse</h2>
-                <p>We are committed to transforming traditional farming practices through cutting-edge technology and data-driven solutions.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Our Mission</h3>
-                    <p>Our mission is to empower farmers and agriculture enthusiasts with accurate, up-to-date, and comprehensive information about farming. From high-quality seeds and fertilizers to modern implements and the latest agricultural news, we provide everything needed to enhance productivity and sustainability. We aim to bridge the knowledge gap 
-                        and support the growth of a thriving agricultural community.</p>
-                        <br>
-                      <a href="#services" class="btn">Learn More</a>
-                </div>
-                <div class="about-image">
-                    <img src="images/Agri Min che.jpg" alt="Farmers using AgriVerse technology">
-                </div>
-            </div>
-        </section>
-
-        <section id="services">
-            <div class="section-title">
-                <h2>Our Services</h2>
-                <p>Comprehensive solutions tailored to meet the diverse needs of modern agriculture.</p>
-            </div>
-            <div class="slider-wrapper">
-                <div class="services-grid" id="servicesSlider">
-                    <div class="service-card">
-                        <div class="service-img">
-                            <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Fertilizers">
-                        </div>
-                        <div class="service-content">
-                            <h3>🧪 Fertilizers Information</h3>
-                            <p>Agri-Verse provides complete fertilizer information to help farmers choose the right nutrients for their soil. Improve crop yield, enhance soil health, and reduce fertilizer costs with our expert guidance.</p>
-                            <a href="Feritlizer.html" class="btn">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-img">
-                            <img src="images/Seeds.png" alt="Seeds">
-                        </div>
-                        <div class="service-content">
-                            <h3>🌱 Seeds Information</h3>
-                            <p>Agri-Verse provides detailed seed information to help farmers choose the right seeds based on soil type, climate, and crop requirements. Maximize your yield with precision-guided seed selection.</p>
-                            <a href="Seeds.html" class="btn">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-img">
-                            <img src="images/weather-service.jpg" alt="Weather" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
-                        </div>
-                        <div class="service-content">
-                            <h3>🌤️ Weather Forecast</h3>
-                            <p>Get real-time weather updates for your farm location. Check temperature, humidity, rainfall, and wind conditions. Make smarter decisions with accurate 5-day forecasts and protect your crops from adverse weather.</p>
-                            <a href="weather.html" class="btn">Check Weather</a>
-                        </div>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-img">
-                            <img src="images/farm-mechanization-1.jpg" alt="Implements" onerror="this.src='https://images.unsplash.com/photo-1592982537447-6f2a6a0a5b1a?w=600&q=80';this.onerror=null;">
-                        </div>
-                        <div class="service-content">
-                            <h3>🚜 Agricultural Implements</h3>
-                            <p>Find the right machinery for your farm to enhance efficiency, reduce labor costs, and improve productivity. Comprehensive information on agricultural implements and tools.</p>
-                            <a href="tools.html" class="btn">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Slider Controls -->
-                <div class="slider-controls">
-                    <button class="slider-btn" id="slidePrev" onclick="slideServices(-1)">&#8249;</button>
-                    <div class="slider-dots" id="sliderDots"></div>
-                    <button class="slider-btn" id="slideNext" onclick="slideServices(1)">&#8250;</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="stats">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Farmers Empowered</p>
-                </div>
-                <div class="stat-item">
-                    <h3>20%</h3>
-                    <p>Average Yield Increase</p>
-                </div>
-                <div class="stat-item">
-                    <h3>30%</h3>
-                    <p>Water Savings</p>
-                </div>
-                <div class="stat-item">
-                    <h3>3</h3>
-                    <p>States Served</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="testimonials">
-            <div class="section-title">
-                <h2>What Farmers Say</h2>
-                <p>Hear from the agricultural community about their experiences with AgriVerse solutions.</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>Agri-Verse has completely changed the way I farm! Now I get accurate information about seeds and fertilizers. My production has increased and costs have reduced. A very useful platform for farmers.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-img">
-                            <img src="images/rajj.jpg" alt="Raj Patel" onerror="this.src='https://ui-avatars.com/api/?name=Raj+Patel&background=4CAF50&color=fff&size=50';this.onerror=null;">
-                        </div>
-                        <div class="author-info">
-                            <h4>Raj Patel</h4>
-                            <p>Cotton Farmer, Gujarat</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>The weather forecast and fertilizer information on Agri-Verse is very helpful. Getting the right information at the right time saved my crops from damage. Excellent website!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-img">
-                            <img src="images/jay.jpg" alt="Ketan Vaghasiya" onerror="this.src='https://ui-avatars.com/api/?name=Ketan+Vaghasiya&background=4CAF50&color=fff&size=50';this.onerror=null;">
-                        </div>
-                        <div class="author-info">
-                            <h4>Ketan Vaghasiya</h4>
-                            <p>Vegetable Farmer, Gujarat</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>As a small-scale farmer, this website helps me a lot. Seeds, Fertilizer, Weather - all information in one place. A great initiative for the farming community!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-img">
-                            <img src="images/vinay.jpg" alt="Alpesh Dholariya" onerror="this.src='https://ui-avatars.com/api/?name=Alpesh+Dholariya&background=4CAF50&color=fff&size=50';this.onerror=null;">
-                        </div>
-                        <div class="author-info">
-                            <h4>Alpesh Dholariya</h4>
-                            <p>Maize Farmer, Junagadh</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact">
-            <div class="section-title">
-                <h2>Contact Us</h2>
-                <p>Get in touch with our team to learn how Agri-Verse can help your farming operation.</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Let's Connect</h3>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Our Address</h4>
-                                <p><a href="https://www.google.com/maps?q=8C7P+74,+Amargadh,+Gujarat+362260" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">8C7P+74, Amargadh, Gujarat 362260</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Call Us</h4>
-                                <p><a href="tel:+919558478082">+91 9558478082</a></p>
-                                 
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Email Us</h4>
-                                <p><a href="mailto:kavinjpatel104@gmail.com">kavinjpatel104@gmail.com</a></p>
-                                 
-                            </div>
-                        </div>
-                    </div>
-                    <h3>Follow Us</h3>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61585488087757" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/agriverse009/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.youtube.com/@AgriVerse-f7l" target="_blank"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Your Name*</label>
-                            <input type="text" id="name" name="name" required>
-                            <small class="error-text" id="name-error"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address*</label>
-                            <input type="email" id="email" name="email" required>
-                            <small class="error-text" id="email-error"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
-                            <small class="error-text" id="phone-error"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message*</label>
-                            <textarea id="message" name="message" required></textarea>
-                            <small class="error-text" id="message-error"></small>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                        <div id="form-message"></div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>Agri-Verse</h3>
-                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
-                <p>&copy; 2026 AgriVerse. All rights reserved.</p>
-            </div>
-            <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Services</h3>
-                <ul class="footer-links">
-                    <li><a href="weather.html">🌤️ Check Weather</a></li>
-                    <li><a href="Seeds.html">🌱 Seeds Guide</a></li>
-                    <li><a href="Feritlizer.html">🧪 Fertilizers</a></li>
-                    <li><a href="tools.html">🚜 Implements</a></li>
-                    <li><a href="farmingtypes.html">🌾 Farming Types</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Newsletter</h3>
-                <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
-                <form id="newsletterForm">
-                    <input type="email" id="newsletterEmail" placeholder="Your Email" required>
-                    <button type="submit" class="btn" id="subscribeBtn">Subscribe</button>
-                </form>
-                <p id="newsletterMsg" style="color:#4CAF50;margin-top:8px;display:none;">✅ Subscribed!</p>
-            </div>
         </div>
-        <div class="footer-bottom">
-            <p>Developed by Kavin Dobariya</p>
-            <a href="https://wa.me/919558478082" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 22px;border-radius:25px;text-decoration:none;font-weight:600;margin-top:12px;font-size:0.95rem;">
-                <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> WhatsApp Contact
-            </a>
+        <div class="footer-col">
+            <h3>Services</h3>
+            <ul class="footer-links">
+                <li><a href="weather.html">🌤️ Check Weather</a></li>
+                <li><a href="Seeds.html">🌱 Seeds Guide</a></li>
+                <li><a href="Feritlizer.html">🧪 Fertilizers</a></li>
+                <li><a href="tools.html">🚜 Implements</a></li>
+                <li><a href="farmingtypes.html">🌾 Farming Types</a></li>
+            </ul>
         </div>
-    </footer>
-    <script src="script.js"></script>
-<button id="backToTop" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+        <div class="footer-col">
+            <h3>Newsletter</h3>
+            <p>Subscribe for latest farming updates.</p>
+            <form id="newsletterForm">
+                <input type="email" id="newsletterEmail" placeholder="Your Email" required style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:4px;margin-bottom:8px;">
+                <button type="submit" class="btn" style="width:100%;">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Developed by Kavin Dobariya</p>
+    </div>
+</footer>
+
+<button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <script>
-// Hamburger menu
-document.getElementById("hamburger").addEventListener("click", function(){
-    document.querySelector("nav ul").classList.toggle("active");
-});
-// Back to top
-window.onscroll = function(){
-    document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none";
+
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80';
+
+const RSS_MAP = {
+    'all':        'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
+    'crops':      'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
+    'government': 'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
+    'weather':    'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
+    'technology': 'https://economictimes.indiatimes.com/news/economy/agriculture/rssfeeds/13352306.cms',
 };
-</script>
-<script>
-function heroSearchFn() {
-    var q = document.getElementById('heroSearch').value.toLowerCase().trim();
-    if (!q) { alert('Search type karo!'); return; }
-    if (q.includes('seed')||q.includes('rice')||q.includes('wheat')||q.includes('tomato')||q.includes('bean')||q.includes('onion')) { window.location.href='Seeds.html'; return; }
-    if (q.includes('fertil')||q.includes('urea')||q.includes('npk')||q.includes('dap')||q.includes('compost')) { window.location.href='Feritlizer.html'; return; }
-    if (q.includes('tool')||q.includes('implement')||q.includes('plow')||q.includes('hoe')||q.includes('spade')||q.includes('rake')||q.includes('harrow')) { window.location.href='tools.html'; return; }
-    if (q.includes('weather')||q.includes('rain')||q.includes('forecast')||q.includes('temperature')) { window.location.href='weather.html'; return; }
-    if (q.includes('news')||q.includes('update')||q.includes('latest')) { window.location.href='news.html'; return; }
-    if (q.includes('farm')||q.includes('organic')||q.includes('irrigation')||q.includes('soil')) { window.location.href='farmingtypes.html'; return; }
-    alert('Seeds, Fertilizers, Tools, Weather, News, Farming - type karo!');
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var inp = document.getElementById('heroSearch');
-    if (inp) inp.addEventListener('keypress', function(e){ if(e.key==='Enter') heroSearchFn(); });
-});
-</script>
-<script>
-// Newsletter Subscribe
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('newsletterForm');
-    if (form) {
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            var email = document.getElementById('newsletterEmail').value;
-            var btn = document.getElementById('subscribeBtn');
-            var msg = document.getElementById('newsletterMsg');
-            
-            btn.innerHTML = '<span class="spinner"></span> Subscribing...';
-            btn.disabled = true;
-            
-            try {
-                var response = await fetch('https://agri-project-ol6n.onrender.com/api/newsletter', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email })
-                });
-                
-                if (response.ok) {
-                    msg.style.display = 'block';
-                    document.getElementById('newsletterEmail').value = '';
-                    btn.innerHTML = '✅ Subscribed!';
-                } else {
-                    btn.innerHTML = 'Subscribe';
-                    btn.disabled = false;
-                    alert('Error! Please try again.');
-                }
-            } catch(err) {
-                btn.innerHTML = 'Subscribe';
-                btn.disabled = false;
-                alert('Error! Please try again.');
-            }
-        });
-    }
-});
-</script>
 
-<script>
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        var loader = document.getElementById('page-loader');
-        if (loader) {
-            loader.classList.add('hide');
-            setTimeout(function() { loader.style.display='none'; }, 500);
+const MARKET_DATA = [
+    // ── VEGETABLES ──────────────────────────────────────────────
+    { cat:'veg', crop:'Tomato',           market:'Ahmedabad',     min:950,  max:1900, modal:1450, trend:'up', chg:8.4 },
+    { cat:'veg', crop:'Tomato',           market:'Rajkot',        min:900,  max:1800, modal:1400, trend:'up', chg:3.0 },
+    { cat:'veg', crop:'Tomato',           market:'Surat',         min:850,  max:1700, modal:1300, trend:'up', chg:7.2 },
+    { cat:'veg', crop:'Tomato',           market:'Vadodara',      min:870,  max:1750, modal:1320, trend:'up', chg:6.6 },
+    { cat:'veg', crop:'Tomato',           market:'Junagadh',      min:830,  max:1680, modal:1280, trend:'up', chg:7.5 },
+    { cat:'veg', crop:'Tomato',           market:'Anand',         min:880,  max:1720, modal:1340, trend:'up', chg:4.1 },
+    { cat:'veg', crop:'Tomato',           market:'Mehsana',       min:860,  max:1700, modal:1310, trend:'up', chg:2.6 },
+
+    { cat:'veg', crop:'Onion',            market:'Ahmedabad',     min:630,  max:1120, modal:870,  trend:'down', chg:-2.6 },
+    { cat:'veg', crop:'Onion',            market:'Rajkot',        min:550,  max:1050, modal:800,  trend:'down', chg:-6.4 },
+    { cat:'veg', crop:'Onion',            market:'Junagadh',      min:600,  max:1100, modal:850,  trend:'down', chg:-5.9 },
+    { cat:'veg', crop:'Onion',            market:'Surat',         min:580,  max:1080, modal:830,  trend:'down', chg:-2.2 },
+    { cat:'veg', crop:'Onion',            market:'Mehsana',       min:620,  max:1150, modal:880,  trend:'down', chg:-2.4 },
+    { cat:'veg', crop:'Onion',            market:'Vadodara',      min:590,  max:1090, modal:840,  trend:'down', chg:-5.3 },
+
+    { cat:'veg', crop:'Potato',           market:'Ahmedabad',     min:700,  max:1250, modal:980,  trend:'same', chg:0.9 },
+    { cat:'veg', crop:'Potato',           market:'Rajkot',        min:720,  max:1280, modal:1000, trend:'same', chg:-0.2 },
+    { cat:'veg', crop:'Potato',           market:'Surat',         min:750,  max:1300, modal:1020, trend:'same', chg:-0.8 },
+    { cat:'veg', crop:'Potato',           market:'Vadodara',      min:710,  max:1260, modal:990,  trend:'same', chg:0.4 },
+    { cat:'veg', crop:'Potato',           market:'Anand',         min:730,  max:1290, modal:1010, trend:'same', chg:-0.7 },
+    { cat:'veg', crop:'Potato',           market:'Mehsana',       min:690,  max:1230, modal:960,  trend:'same', chg:0.6 },
+
+    { cat:'veg', crop:'Brinjal',          market:'Ahmedabad',     min:290,  max:770,  modal:530,  trend:'same', chg:-0.3 },
+    { cat:'veg', crop:'Brinjal',          market:'Surat',         min:280,  max:750,  modal:520,  trend:'down', chg:-2.6 },
+    { cat:'veg', crop:'Brinjal',          market:'Vadodara',      min:300,  max:800,  modal:550,  trend:'same', chg:-0.2 },
+    { cat:'veg', crop:'Brinjal',          market:'Rajkot',        min:270,  max:740,  modal:510,  trend:'down', chg:-4.8 },
+
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Ahmedabad',     min:500,  max:1100, modal:800,  trend:'up', chg:3.2 },
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Anand',         min:490,  max:1080, modal:790,  trend:'up', chg:6.9 },
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Surat',         min:480,  max:1050, modal:780,  trend:'up', chg:7.6 },
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Rajkot',        min:470,  max:1030, modal:760,  trend:'up', chg:3.4 },
+
+    { cat:'veg', crop:'Bitter Gourd',     market:'Rajkot',        min:400,  max:900,  modal:650,  trend:'up', chg:4.8 },
+    { cat:'veg', crop:'Bitter Gourd',     market:'Surat',         min:380,  max:880,  modal:630,  trend:'up', chg:6.3 },
+    { cat:'veg', crop:'Bitter Gourd',     market:'Ahmedabad',     min:420,  max:920,  modal:670,  trend:'up', chg:2.7 },
+
+    { cat:'veg', crop:'Bottle Gourd',     market:'Ahmedabad',     min:200,  max:600,  modal:400,  trend:'same', chg:-0.6 },
+    { cat:'veg', crop:'Bottle Gourd',     market:'Surat',         min:190,  max:580,  modal:390,  trend:'same', chg:0.8 },
+    { cat:'veg', crop:'Bottle Gourd',     market:'Vadodara',      min:210,  max:610,  modal:410,  trend:'same', chg:0.8 },
+
+    { cat:'veg', crop:'Cucumber',         market:'Surat',         min:400,  max:900,  modal:650,  trend:'down', chg:-6.2 },
+    { cat:'veg', crop:'Cucumber',         market:'Rajkot',        min:380,  max:850,  modal:620,  trend:'down', chg:-3.2 },
+    { cat:'veg', crop:'Cucumber',         market:'Ahmedabad',     min:390,  max:870,  modal:630,  trend:'down', chg:-2.6 },
+
+    { cat:'veg', crop:'Carrot',           market:'Ahmedabad',     min:600,  max:1400, modal:1000, trend:'same', chg:-0.1 },
+    { cat:'veg', crop:'Carrot',           market:'Surat',         min:580,  max:1380, modal:980,  trend:'same', chg:0.5 },
+    { cat:'veg', crop:'Carrot',           market:'Rajkot',        min:590,  max:1390, modal:990,  trend:'same', chg:-0.5 },
+
+    { cat:'veg', crop:'Spinach',          market:'Surat',         min:300,  max:700,  modal:500,  trend:'same', chg:0.0 },
+    { cat:'veg', crop:'Spinach',          market:'Ahmedabad',     min:310,  max:720,  modal:510,  trend:'same', chg:0.7 },
+
+    { cat:'veg', crop:'Coriander',        market:'Rajkot',        min:800,  max:2000, modal:1400, trend:'up', chg:6.4 },
+    { cat:'veg', crop:'Coriander',        market:'Junagadh',      min:780,  max:1950, modal:1350, trend:'up', chg:8.3 },
+    { cat:'veg', crop:'Coriander',        market:'Ahmedabad',     min:820,  max:2050, modal:1420, trend:'up', chg:4.4 },
+
+    { cat:'veg', crop:'Garlic',           market:'Junagadh',      min:2200, max:4200, modal:3200, trend:'up', chg:6.6 },
+    { cat:'veg', crop:'Garlic',           market:'Rajkot',        min:2100, max:4000, modal:3100, trend:'up', chg:6.9 },
+    { cat:'veg', crop:'Garlic',           market:'Ahmedabad',     min:2250, max:4300, modal:3250, trend:'up', chg:3.2 },
+    { cat:'veg', crop:'Garlic',           market:'Mehsana',       min:2150, max:4100, modal:3150, trend:'up', chg:6.1 },
+
+    { cat:'veg', crop:'Ginger',           market:'Ahmedabad',     min:3000, max:5500, modal:4200, trend:'up', chg:6.8 },
+    { cat:'veg', crop:'Ginger',           market:'Surat',         min:2900, max:5400, modal:4100, trend:'up', chg:5.5 },
+    { cat:'veg', crop:'Ginger',           market:'Rajkot',        min:2950, max:5450, modal:4150, trend:'up', chg:7.2 },
+
+    { cat:'veg', crop:'Cauliflower',      market:'Ahmedabad',     min:400,  max:1000, modal:700,  trend:'down', chg:-8.1 },
+    { cat:'veg', crop:'Cauliflower',      market:'Surat',         min:380,  max:950,  modal:670,  trend:'down', chg:-5.3 },
+
+    { cat:'veg', crop:'Cabbage',          market:'Surat',         min:250,  max:700,  modal:480,  trend:'same', chg:-0.3 },
+    { cat:'veg', crop:'Cabbage',          market:'Ahmedabad',     min:260,  max:720,  modal:490,  trend:'same', chg:-0.8 },
+
+    { cat:'veg', crop:'Green Peas',       market:'Anand',         min:1200, max:2800, modal:2000, trend:'up', chg:2.7 },
+    { cat:'veg', crop:'Green Peas',       market:'Ahmedabad',     min:1150, max:2750, modal:1950, trend:'up', chg:4.3 },
+
+    { cat:'veg', crop:'Capsicum',         market:'Ahmedabad',     min:600,  max:1500, modal:1100, trend:'same', chg:-0.5 },
+    { cat:'veg', crop:'Capsicum',         market:'Surat',         min:580,  max:1450, modal:1050, trend:'same', chg:0.7 },
+
+    // ── CEREALS ─────────────────────────────────────────────────
+    { cat:'cereal', crop:'Wheat',         market:'Ahmedabad',     min:2100, max:2450, modal:2250, trend:'same', chg:0.7 },
+    { cat:'cereal', crop:'Wheat',         market:'Rajkot',        min:2050, max:2400, modal:2200, trend:'same', chg:-0.2 },
+    { cat:'cereal', crop:'Wheat',         market:'Mehsana',       min:2080, max:2430, modal:2230, trend:'same', chg:0.8 },
+    { cat:'cereal', crop:'Wheat',         market:'Anand',         min:2060, max:2420, modal:2210, trend:'same', chg:0.5 },
+    { cat:'cereal', crop:'Wheat',         market:'Vadodara',      min:2070, max:2440, modal:2220, trend:'same', chg:-0.2 },
+
+    { cat:'cereal', crop:'Bajra',         market:'Rajkot',        min:1900, max:2300, modal:2100, trend:'down', chg:-8.0 },
+    { cat:'cereal', crop:'Bajra',         market:'Junagadh',      min:1850, max:2250, modal:2050, trend:'down', chg:-4.4 },
+    { cat:'cereal', crop:'Bajra',         market:'Surendranagar', min:1870, max:2270, modal:2070, trend:'down', chg:-5.8 },
+    { cat:'cereal', crop:'Bajra',         market:'Amreli',        min:1860, max:2260, modal:2060, trend:'down', chg:-5.8 },
+
+    { cat:'cereal', crop:'Jowar',         market:'Surat',         min:2000, max:2600, modal:2250, trend:'same', chg:0.9 },
+    { cat:'cereal', crop:'Jowar',         market:'Vadodara',      min:1950, max:2550, modal:2200, trend:'same', chg:0.5 },
+    { cat:'cereal', crop:'Jowar',         market:'Ahmedabad',     min:1980, max:2580, modal:2230, trend:'same', chg:0.2 },
+
+    { cat:'cereal', crop:'Maize',         market:'Anand',         min:1800, max:2250, modal:2050, trend:'up', chg:2.3 },
+    { cat:'cereal', crop:'Maize',         market:'Ahmedabad',     min:1780, max:2200, modal:2000, trend:'up', chg:7.6 },
+    { cat:'cereal', crop:'Maize',         market:'Vadodara',      min:1790, max:2220, modal:2020, trend:'up', chg:8.0 },
+    { cat:'cereal', crop:'Maize',         market:'Surat',         min:1770, max:2190, modal:1990, trend:'up', chg:6.2 },
+
+    { cat:'cereal', crop:'Rice (Basmati)',market:'Anand',         min:3500, max:5000, modal:4200, trend:'same', chg:0.7 },
+    { cat:'cereal', crop:'Rice (Basmati)',market:'Surat',         min:3400, max:4900, modal:4100, trend:'same', chg:-0.4 },
+    { cat:'cereal', crop:'Rice (Basmati)',market:'Ahmedabad',     min:3550, max:5050, modal:4250, trend:'same', chg:0.2 },
+    { cat:'cereal', crop:'Rice (Non-Bas)',market:'Surat',         min:1800, max:2800, modal:2300, trend:'same', chg:0.5 },
+    { cat:'cereal', crop:'Rice (Non-Bas)',market:'Vadodara',      min:1750, max:2750, modal:2250, trend:'same', chg:-0.6 },
+
+    { cat:'cereal', crop:'Sunflower',     market:'Rajkot',        min:5200, max:6100, modal:5700, trend:'up', chg:2.1 },
+    { cat:'cereal', crop:'Sunflower',     market:'Junagadh',      min:5150, max:6050, modal:5650, trend:'up', chg:2.9 },
+
+    // ── PULSES ──────────────────────────────────────────────────
+    { cat:'pulse', crop:'Moong Dal',      market:'Rajkot',        min:7000, max:8600, modal:7900, trend:'up', chg:8.6 },
+    { cat:'pulse', crop:'Moong Dal',      market:'Ahmedabad',     min:6900, max:8500, modal:7800, trend:'up', chg:4.8 },
+    { cat:'pulse', crop:'Moong Dal',      market:'Junagadh',      min:6950, max:8550, modal:7850, trend:'up', chg:2.4 },
+    { cat:'pulse', crop:'Moong Dal',      market:'Vadodara',      min:6850, max:8450, modal:7750, trend:'up', chg:8.6 },
+
+    { cat:'pulse', crop:'Toor Dal',       market:'Ahmedabad',     min:8000, max:9600, modal:8900, trend:'down', chg:-3.0 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Rajkot',        min:7900, max:9500, modal:8800, trend:'down', chg:-4.2 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Surat',         min:7950, max:9550, modal:8850, trend:'down', chg:-8.4 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Vadodara',      min:7850, max:9450, modal:8750, trend:'down', chg:-7.4 },
+
+    { cat:'pulse', crop:'Urad Dal',       market:'Rajkot',        min:6500, max:8000, modal:7200, trend:'same', chg:-0.8 },
+    { cat:'pulse', crop:'Urad Dal',       market:'Junagadh',      min:6400, max:7900, modal:7100, trend:'same', chg:-0.6 },
+    { cat:'pulse', crop:'Urad Dal',       market:'Ahmedabad',     min:6550, max:8050, modal:7250, trend:'same', chg:-0.1 },
+
+    { cat:'pulse', crop:'Chana (Kabuli)', market:'Ahmedabad',     min:5000, max:6200, modal:5600, trend:'up', chg:7.4 },
+    { cat:'pulse', crop:'Chana (Kabuli)', market:'Rajkot',        min:4900, max:6100, modal:5500, trend:'up', chg:4.7 },
+    { cat:'pulse', crop:'Chana (Kabuli)', market:'Mehsana',       min:4950, max:6150, modal:5550, trend:'up', chg:8.1 },
+
+    { cat:'pulse', crop:'Chana (Desi)',   market:'Ahmedabad',     min:4600, max:5800, modal:5200, trend:'up', chg:8.6 },
+    { cat:'pulse', crop:'Chana (Desi)',   market:'Rajkot',        min:4500, max:5700, modal:5100, trend:'up', chg:4.7 },
+
+    { cat:'pulse', crop:'Soybean',        market:'Rajkot',        min:4200, max:5100, modal:4700, trend:'same', chg:-0.6 },
+    { cat:'pulse', crop:'Soybean',        market:'Vadodara',      min:4100, max:5000, modal:4600, trend:'same', chg:-0.5 },
+    { cat:'pulse', crop:'Soybean',        market:'Ahmedabad',     min:4150, max:5050, modal:4650, trend:'same', chg:0.4 },
+
+    { cat:'pulse', crop:'Masoor Dal',     market:'Ahmedabad',     min:5500, max:6800, modal:6100, trend:'same', chg:0.1 },
+    { cat:'pulse', crop:'Masoor Dal',     market:'Rajkot',        min:5400, max:6700, modal:6000, trend:'same', chg:0.8 },
+
+    // ── OILSEEDS / CASH CROPS ────────────────────────────────────
+    { cat:'oilseed', crop:'Groundnut',    market:'Junagadh',      min:5400, max:6600, modal:6000, trend:'up', chg:6.1 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Rajkot',        min:5300, max:6500, modal:5900, trend:'up', chg:7.6 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Amreli',        min:5350, max:6550, modal:5950, trend:'up', chg:3.6 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Surendranagar', min:5280, max:6480, modal:5880, trend:'up', chg:2.2 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Bhavnagar',     min:5320, max:6520, modal:5920, trend:'up', chg:6.6 },
+
+    { cat:'oilseed', crop:'Cotton',       market:'Rajkot',        min:6100, max:7400, modal:6800, trend:'up', chg:2.5 },
+    { cat:'oilseed', crop:'Cotton',       market:'Surendranagar', min:6000, max:7300, modal:6700, trend:'up', chg:3.7 },
+    { cat:'oilseed', crop:'Cotton',       market:'Junagadh',      min:6050, max:7350, modal:6750, trend:'up', chg:6.5 },
+    { cat:'oilseed', crop:'Cotton',       market:'Amreli',        min:6020, max:7320, modal:6720, trend:'up', chg:2.9 },
+    { cat:'oilseed', crop:'Cotton',       market:'Bhavnagar',     min:6030, max:7330, modal:6730, trend:'up', chg:3.8 },
+    { cat:'oilseed', crop:'Cotton',       market:'Mehsana',       min:6010, max:7310, modal:6710, trend:'up', chg:4.0 },
+
+    { cat:'oilseed', crop:'Castor',       market:'Rajkot',        min:5800, max:6600, modal:6200, trend:'same', chg:0.7 },
+    { cat:'oilseed', crop:'Castor',       market:'Mehsana',       min:5750, max:6550, modal:6150, trend:'same', chg:0.2 },
+    { cat:'oilseed', crop:'Castor',       market:'Junagadh',      min:5780, max:6580, modal:6180, trend:'same', chg:0.2 },
+    { cat:'oilseed', crop:'Castor',       market:'Amreli',        min:5760, max:6560, modal:6160, trend:'same', chg:-0.7 },
+
+    { cat:'oilseed', crop:'Mustard',      market:'Mehsana',       min:5000, max:5800, modal:5400, trend:'up', chg:4.4 },
+    { cat:'oilseed', crop:'Mustard',      market:'Ahmedabad',     min:5050, max:5850, modal:5450, trend:'up', chg:2.5 },
+    { cat:'oilseed', crop:'Mustard',      market:'Rajkot',        min:4980, max:5780, modal:5380, trend:'up', chg:3.6 },
+
+    { cat:'oilseed', crop:'Sesame',       market:'Junagadh',      min:11000,max:14000,modal:12500,trend:'up', chg:5.8 },
+    { cat:'oilseed', crop:'Sesame',       market:'Rajkot',        min:10800,max:13800,modal:12300,trend:'up', chg:7.3 },
+    { cat:'oilseed', crop:'Sesame',       market:'Amreli',        min:10900,max:13900,modal:12400,trend:'up', chg:4.5 },
+
+    // ── FRUITS ──────────────────────────────────────────────────
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Junagadh',      min:2500, max:6000, modal:4000, trend:'up', chg:8.2 },
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Amreli',        min:2400, max:5800, modal:3900, trend:'up', chg:4.2 },
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Rajkot',        min:2300, max:5500, modal:3800, trend:'up', chg:2.8 },
+
+    { cat:'fruit', crop:'Banana',         market:'Anand',         min:800,  max:1600, modal:1200, trend:'same', chg:-0.1 },
+    { cat:'fruit', crop:'Banana',         market:'Surat',         min:750,  max:1550, modal:1150, trend:'same', chg:-0.7 },
+    { cat:'fruit', crop:'Banana',         market:'Ahmedabad',     min:780,  max:1580, modal:1180, trend:'same', chg:0.1 },
+    { cat:'fruit', crop:'Banana',         market:'Vadodara',      min:760,  max:1560, modal:1160, trend:'same', chg:-0.6 },
+
+    { cat:'fruit', crop:'Papaya',         market:'Surat',         min:400,  max:900,  modal:650,  trend:'down', chg:-2.8 },
+    { cat:'fruit', crop:'Papaya',         market:'Ahmedabad',     min:380,  max:880,  modal:630,  trend:'down', chg:-4.5 },
+    { cat:'fruit', crop:'Papaya',         market:'Vadodara',      min:390,  max:890,  modal:640,  trend:'down', chg:-4.2 },
+
+    { cat:'fruit', crop:'Watermelon',     market:'Ahmedabad',     min:300,  max:700,  modal:500,  trend:'down', chg:-4.7 },
+    { cat:'fruit', crop:'Watermelon',     market:'Surat',         min:280,  max:680,  modal:480,  trend:'down', chg:-8.4 },
+    { cat:'fruit', crop:'Watermelon',     market:'Rajkot',        min:290,  max:690,  modal:490,  trend:'down', chg:-8.0 },
+
+    { cat:'fruit', crop:'Pomegranate',    market:'Rajkot',        min:4000, max:8000, modal:6000, trend:'up', chg:7.6 },
+    { cat:'fruit', crop:'Pomegranate',    market:'Ahmedabad',     min:3900, max:7900, modal:5900, trend:'up', chg:3.2 },
+    { cat:'fruit', crop:'Pomegranate',    market:'Junagadh',      min:3800, max:7800, modal:5800, trend:'up', chg:8.4 },
+
+    { cat:'fruit', crop:'Grapes',         market:'Anand',         min:2000, max:5000, modal:3500, trend:'up', chg:3.2 },
+    { cat:'fruit', crop:'Grapes',         market:'Vadodara',      min:1900, max:4800, modal:3400, trend:'up', chg:6.5 },
+
+    { cat:'fruit', crop:'Guava',          market:'Ahmedabad',     min:800,  max:2000, modal:1400, trend:'same', chg:-0.8 },
+    { cat:'fruit', crop:'Guava',          market:'Surat',         min:780,  max:1950, modal:1350, trend:'same', chg:0.4 },
+
+    { cat:'fruit', crop:'Lemon',          market:'Ahmedabad',     min:1500, max:3500, modal:2500, trend:'up', chg:6.7 },
+    { cat:'fruit', crop:'Lemon',          market:'Rajkot',        min:1450, max:3400, modal:2450, trend:'up', chg:2.4 },
+    { cat:'fruit', crop:'Lemon',          market:'Surat',         min:1480, max:3450, modal:2480, trend:'up', chg:7.5 },
+
+    { cat:'fruit', crop:'Coconut',        market:'Surat',         min:1200, max:2200, modal:1700, trend:'same', chg:-0.2 },
+    { cat:'fruit', crop:'Coconut',        market:'Ahmedabad',     min:1250, max:2250, modal:1750, trend:'same', chg:0.1 },
+    // Groundnut - all cities
+    { cat:'oilseed', crop:'Groundnut',    market:'Ahmedabad',     min:5250, max:6450, modal:5850, trend:'up', chg:4.1 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Vadodara',      min:5230, max:6430, modal:5830, trend:'up', chg:8.3 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Anand',         min:5270, max:6470, modal:5870, trend:'up', chg:3.1 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Surat',         min:5200, max:6400, modal:5800, trend:'up', chg:7.2 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Mehsana',       min:5240, max:6440, modal:5840, trend:'up', chg:3.8 },
+
+    // Cotton - more cities
+    { cat:'oilseed', crop:'Cotton',       market:'Vadodara',      min:6040, max:7340, modal:6740, trend:'up', chg:2.4 },
+    { cat:'oilseed', crop:'Cotton',       market:'Anand',         min:6060, max:7360, modal:6760, trend:'up', chg:2.7 },
+    { cat:'oilseed', crop:'Cotton',       market:'Ahmedabad',     min:6080, max:7380, modal:6780, trend:'up', chg:8.6 },
+
+    // New Oilseeds
+    { cat:'oilseed', crop:'Sunflower',    market:'Ahmedabad',     min:5180, max:6080, modal:5680, trend:'up', chg:7.8 },
+    { cat:'oilseed', crop:'Sunflower',    market:'Amreli',        min:5130, max:6030, modal:5630, trend:'up', chg:2.7 },
+    { cat:'oilseed', crop:'Linseed',      market:'Rajkot',        min:5500, max:6800, modal:6200, trend:'same', chg:-0.3 },
+    { cat:'oilseed', crop:'Linseed',      market:'Ahmedabad',     min:5450, max:6750, modal:6150, trend:'same', chg:-0.5 },
+
+    // New Vegetables
+    { cat:'veg', crop:'Drumstick',        market:'Surat',         min:1500, max:3500, modal:2500, trend:'up', chg:7.3 },
+    { cat:'veg', crop:'Drumstick',        market:'Ahmedabad',     min:1400, max:3400, modal:2400, trend:'up', chg:5.2 },
+    { cat:'veg', crop:'Raw Banana',       market:'Surat',         min:600,  max:1200, modal:900,  trend:'same', chg:-0.0 },
+    { cat:'veg', crop:'Raw Banana',       market:'Vadodara',      min:580,  max:1180, modal:880,  trend:'same', chg:0.7 },
+    { cat:'veg', crop:'Pointed Gourd',    market:'Vadodara',      min:500,  max:1200, modal:850,  trend:'up', chg:3.4 },
+    { cat:'veg', crop:'Ridge Gourd',      market:'Ahmedabad',     min:300,  max:800,  modal:550,  trend:'same', chg:0.1 },
+    { cat:'veg', crop:'Ridge Gourd',      market:'Surat',         min:280,  max:780,  modal:530,  trend:'same', chg:-0.2 },
+    { cat:'veg', crop:'Pumpkin',          market:'Ahmedabad',     min:250,  max:700,  modal:480,  trend:'same', chg:-0.7 },
+    { cat:'veg', crop:'Pumpkin',          market:'Vadodara',      min:230,  max:680,  modal:460,  trend:'same', chg:-0.2 },
+    { cat:'veg', crop:'Sweet Potato',     market:'Surat',         min:800,  max:1800, modal:1300, trend:'up', chg:2.4 },
+    { cat:'veg', crop:'Radish',           market:'Ahmedabad',     min:200,  max:600,  modal:400,  trend:'down', chg:-7.0 },
+    { cat:'veg', crop:'Radish',           market:'Surat',         min:190,  max:580,  modal:390,  trend:'down', chg:-2.4 },
+    { cat:'veg', crop:'Fenugreek (Methi)',market:'Rajkot',        min:600,  max:1500, modal:1050, trend:'up', chg:3.1 },
+    { cat:'veg', crop:'Fenugreek (Methi)',market:'Ahmedabad',     min:620,  max:1520, modal:1070, trend:'up', chg:5.5 },
+    { cat:'veg', crop:'Green Chilli',     market:'Ahmedabad',     min:800,  max:2500, modal:1600, trend:'up', chg:3.3 },
+    { cat:'veg', crop:'Green Chilli',     market:'Rajkot',        min:750,  max:2400, modal:1550, trend:'up', chg:8.8 },
+    { cat:'veg', crop:'Green Chilli',     market:'Surat',         min:780,  max:2450, modal:1580, trend:'up', chg:7.0 },
+    { cat:'veg', crop:'Dry Chilli',       market:'Junagadh',      min:8000, max:15000,modal:12000,trend:'up', chg:8.3 },
+    { cat:'veg', crop:'Dry Chilli',       market:'Rajkot',        min:7800, max:14800,modal:11800,trend:'up', chg:3.7 },
+    { cat:'veg', crop:'Turmeric',         market:'Ahmedabad',     min:7000, max:10000,modal:8500, trend:'up', chg:7.0 },
+    { cat:'veg', crop:'Turmeric',         market:'Surat',         min:6800, max:9800, modal:8300, trend:'up', chg:3.2 },
+
+    // New Pulses
+    { cat:'pulse', crop:'Moong Dal',      market:'Surat',         min:6880, max:8480, modal:7780, trend:'up', chg:6.2 },
+    { cat:'pulse', crop:'Moong Dal',      market:'Anand',         min:6920, max:8520, modal:7820, trend:'up', chg:4.2 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Anand',         min:7920, max:9520, modal:8820, trend:'down', chg:-2.5 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Junagadh',      min:7880, max:9480, modal:8780, trend:'down', chg:-3.2 },
+    { cat:'pulse', crop:'Urad Dal',       market:'Vadodara',      min:6480, max:7980, modal:7180, trend:'same', chg:0.5 },
+    { cat:'pulse', crop:'Urad Dal',       market:'Surat',         min:6460, max:7960, modal:7160, trend:'same', chg:0.6 },
+    { cat:'pulse', crop:'Chana (Kabuli)', market:'Surat',         min:4920, max:6120, modal:5520, trend:'up', chg:5.6 },
+    { cat:'pulse', crop:'Chana (Desi)',   market:'Surat',         min:4520, max:5720, modal:5120, trend:'up', chg:5.1 },
+    { cat:'pulse', crop:'Chana (Desi)',   market:'Mehsana',       min:4540, max:5740, modal:5140, trend:'up', chg:3.4 },
+    { cat:'pulse', crop:'Soybean',        market:'Junagadh',      min:4120, max:5020, modal:4620, trend:'same', chg:0.4 },
+    { cat:'pulse', crop:'Soybean',        market:'Anand',         min:4140, max:5040, modal:4640, trend:'same', chg:0.1 },
+    { cat:'pulse', crop:'Masoor Dal',     market:'Vadodara',      min:5380, max:6680, modal:5980, trend:'same', chg:0.3 },
+    { cat:'pulse', crop:'Masoor Dal',     market:'Surat',         min:5360, max:6660, modal:5960, trend:'same', chg:-0.4 },
+    { cat:'pulse', crop:'Val (Field Bean)',market:'Surat',        min:6000, max:7500, modal:6800, trend:'up', chg:6.2 },
+    { cat:'pulse', crop:'Val (Field Bean)',market:'Vadodara',     min:5900, max:7400, modal:6700, trend:'up', chg:7.8 },
+    { cat:'pulse', crop:'Kulthi Dal',     market:'Ahmedabad',     min:4500, max:5800, modal:5200, trend:'same', chg:0.4 },
+
+    // New Cereals
+    { cat:'cereal', crop:'Wheat',         market:'Surat',         min:2090, max:2440, modal:2240, trend:'same', chg:0.6 },
+    { cat:'cereal', crop:'Wheat',         market:'Junagadh',      min:2060, max:2410, modal:2210, trend:'same', chg:-0.0 },
+    { cat:'cereal', crop:'Bajra',         market:'Mehsana',       min:1880, max:2280, modal:2080, trend:'down', chg:-8.4 },
+    { cat:'cereal', crop:'Bajra',         market:'Vadodara',      min:1870, max:2270, modal:2070, trend:'down', chg:-8.4 },
+    { cat:'cereal', crop:'Maize',         market:'Rajkot',        min:1800, max:2250, modal:2050, trend:'up', chg:3.9 },
+    { cat:'cereal', crop:'Maize',         market:'Junagadh',      min:1790, max:2240, modal:2040, trend:'up', chg:8.5 },
+    { cat:'cereal', crop:'Rice (Basmati)',market:'Vadodara',      min:3450, max:4950, modal:4150, trend:'same', chg:-0.5 },
+    { cat:'cereal', crop:'Rice (Non-Bas)',market:'Ahmedabad',     min:1780, max:2780, modal:2280, trend:'same', chg:0.4 },
+    { cat:'cereal', crop:'Rice (Non-Bas)',market:'Anand',         min:1760, max:2760, modal:2260, trend:'same', chg:-0.3 },
+    { cat:'cereal', crop:'Ragi (Nachni)', market:'Surat',         min:2800, max:3800, modal:3300, trend:'up', chg:4.3 },
+    { cat:'cereal', crop:'Ragi (Nachni)', market:'Vadodara',      min:2750, max:3750, modal:3250, trend:'up', chg:2.7 },
+
+    // New Fruits
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Vadodara',      min:2200, max:5300, modal:3700, trend:'up', chg:6.6 },
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Surat',         min:2100, max:5200, modal:3600, trend:'up', chg:5.0 },
+    { cat:'fruit', crop:'Banana',         market:'Rajkot',        min:770,  max:1570, modal:1170, trend:'same', chg:0.1 },
+    { cat:'fruit', crop:'Banana',         market:'Mehsana',       min:750,  max:1550, modal:1150, trend:'same', chg:-0.6 },
+    { cat:'fruit', crop:'Chikoo (Sapota)',market:'Anand',         min:1200, max:2800, modal:2000, trend:'up', chg:6.0 },
+    { cat:'fruit', crop:'Chikoo (Sapota)',market:'Surat',         min:1150, max:2750, modal:1950, trend:'up', chg:6.7 },
+    { cat:'fruit', crop:'Pomegranate',    market:'Vadodara',      min:3850, max:7850, modal:5850, trend:'up', chg:6.8 },
+    { cat:'fruit', crop:'Pomegranate',    market:'Surat',         min:3800, max:7800, modal:5800, trend:'up', chg:7.4 },
+    { cat:'fruit', crop:'Grapes',         market:'Surat',         min:1850, max:4700, modal:3300, trend:'up', chg:4.2 },
+    { cat:'fruit', crop:'Grapes',         market:'Ahmedabad',     min:1950, max:4900, modal:3450, trend:'up', chg:7.3 },
+    { cat:'fruit', crop:'Guava',          market:'Rajkot',        min:760,  max:1930, modal:1340, trend:'same', chg:0.2 },
+    { cat:'fruit', crop:'Guava',          market:'Vadodara',      min:770,  max:1940, modal:1350, trend:'same', chg:-0.2 },
+    { cat:'fruit', crop:'Lemon',          market:'Vadodara',      min:1460, max:3420, modal:2460, trend:'up', chg:3.4 },
+    { cat:'fruit', crop:'Lemon',          market:'Junagadh',      min:1430, max:3380, modal:2420, trend:'up', chg:3.4 },
+    { cat:'fruit', crop:'Coconut',        market:'Vadodara',      min:1220, max:2220, modal:1720, trend:'same', chg:0.7 },
+    { cat:'fruit', crop:'Coconut',        market:'Rajkot',        min:1210, max:2210, modal:1710, trend:'same', chg:0.7 },
+    { cat:'fruit', crop:'Sitaphal (Custard Apple)',market:'Junagadh', min:2000, max:5000, modal:3500, trend:'up', chg:7.8 },
+    { cat:'fruit', crop:'Sitaphal (Custard Apple)',market:'Amreli',   min:1900, max:4800, modal:3400, trend:'up', chg:5.8 },
+    { cat:'fruit', crop:'Jamun',          market:'Surat',         min:1500, max:4000, modal:2800, trend:'up', chg:2.2 },
+    { cat:'fruit', crop:'Fig (Anjeer)',   market:'Junagadh',      min:5000, max:12000,modal:8000, trend:'up', chg:8.7 },
+    { cat:'fruit', crop:'Papaya',         market:'Rajkot',        min:370,  max:870,  modal:620,  trend:'down', chg:-7.9 },
+    { cat:'fruit', crop:'Watermelon',     market:'Vadodara',      min:285,  max:685,  modal:485,  trend:'down', chg:-5.9 },
+    { cat:'fruit', crop:'Watermelon',     market:'Junagadh',      min:275,  max:675,  modal:475,  trend:'down', chg:-7.7 },
+    // ── NEW CITIES: Gandhinagar, Navsari, Bharuch, Morbi, Botad, Porbandar ──
+
+    // Vegetables - new cities
+    { cat:'veg', crop:'Tomato',           market:'Gandhinagar',   min:920,  max:1850, modal:1420, trend:'up', chg:6.4 },
+    { cat:'veg', crop:'Tomato',           market:'Navsari',       min:840,  max:1710, modal:1290, trend:'up', chg:6.2 },
+    { cat:'veg', crop:'Tomato',           market:'Bharuch',       min:860,  max:1730, modal:1310, trend:'up', chg:6.1 },
+    { cat:'veg', crop:'Tomato',           market:'Morbi',         min:870,  max:1740, modal:1320, trend:'up', chg:2.6 },
+    { cat:'veg', crop:'Tomato',           market:'Botad',         min:850,  max:1720, modal:1300, trend:'up', chg:2.4 },
+    { cat:'veg', crop:'Tomato',           market:'Porbandar',     min:830,  max:1700, modal:1280, trend:'up', chg:5.5 },
+
+    { cat:'veg', crop:'Onion',            market:'Gandhinagar',   min:610,  max:1110, modal:860,  trend:'down', chg:-2.2 },
+    { cat:'veg', crop:'Onion',            market:'Navsari',       min:570,  max:1070, modal:820,  trend:'down', chg:-6.2 },
+    { cat:'veg', crop:'Onion',            market:'Bharuch',       min:580,  max:1080, modal:830,  trend:'down', chg:-6.5 },
+    { cat:'veg', crop:'Onion',            market:'Morbi',         min:560,  max:1060, modal:810,  trend:'down', chg:-8.0 },
+    { cat:'veg', crop:'Onion',            market:'Botad',         min:575,  max:1075, modal:825,  trend:'down', chg:-3.9 },
+    { cat:'veg', crop:'Onion',            market:'Porbandar',     min:565,  max:1065, modal:815,  trend:'down', chg:-6.0 },
+
+    { cat:'veg', crop:'Potato',           market:'Gandhinagar',   min:710,  max:1260, modal:985,  trend:'same', chg:-0.8 },
+    { cat:'veg', crop:'Potato',           market:'Navsari',       min:740,  max:1290, modal:1015, trend:'same', chg:0.7 },
+    { cat:'veg', crop:'Potato',           market:'Bharuch',       min:720,  max:1270, modal:995,  trend:'same', chg:-0.4 },
+    { cat:'veg', crop:'Potato',           market:'Morbi',         min:715,  max:1265, modal:990,  trend:'same', chg:0.8 },
+    { cat:'veg', crop:'Potato',           market:'Botad',         min:725,  max:1275, modal:1000, trend:'same', chg:-0.6 },
+    { cat:'veg', crop:'Potato',           market:'Porbandar',     min:705,  max:1255, modal:980,  trend:'same', chg:-0.8 },
+
+    { cat:'veg', crop:'Green Chilli',     market:'Gandhinagar',   min:760,  max:2430, modal:1560, trend:'up', chg:4.8 },
+    { cat:'veg', crop:'Green Chilli',     market:'Bharuch',       min:770,  max:2440, modal:1570, trend:'up', chg:2.8 },
+    { cat:'veg', crop:'Green Chilli',     market:'Navsari',       min:755,  max:2425, modal:1550, trend:'up', chg:3.5 },
+
+    { cat:'veg', crop:'Garlic',           market:'Botad',         min:2120, max:4020, modal:3120, trend:'up', chg:4.5 },
+    { cat:'veg', crop:'Garlic',           market:'Porbandar',     min:2090, max:3990, modal:3090, trend:'up', chg:8.6 },
+    { cat:'veg', crop:'Garlic',           market:'Morbi',         min:2100, max:4000, modal:3100, trend:'up', chg:8.9 },
+
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Gandhinagar',   min:475,  max:1045, modal:765,  trend:'up', chg:4.4 },
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Bharuch',       min:465,  max:1025, modal:755,  trend:'up', chg:2.2 },
+    { cat:'veg', crop:'Okra (Bhindi)',    market:'Navsari',       min:460,  max:1020, modal:750,  trend:'up', chg:8.3 },
+
+    { cat:'veg', crop:'Brinjal',          market:'Gandhinagar',   min:275,  max:745,  modal:515,  trend:'same', chg:-0.8 },
+    { cat:'veg', crop:'Brinjal',          market:'Bharuch',       min:265,  max:735,  modal:505,  trend:'down', chg:-5.2 },
+    { cat:'veg', crop:'Brinjal',          market:'Navsari',       min:260,  max:730,  modal:500,  trend:'down', chg:-3.0 },
+
+    { cat:'veg', crop:'Cucumber',         market:'Gandhinagar',   min:375,  max:845,  modal:615,  trend:'down', chg:-5.2 },
+    { cat:'veg', crop:'Cucumber',         market:'Bharuch',       min:370,  max:840,  modal:610,  trend:'down', chg:-2.7 },
+
+    { cat:'veg', crop:'Coriander',        market:'Gandhinagar',   min:810,  max:2010, modal:1410, trend:'up', chg:7.5 },
+    { cat:'veg', crop:'Coriander',        market:'Morbi',         min:790,  max:1970, modal:1370, trend:'up', chg:8.9 },
+
+    { cat:'veg', crop:'Ginger',           market:'Bharuch',       min:2920, max:5420, modal:4120, trend:'up', chg:5.5 },
+    { cat:'veg', crop:'Ginger',           market:'Navsari',       min:2880, max:5380, modal:4080, trend:'up', chg:3.1 },
+
+    { cat:'veg', crop:'Turmeric',         market:'Bharuch',       min:6900, max:9900, modal:8400, trend:'up', chg:3.2 },
+    { cat:'veg', crop:'Turmeric',         market:'Navsari',       min:6750, max:9750, modal:8250, trend:'up', chg:3.9 },
+
+    { cat:'veg', crop:'Carrot',           market:'Gandhinagar',   min:585,  max:1385, modal:985,  trend:'same', chg:-0.7 },
+    { cat:'veg', crop:'Carrot',           market:'Vadodara',      min:592,  max:1392, modal:992,  trend:'same', chg:-0.1 },
+
+    { cat:'veg', crop:'Cauliflower',      market:'Gandhinagar',   min:390,  max:980,  modal:685,  trend:'down', chg:-3.8 },
+    { cat:'veg', crop:'Cauliflower',      market:'Vadodara',      min:375,  max:965,  modal:670,  trend:'down', chg:-6.9 },
+
+    { cat:'veg', crop:'Capsicum',         market:'Gandhinagar',   min:590,  max:1480, modal:1060, trend:'same', chg:-0.5 },
+    { cat:'veg', crop:'Capsicum',         market:'Rajkot',        min:575,  max:1460, modal:1040, trend:'same', chg:0.4 },
+
+    { cat:'veg', crop:'Bitter Gourd',     market:'Gandhinagar',   min:410,  max:910,  modal:660,  trend:'up', chg:6.9 },
+    { cat:'veg', crop:'Bitter Gourd',     market:'Bharuch',       min:375,  max:875,  modal:625,  trend:'up', chg:2.5 },
+
+    { cat:'veg', crop:'Bottle Gourd',     market:'Gandhinagar',   min:205,  max:605,  modal:405,  trend:'same', chg:0.7 },
+    { cat:'veg', crop:'Bottle Gourd',     market:'Bharuch',       min:195,  max:590,  modal:395,  trend:'same', chg:0.3 },
+
+    { cat:'veg', crop:'Pumpkin',          market:'Surat',         min:225,  max:670,  modal:450,  trend:'same', chg:0.7 },
+    { cat:'veg', crop:'Pumpkin',          market:'Bharuch',       min:220,  max:660,  modal:440,  trend:'same', chg:-0.1 },
+
+    { cat:'veg', crop:'Drumstick',        market:'Bharuch',       min:1380, max:3380, modal:2380, trend:'up', chg:4.7 },
+    { cat:'veg', crop:'Drumstick',        market:'Navsari',       min:1420, max:3420, modal:2420, trend:'up', chg:8.2 },
+
+    { cat:'veg', crop:'Fenugreek (Methi)',market:'Gandhinagar',   min:610,  max:1510, modal:1060, trend:'up', chg:4.6 },
+    { cat:'veg', crop:'Fenugreek (Methi)',market:'Mehsana',       min:595,  max:1495, modal:1045, trend:'up', chg:7.7 },
+
+    { cat:'veg', crop:'Dry Chilli',       market:'Ahmedabad',     min:7900, max:14900,modal:11900,trend:'up', chg:6.7 },
+    { cat:'veg', crop:'Dry Chilli',       market:'Vadodara',      min:7750, max:14750,modal:11750,trend:'up', chg:4.1 },
+
+    // ── CEREALS - new cities ──
+    { cat:'cereal', crop:'Wheat',         market:'Gandhinagar',   min:2065, max:2415, modal:2215, trend:'same', chg:-0.7 },
+    { cat:'cereal', crop:'Wheat',         market:'Bharuch',       min:2055, max:2405, modal:2205, trend:'same', chg:0.3 },
+    { cat:'cereal', crop:'Wheat',         market:'Morbi',         min:2058, max:2408, modal:2208, trend:'same', chg:0.7 },
+    { cat:'cereal', crop:'Wheat',         market:'Navsari',       min:2062, max:2412, modal:2212, trend:'same', chg:0.5 },
+    { cat:'cereal', crop:'Wheat',         market:'Botad',         min:2068, max:2418, modal:2218, trend:'same', chg:0.2 },
+
+    { cat:'cereal', crop:'Bajra',         market:'Gandhinagar',   min:1875, max:2275, modal:2075, trend:'down', chg:-3.5 },
+    { cat:'cereal', crop:'Bajra',         market:'Morbi',         min:1865, max:2265, modal:2065, trend:'down', chg:-4.2 },
+    { cat:'cereal', crop:'Bajra',         market:'Botad',         min:1855, max:2255, modal:2055, trend:'down', chg:-5.4 },
+    { cat:'cereal', crop:'Bajra',         market:'Porbandar',     min:1845, max:2245, modal:2045, trend:'down', chg:-3.4 },
+
+    { cat:'cereal', crop:'Jowar',         market:'Gandhinagar',   min:1970, max:2570, modal:2220, trend:'same', chg:0.4 },
+    { cat:'cereal', crop:'Jowar',         market:'Bharuch',       min:1960, max:2560, modal:2210, trend:'same', chg:0.1 },
+    { cat:'cereal', crop:'Jowar',         market:'Navsari',       min:1950, max:2550, modal:2200, trend:'same', chg:0.7 },
+
+    { cat:'cereal', crop:'Maize',         market:'Gandhinagar',   min:1785, max:2235, modal:2010, trend:'up', chg:5.5 },
+    { cat:'cereal', crop:'Maize',         market:'Bharuch',       min:1775, max:2225, modal:2005, trend:'up', chg:7.2 },
+    { cat:'cereal', crop:'Maize',         market:'Morbi',         min:1780, max:2230, modal:2005, trend:'up', chg:7.9 },
+    { cat:'cereal', crop:'Maize',         market:'Navsari',       min:1770, max:2215, modal:1995, trend:'up', chg:6.9 },
+
+    { cat:'cereal', crop:'Rice (Basmati)',market:'Bharuch',       min:3420, max:4920, modal:4120, trend:'same', chg:-0.3 },
+    { cat:'cereal', crop:'Rice (Basmati)',market:'Navsari',       min:3440, max:4940, modal:4140, trend:'same', chg:0.9 },
+    { cat:'cereal', crop:'Rice (Non-Bas)',market:'Bharuch',       min:1755, max:2755, modal:2255, trend:'same', chg:-0.2 },
+    { cat:'cereal', crop:'Rice (Non-Bas)',market:'Navsari',       min:1760, max:2760, modal:2260, trend:'same', chg:0.8 },
+
+    { cat:'cereal', crop:'Sunflower',     market:'Morbi',         min:5140, max:6040, modal:5640, trend:'up', chg:4.8 },
+    { cat:'cereal', crop:'Sunflower',     market:'Botad',         min:5120, max:6020, modal:5620, trend:'up', chg:5.4 },
+    { cat:'cereal', crop:'Ragi (Nachni)', market:'Ahmedabad',     min:2780, max:3780, modal:3280, trend:'up', chg:8.4 },
+    { cat:'cereal', crop:'Ragi (Nachni)', market:'Bharuch',       min:2760, max:3760, modal:3260, trend:'up', chg:6.0 },
+
+    // ── PULSES - new cities ──
+    { cat:'pulse', crop:'Toor Dal',       market:'Bharuch',       min:7870, max:9470, modal:8770, trend:'down', chg:-7.0 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Gandhinagar',   min:7930, max:9530, modal:8830, trend:'down', chg:-7.4 },
+    { cat:'pulse', crop:'Toor Dal',       market:'Morbi',         min:7910, max:9510, modal:8810, trend:'down', chg:-6.4 },
+
+    { cat:'pulse', crop:'Moong Dal',      market:'Bharuch',       min:6870, max:8470, modal:7770, trend:'up', chg:6.4 },
+    { cat:'pulse', crop:'Moong Dal',      market:'Gandhinagar',   min:6930, max:8530, modal:7830, trend:'up', chg:4.6 },
+    { cat:'pulse', crop:'Moong Dal',      market:'Morbi',         min:6910, max:8510, modal:7810, trend:'up', chg:2.3 },
+
+    { cat:'pulse', crop:'Urad Dal',       market:'Gandhinagar',   min:6470, max:7970, modal:7170, trend:'same', chg:0.1 },
+    { cat:'pulse', crop:'Urad Dal',       market:'Bharuch',       min:6450, max:7950, modal:7150, trend:'same', chg:-0.0 },
+
+    { cat:'pulse', crop:'Chana (Kabuli)', market:'Gandhinagar',   min:4930, max:6130, modal:5530, trend:'up', chg:5.0 },
+    { cat:'pulse', crop:'Chana (Kabuli)', market:'Vadodara',      min:4940, max:6140, modal:5540, trend:'up', chg:2.5 },
+    { cat:'pulse', crop:'Chana (Desi)',   market:'Gandhinagar',   min:4530, max:5730, modal:5130, trend:'up', chg:4.4 },
+    { cat:'pulse', crop:'Chana (Desi)',   market:'Vadodara',      min:4520, max:5720, modal:5120, trend:'up', chg:7.9 },
+
+    { cat:'pulse', crop:'Soybean',        market:'Bharuch',       min:4110, max:5010, modal:4610, trend:'same', chg:0.7 },
+    { cat:'pulse', crop:'Soybean',        market:'Morbi',         min:4100, max:5000, modal:4600, trend:'same', chg:0.4 },
+
+    { cat:'pulse', crop:'Masoor Dal',     market:'Gandhinagar',   min:5370, max:6670, modal:5970, trend:'same', chg:0.8 },
+    { cat:'pulse', crop:'Masoor Dal',     market:'Anand',         min:5350, max:6650, modal:5950, trend:'same', chg:0.3 },
+
+    { cat:'pulse', crop:'Val (Field Bean)',market:'Bharuch',      min:5850, max:7350, modal:6650, trend:'up', chg:7.3 },
+    { cat:'pulse', crop:'Val (Field Bean)',market:'Navsari',      min:5900, max:7400, modal:6700, trend:'up', chg:4.7 },
+    { cat:'pulse', crop:'Kulthi Dal',     market:'Surat',         min:4450, max:5750, modal:5150, trend:'same', chg:0.7 },
+    { cat:'pulse', crop:'Kulthi Dal',     market:'Bharuch',       min:4420, max:5720, modal:5120, trend:'same', chg:-0.3 },
+
+    // ── OILSEEDS - new cities ──
+    { cat:'oilseed', crop:'Groundnut',    market:'Gandhinagar',   min:5260, max:6460, modal:5860, trend:'up', chg:5.7 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Morbi',         min:5290, max:6490, modal:5890, trend:'up', chg:2.8 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Botad',         min:5310, max:6510, modal:5910, trend:'up', chg:8.7 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Porbandar',     min:5340, max:6540, modal:5940, trend:'up', chg:7.7 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Navsari',       min:5210, max:6410, modal:5810, trend:'up', chg:5.2 },
+    { cat:'oilseed', crop:'Groundnut',    market:'Bharuch',       min:5220, max:6420, modal:5820, trend:'up', chg:6.8 },
+
+    { cat:'oilseed', crop:'Cotton',       market:'Gandhinagar',   min:6015, max:7315, modal:6715, trend:'up', chg:3.2 },
+    { cat:'oilseed', crop:'Cotton',       market:'Morbi',         min:6025, max:7325, modal:6725, trend:'up', chg:3.4 },
+    { cat:'oilseed', crop:'Cotton',       market:'Botad',         min:6035, max:7335, modal:6735, trend:'up', chg:8.9 },
+    { cat:'oilseed', crop:'Cotton',       market:'Porbandar',     min:6000, max:7300, modal:6700, trend:'up', chg:6.3 },
+
+    { cat:'oilseed', crop:'Castor',       market:'Gandhinagar',   min:5770, max:6570, modal:6170, trend:'same', chg:-0.6 },
+    { cat:'oilseed', crop:'Castor',       market:'Morbi',         min:5755, max:6555, modal:6155, trend:'same', chg:-0.1 },
+    { cat:'oilseed', crop:'Castor',       market:'Botad',         min:5765, max:6565, modal:6165, trend:'same', chg:-0.5 },
+    { cat:'oilseed', crop:'Castor',       market:'Surendranagar', min:5740, max:6540, modal:6140, trend:'same', chg:0.3 },
+
+    { cat:'oilseed', crop:'Mustard',      market:'Gandhinagar',   min:5020, max:5820, modal:5420, trend:'up', chg:4.5 },
+    { cat:'oilseed', crop:'Mustard',      market:'Morbi',         min:4990, max:5790, modal:5390, trend:'up', chg:4.3 },
+    { cat:'oilseed', crop:'Mustard',      market:'Anand',         min:5010, max:5810, modal:5410, trend:'up', chg:2.6 },
+
+    { cat:'oilseed', crop:'Sesame',       market:'Bharuch',       min:10850,max:13850,modal:12350,trend:'up', chg:6.7 },
+    { cat:'oilseed', crop:'Sesame',       market:'Navsari',       min:10800,max:13800,modal:12300,trend:'up', chg:4.7 },
+    { cat:'oilseed', crop:'Sesame',       market:'Surendranagar', min:10820,max:13820,modal:12320,trend:'up', chg:3.5 },
+    { cat:'oilseed', crop:'Sesame',       market:'Botad',         min:10870,max:13870,modal:12370,trend:'up', chg:8.4 },
+
+    { cat:'oilseed', crop:'Sunflower',    market:'Surendranagar', min:5120, max:6020, modal:5620, trend:'up', chg:7.0 },
+    { cat:'oilseed', crop:'Sunflower',    market:'Gandhinagar',   min:5170, max:6070, modal:5670, trend:'up', chg:5.7 },
+
+    { cat:'oilseed', crop:'Linseed',      market:'Gandhinagar',   min:5430, max:6730, modal:6130, trend:'same', chg:0.4 },
+    { cat:'oilseed', crop:'Linseed',      market:'Vadodara',      min:5410, max:6710, modal:6110, trend:'same', chg:-0.3 },
+
+    // ── FRUITS - new cities ──
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Gandhinagar',   min:2150, max:5250, modal:3650, trend:'up', chg:8.8 },
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Bharuch',       min:2050, max:5150, modal:3550, trend:'up', chg:7.7 },
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Navsari',       min:2000, max:5000, modal:3500, trend:'up', chg:8.5 },
+    { cat:'fruit', crop:'Mango (Kesar)',  market:'Porbandar',     min:2250, max:5500, modal:3750, trend:'up', chg:8.7 },
+
+    { cat:'fruit', crop:'Banana',         market:'Gandhinagar',   min:755,  max:1555, modal:1155, trend:'same', chg:0.8 },
+    { cat:'fruit', crop:'Banana',         market:'Bharuch',       min:745,  max:1545, modal:1145, trend:'same', chg:-0.8 },
+    { cat:'fruit', crop:'Banana',         market:'Navsari',       min:740,  max:1540, modal:1140, trend:'same', chg:-0.0 },
+    { cat:'fruit', crop:'Banana',         market:'Morbi',         min:760,  max:1560, modal:1160, trend:'same', chg:0.7 },
+    { cat:'fruit', crop:'Banana',         market:'Botad',         min:765,  max:1565, modal:1165, trend:'same', chg:0.2 },
+    { cat:'fruit', crop:'Banana',         market:'Porbandar',     min:748,  max:1548, modal:1148, trend:'same', chg:-0.6 },
+
+    { cat:'fruit', crop:'Papaya',         market:'Gandhinagar',   min:375,  max:875,  modal:625,  trend:'down', chg:-4.9 },
+    { cat:'fruit', crop:'Papaya',         market:'Bharuch',       min:365,  max:865,  modal:615,  trend:'down', chg:-7.5 },
+    { cat:'fruit', crop:'Papaya',         market:'Navsari',       min:355,  max:855,  modal:605,  trend:'down', chg:-8.9 },
+
+    { cat:'fruit', crop:'Watermelon',     market:'Gandhinagar',   min:283,  max:683,  modal:483,  trend:'down', chg:-3.2 },
+    { cat:'fruit', crop:'Watermelon',     market:'Bharuch',       min:278,  max:678,  modal:478,  trend:'down', chg:-8.8 },
+    { cat:'fruit', crop:'Watermelon',     market:'Navsari',       min:270,  max:670,  modal:470,  trend:'down', chg:-2.1 },
+
+    { cat:'fruit', crop:'Pomegranate',    market:'Gandhinagar',   min:3870, max:7870, modal:5870, trend:'up', chg:7.1 },
+    { cat:'fruit', crop:'Pomegranate',    market:'Bharuch',       min:3820, max:7820, modal:5820, trend:'up', chg:5.4 },
+    { cat:'fruit', crop:'Pomegranate',    market:'Morbi',         min:3830, max:7830, modal:5830, trend:'up', chg:7.1 },
+
+    { cat:'fruit', crop:'Grapes',         market:'Gandhinagar',   min:1920, max:4820, modal:3370, trend:'up', chg:4.9 },
+    { cat:'fruit', crop:'Grapes',         market:'Bharuch',       min:1880, max:4780, modal:3330, trend:'up', chg:8.2 },
+    { cat:'fruit', crop:'Grapes',         market:'Navsari',       min:1870, max:4770, modal:3320, trend:'up', chg:5.9 },
+
+    { cat:'fruit', crop:'Lemon',          market:'Gandhinagar',   min:1470, max:3430, modal:2470, trend:'up', chg:6.4 },
+    { cat:'fruit', crop:'Lemon',          market:'Bharuch',       min:1440, max:3400, modal:2440, trend:'up', chg:6.1 },
+    { cat:'fruit', crop:'Lemon',          market:'Morbi',         min:1420, max:3380, modal:2420, trend:'up', chg:7.0 },
+
+    { cat:'fruit', crop:'Guava',          market:'Gandhinagar',   min:775,  max:1945, modal:1355, trend:'same', chg:0.1 },
+    { cat:'fruit', crop:'Guava',          market:'Bharuch',       min:762,  max:1925, modal:1340, trend:'same', chg:0.2 },
+
+    { cat:'fruit', crop:'Coconut',        market:'Navsari',       min:1215, max:2215, modal:1715, trend:'same', chg:0.3 },
+    { cat:'fruit', crop:'Coconut',        market:'Bharuch',       min:1205, max:2205, modal:1705, trend:'same', chg:-0.5 },
+    { cat:'fruit', crop:'Coconut',        market:'Surat',         min:1200, max:2200, modal:1700, trend:'same', chg:0.8 },
+
+    { cat:'fruit', crop:'Chikoo (Sapota)',market:'Gandhinagar',   min:1130, max:2730, modal:1930, trend:'up', chg:3.2 },
+    { cat:'fruit', crop:'Chikoo (Sapota)',market:'Bharuch',       min:1100, max:2700, modal:1900, trend:'up', chg:4.3 },
+    { cat:'fruit', crop:'Chikoo (Sapota)',market:'Navsari',       min:1120, max:2720, modal:1920, trend:'up', chg:2.8 },
+    { cat:'fruit', crop:'Chikoo (Sapota)',market:'Vadodara',      min:1140, max:2740, modal:1940, trend:'up', chg:5.6 },
+
+    { cat:'fruit', crop:'Sitaphal (Custard Apple)',market:'Surat',      min:1950, max:4900, modal:3450, trend:'up', chg:3.2 },
+    { cat:'fruit', crop:'Sitaphal (Custard Apple)',market:'Bharuch',    min:1880, max:4780, modal:3330, trend:'up', chg:7.4 },
+    { cat:'fruit', crop:'Sitaphal (Custard Apple)',market:'Vadodara',   min:1920, max:4820, modal:3370, trend:'up', chg:5.8 },
+
+    { cat:'fruit', crop:'Fig (Anjeer)',   market:'Surat',         min:4800, max:11800,modal:7800, trend:'up', chg:4.7 },
+    { cat:'fruit', crop:'Fig (Anjeer)',   market:'Ahmedabad',     min:5100, max:12100,modal:8100, trend:'up', chg:4.5 },
+
+    { cat:'fruit', crop:'Jamun',          market:'Ahmedabad',     min:1480, max:3980, modal:2780, trend:'up', chg:8.0 },
+    { cat:'fruit', crop:'Jamun',          market:'Vadodara',      min:1450, max:3950, modal:2750, trend:'up', chg:4.1 },
+];
+
+
+let currentQuery = 'all';
+let currentPage = 1;
+
+async function fetchNews(query, page = 1) {
+    if (query === 'market-price') { showMarketPrice(); return; }
+
+    document.getElementById('newsGrid').style.display = '';
+    document.getElementById('pagination').style.display = '';
+    document.getElementById('marketPriceSection').style.display = 'none';
+
+    const grid = document.getElementById('newsGrid');
+    showSkeletons(grid);
+
+    const rssUrl = RSS_MAP[query] || RSS_MAP['all'];
+    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=&count=10&order_by=pubDate`;
+
+    try {
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+
+        if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+            showFallbackNews(query, grid);
+            return;
         }
-    }, 800);
-});
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function() { console.log('PWA Ready!'); })
-            .catch(function(err) { console.warn('SW skipped:', err); });
-    });
+        renderNews(data.items, grid, data.feed?.title || 'News');
+        document.getElementById('pagination').innerHTML = '';
+    } catch (err) {
+        showFallbackNews(query, grid);
+    }
 }
-</script>
 
-<script>
-// Services Slider
-(function() {
-    const slider = document.getElementById('servicesSlider');
-    if (!slider) return;
-    const cards = slider.querySelectorAll('.service-card');
-    const total = cards.length;
-    let current = 0;
-    let autoTimer;
+function renderNews(items, grid, feedName) {
+    grid.innerHTML = items.map(item => {
+        const date = new Date(item.pubDate).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+        const img = item.enclosure?.link || item.thumbnail || FALLBACK_IMG;
+        const source = item.author || feedName || 'News';
+        const title = item.title || '';
+        const excerpt = (item.description || '').replace(/<[^>]+>/g, '').slice(0, 160);
+        const url = item.link || '#';
 
-    function getVisible() {
-        if (window.innerWidth <= 600) return 1;
-        if (window.innerWidth <= 992) return 2;
-        return 3;
-    }
+        return `
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="news-article">
+            <div class="article-image">
+                <img loading="lazy" src="${img}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'">
+                <span class="article-source-badge">${source.split(' ')[0]}</span>
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="article-date"><i class="far fa-calendar-alt"></i> ${date}</span>
+                    <span class="article-tag">🌾 Agriculture</span>
+                </div>
+                <h3>${title}</h3>
+                <p class="article-excerpt">${excerpt}</p>
+                <span class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>`;
+    }).join('');
+}
 
-    function getMaxIndex() {
-        return Math.max(0, total - getVisible());
-    }
-
-    function buildDots() {
-        const dotsEl = document.getElementById('sliderDots');
-        if (!dotsEl) return;
-        dotsEl.innerHTML = '';
-        const max = getMaxIndex() + 1;
-        for (let i = 0; i < max; i++) {
-            const d = document.createElement('span');
-            d.className = 'slider-dot' + (i === current ? ' active' : '');
-            d.onclick = () => { goTo(i); resetAuto(); };
-            dotsEl.appendChild(d);
-        }
-    }
-
-    function goTo(idx) {
-        current = Math.max(0, Math.min(idx, getMaxIndex()));
-        const pct = (100 / getVisible()) * current;
-        slider.style.transform = `translateX(-${pct}%)`;
-        document.querySelectorAll('.slider-dot').forEach((d, i) => {
-            d.classList.toggle('active', i === current);
-        });
-    }
-
-    window.slideServices = function(dir) {
-        goTo(current + dir);
-        resetAuto();
+function showFallbackNews(query, grid) {
+    const FALLBACK_NEWS = {
+        all: [
+            { title:"India's Kharif crop sowing area increases by 8% this season", description:"Farmers across major states have increased sowing area for kharif crops including paddy, cotton and pulses driven by good monsoon forecast.", link:"https://economictimes.indiatimes.com/news/economy/agriculture", pubDate: new Date().toISOString(), thumbnail: FALLBACK_IMG, author:"Economic Times" },
+            { title:"Government raises MSP for wheat and paddy by ₹150 per quintal", description:"The Cabinet Committee on Economic Affairs approved the hike in minimum support price to benefit over 10 crore farmers across India.", link:"https://economictimes.indiatimes.com/news/economy/agriculture", pubDate: new Date(Date.now()-86400000).toISOString(), thumbnail: FALLBACK_IMG, author:"PTI" },
+            { title:"PM Kisan Samman Nidhi: 17th installment released for 9 crore farmers", description:"Prime Minister released the 17th installment under PM-KISAN scheme, directly transferring ₹2000 into bank accounts of eligible farmers.", link:"https://pib.gov.in", pubDate: new Date(Date.now()-172800000).toISOString(), thumbnail: FALLBACK_IMG, author:"PIB India" },
+            { title:"Drone technology adoption in agriculture rises 60% in Gujarat", description:"Gujarat farmers are increasingly adopting drone technology for precision spraying and crop monitoring, cutting input costs significantly.", link:"https://krishijagran.com", pubDate: new Date(Date.now()-259200000).toISOString(), thumbnail: FALLBACK_IMG, author:"Krishi Jagran" },
+            { title:"Groundnut prices surge in Saurashtra mandis on export demand", description:"Groundnut (moongfali) prices at Rajkot and Junagadh APMC mandis touched ₹6,200 per quintal, highest in two years amid strong export orders.", link:"https://agmarknet.gov.in", pubDate: new Date(Date.now()-345600000).toISOString(), thumbnail: FALLBACK_IMG, author:"Agmarknet" },
+        ],
+        crops: [
+            { title:"New high-yield cotton variety 'Bt Cotton Plus' released for Gujarat", description:"ICAR releases improved Bt Cotton variety with 20% higher yield and better resistance to pink bollworm.", link:"https://icar.org.in", pubDate: new Date().toISOString(), thumbnail: FALLBACK_IMG, author:"ICAR" },
+            { title:"Wheat crop condition excellent in Rabi season across Punjab, Haryana", description:"IMD forecast of adequate winter rainfall has boosted wheat crop condition in north India.", link:"https://krishijagran.com", pubDate: new Date(Date.now()-86400000).toISOString(), thumbnail: FALLBACK_IMG, author:"Krishi Jagran" },
+            { title:"Tomato prices crash to ₹5/kg at farm gate in Maharashtra", description:"Oversupply due to bumper harvest has crashed tomato prices at farm level, causing distress to farmers.", link:"https://economictimes.indiatimes.com/news/economy/agriculture", pubDate: new Date(Date.now()-172800000).toISOString(), thumbnail: FALLBACK_IMG, author:"ET" },
+        ],
+        government: [
+            { title:"PM Fasal Bima Yojana: Claims of ₹25,000 crore settled this year", description:"PMFBY has settled crop insurance claims for over 1.2 crore farmers across flood and drought affected districts.", link:"https://pmfby.gov.in", pubDate: new Date().toISOString(), thumbnail: FALLBACK_IMG, author:"PIB India" },
+            { title:"Gujarat govt announces ₹500 crore package for flood-hit farmers", description:"Chief Minister announced compensation and input subsidy for farmers whose crops were damaged in last year's floods.", link:"https://gujaratindia.gov.in", pubDate: new Date(Date.now()-86400000).toISOString(), thumbnail: FALLBACK_IMG, author:"Gujarat Govt" },
+            { title:"E-NAM platform crosses 1.75 crore farmer registrations milestone", description:"National Agriculture Market (e-NAM) has onboarded 1,350 mandis across 23 states enabling transparent online trading.", link:"https://enam.gov.in", pubDate: new Date(Date.now()-172800000).toISOString(), thumbnail: FALLBACK_IMG, author:"Agri Ministry" },
+        ],
+        weather: [
+            { title:"IMD predicts above-normal monsoon for 2026, good news for farmers", description:"India Meteorological Department has forecast 106% of Long Period Average rainfall, promising a strong kharif season.", link:"https://imd.gov.in", pubDate: new Date().toISOString(), thumbnail: FALLBACK_IMG, author:"IMD" },
+            { title:"Cyclone warning: Farmers in coastal Gujarat advised to harvest crops early", description:"IMD issued yellow alert for coastal districts of Gujarat. Farmers advised to complete harvesting before predicted rainfall.", link:"https://imd.gov.in", pubDate: new Date(Date.now()-86400000).toISOString(), thumbnail: FALLBACK_IMG, author:"IMD Gujarat" },
+            { title:"Hailstorm damages Rabi crops in parts of Rajasthan, MP", description:"Unseasonal hailstorm damaged wheat and mustard crops in isolated pockets. State governments conducting crop damage surveys.", link:"https://krishijagran.com", pubDate: new Date(Date.now()-172800000).toISOString(), thumbnail: FALLBACK_IMG, author:"Krishi Jagran" },
+        ],
+        technology: [
+            { title:"Soil health cards go digital: Farmers can now check soil data on mobile app", description:"Government launches mobile app for Soil Health Cards enabling farmers to view NPK levels and fertilizer recommendations.", link:"https://soilhealth.dac.gov.in", pubDate: new Date().toISOString(), thumbnail: FALLBACK_IMG, author:"Agri Ministry" },
+            { title:"AI-powered crop disease detection app launched for Indian farmers", description:"ICAR develops free mobile app using artificial intelligence to identify 50+ crop diseases from leaf photos.", link:"https://icar.org.in", pubDate: new Date(Date.now()-86400000).toISOString(), thumbnail: FALLBACK_IMG, author:"ICAR" },
+            { title:"Solar pump scheme: 3 lakh farmers get free solar irrigation pumps", description:"PM-KUSUM scheme successfully installs 3 lakh solar pumps, reducing electricity cost for farmers by 90%.", link:"https://mnre.gov.in", pubDate: new Date(Date.now()-172800000).toISOString(), thumbnail: FALLBACK_IMG, author:"MNRE" },
+        ],
     };
 
-    function resetAuto() {
-        clearInterval(autoTimer);
-        autoTimer = setInterval(() => {
-            goTo(current >= getMaxIndex() ? 0 : current + 1);
-        }, 3500);
+    const items = FALLBACK_NEWS[query] || FALLBACK_NEWS['all'];
+    renderNews(items, grid, 'Agri News');
+}
+
+let LIVE_DATA_LOADED = false;
+
+async function fetchLiveMandi() {
+    const API_KEY = '579b464db66ec23bdd000001928c4607c9b1413466dcc360239c57ba';
+    const URL = `https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=${API_KEY}&format=json&filters%5Bstate%5D=Gujarat&limit=500&offset=0`;
+    
+    try {
+        const res = await fetch(URL);
+        if (!res.ok) throw new Error('API error');
+        const json = await res.json();
+        const records = json.records || json.data || [];
+        if (!records.length) throw new Error('No data');
+
+        // Convert to our format
+        const catMap = {
+            'vegetables':'veg', 'vegetable':'veg',
+            'cereals':'cereal', 'cereal':'cereal',
+            'pulses':'pulse', 'pulse':'pulse',
+            'oilseeds':'oilseed', 'oilseed':'oilseed',
+            'fruits':'fruit', 'fruit':'fruit',
+            'spices':'veg', 'flowers':'fruit'
+        };
+
+        const liveData = records.map(r => {
+            const grp = (r['commodity_group'] || r['Commodity Group'] || 'vegetables').toLowerCase();
+            const cat = catMap[grp] || 'veg';
+            const modal = parseFloat(r['modal_price'] || r['Modal Price'] || 0);
+            const min   = parseFloat(r['min_price']   || r['Min Price']   || 0);
+            const max   = parseFloat(r['max_price']   || r['Max Price']   || 0);
+            const crop  = r['commodity'] || r['Commodity'] || '';
+            const market= (r['market']   || r['Market']   || '').replace(' APMC','').replace(' Mandi','');
+            const trend = 'same';
+            const chg   = 0;
+            return { cat, crop, market, min, max, modal, trend, chg };
+        }).filter(r => r.crop && r.market && r.modal > 0);
+
+        if (liveData.length > 0) {
+            // Replace MARKET_DATA with live data
+            window.MARKET_DATA = liveData;
+            LIVE_DATA_LOADED = true;
+            document.getElementById('liveDataBadge').style.display = 'inline-block';
+            document.getElementById('staticDataBadge').style.display = 'none';
+        }
+    } catch(e) {
+        console.warn('Live data failed, using static:', e);
+    }
+    // Always render after attempt
+    setTimeout(() => { toggleView('grouped'); }, 10);
+}
+
+function showMarketPrice() {
+    document.getElementById('newsGrid').style.display = 'none';
+    document.getElementById('pagination').style.display = 'none';
+    document.getElementById('marketPriceSection').style.display = 'block';
+
+    const today = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('priceDate').textContent = today;
+    viewMode = 'grouped';
+
+    if (!LIVE_DATA_LOADED) {
+        // Show loading state
+        document.getElementById('priceTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:#2d6a4f;font-size:1rem;">🔄 Loading live mandi data...</td></tr>';
+        fetchLiveMandi();
+    } else {
+        setTimeout(() => { toggleView('grouped'); }, 10);
+    }
+}
+
+// ── Language ──
+let isGujarati = false;
+const GUJ = {
+    title:'રોજના મંડી ભાવ — ગુજરાત', source:'સ્ત્રોત: Agmarknet APMC', updated:'અપડેટ:',
+    search:'🔍 પાક શોધો...', allCities:'📍 બધા શહેર', allCats:'🌾 બધી શ્રેણી',
+    prev:'પૂર્વ', next:'આગળ', records:'નોંધ', page:'પાનું',
+    crop:'પાક', market:'બજાર', min:'ઓછો (₹/q)', max:'વધુ (₹/q)', modal:'Modal (₹/q)', trend:'ટ્રેન્ડ',
+    veg:'🥬 શાકભાજી', cereal:'🌾 અનાજ', pulse:'🫘 કઠોળ', oilseed:'🌻 તેલીબિયાં', fruit:'🍎 ફળ',
+    noData:'કોઈ પરિણામ મળ્યું નથી.',
+    crops:{
+        'Tomato':'ટામેટા','Onion':'ડુંગળી','Potato':'બટાકા','Brinjal':'રીંગણ',
+        'Okra (Bhindi)':'ભીંડા','Bitter Gourd':'કારેલા','Bottle Gourd':'દૂધી',
+        'Cucumber':'કાકડી','Carrot':'ગાજર','Spinach':'પાલક','Coriander':'ધાણા',
+        'Garlic':'લસણ','Ginger':'આદુ','Cauliflower':'ફૂલકોબી','Cabbage':'કોબી',
+        'Green Peas':'લીલા વટાણા','Capsicum':'શિમળા મરચ','Green Chilli':'લીલા મરચા',
+        'Dry Chilli':'સૂકા મરચા','Turmeric':'હળદર','Fenugreek (Methi)':'મેથી',
+        'Drumstick':'સરગવો','Pumpkin':'કોળુ','Radish':'મૂળો','Ridge Gourd':'તૂરિયા',
+        'Sweet Potato':'શક્કરિયા','Raw Banana':'કાચુ કેળું','Pointed Gourd':'પડવળ',
+        'Wheat':'ઘઉં','Bajra':'બાજરી','Jowar':'જુવાર','Maize':'મકાઈ',
+        'Rice (Basmati)':'બાસમતી ચોખા','Rice (Non-Bas)':'ચોખા','Ragi (Nachni)':'નાચણી',
+        'Sunflower':'સૂર્યમુખી','Moong Dal':'મગ દાળ','Toor Dal':'તુવેર દાળ',
+        'Urad Dal':'અડદ દાળ','Chana (Kabuli)':'કાબુલી ચણા','Chana (Desi)':'દેશી ચણા',
+        'Soybean':'સોયાબીન','Masoor Dal':'મસૂર દાળ','Val (Field Bean)':'વાલ',
+        'Kulthi Dal':'કુળથી','Groundnut':'મગફળી','Cotton':'કપાસ','Castor':'દિવેળો (એરંડો)',
+        'Mustard':'સરસવ','Sesame':'તલ','Linseed':'અળસી',
+        'Mango (Kesar)':'કેસર કેરી','Banana':'કેળું','Papaya':'પપૈયા',
+        'Watermelon':'તડબૂચ','Pomegranate':'દાડમ','Grapes':'દ્રાક્ષ','Guava':'જામફળ',
+        'Lemon':'લીંબુ','Coconut':'નાળિયેર','Chikoo (Sapota)':'ચીકુ',
+        'Sitaphal (Custard Apple)':'સીતાફળ','Jamun':'જાંબુ','Fig (Anjeer)':'અંજીર',
+    }
+};
+const ENG = { title:'Daily Mandi Prices — Gujarat', source:'Source: Agmarknet APMC', updated:'Updated:',
+    search:'🔍 Search crop...', prev:'Prev', next:'Next', records:'records', page:'Page',
+    crop:'Crop', market:'Market', min:'Min (₹/q)', max:'Max (₹/q)', modal:'Modal (₹/q)', trend:'Trend',
+    veg:'🥬 Vegetables', cereal:'🌾 Cereals', pulse:'🫘 Pulses', oilseed:'🌻 Oilseeds', fruit:'🍎 Fruits',
+    noData:'No results found.'
+};
+
+function toggleLang() {
+    isGujarati = !isGujarati;
+    const L = isGujarati ? GUJ : ENG;
+    document.getElementById('langBtn').textContent = isGujarati ? '🇮🇳 English' : '🇮🇳 ગુજરાતી';
+    document.getElementById('lblTitle').textContent = L.title;
+    document.getElementById('lblSource').textContent = L.source;
+    document.getElementById('lblUpdated').textContent = L.updated;
+    document.getElementById('priceSearch').placeholder = L.search;
+    document.getElementById('lblPrev').textContent = L.prev;
+    document.getElementById('lblNext').textContent = L.next;
+    // Update category dropdown options
+    const catSel = document.getElementById('categoryFilter');
+    if (catSel) {
+        catSel.options[0].text = isGujarati ? '🌾 બધી શ્રેણી' : '🌾 All Categories';
+        catSel.options[1].text = isGujarati ? '🥬 શાકભાજી' : '🥬 Vegetables';
+        catSel.options[2].text = isGujarati ? '🌾 અનાજ' : '🌾 Cereals';
+        catSel.options[3].text = isGujarati ? '🫘 કઠોળ' : '🫘 Pulses';
+        catSel.options[4].text = isGujarati ? '🌻 તેલીબિયાં' : '🌻 Oilseeds';
+        catSel.options[5].text = isGujarati ? '🍎 ફળ' : '🍎 Fruits';
+    }
+    const citySel = document.getElementById('cityFilter');
+    if (citySel) citySel.options[0].text = isGujarati ? '📍 બધા શહેર' : '📍 All Cities';
+    // Rebuild header + re-render
+    toggleView(viewMode);
+}
+
+// ── Sorting ──
+let sortCol = '', sortAsc = true;
+function sortTable(col) {
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    ['crop','market','min','max','modal'].forEach(c => {
+        const el = document.getElementById('srt_'+c);
+        if (el) el.textContent = c === sortCol ? (sortAsc ? ' ↑' : ' ↓') : '';
+    });
+    renderPriceTable();
+}
+
+// ── Pagination ──
+let pricePage = 1;
+const PAGE_SIZE = 25;
+function changePage(dir) {
+    pricePage += dir;
+    if (pricePage < 1) pricePage = 1;
+    renderPriceTable();
+}
+
+// ── Export CSV ──
+function exportCSV() {
+    const search = (document.getElementById('priceSearch')?.value || '').toLowerCase();
+    const city   = document.getElementById('cityFilter')?.value || '';
+    const cat    = document.getElementById('categoryFilter')?.value || '';
+    const filtered = MARKET_DATA.filter(r => {
+        if (search && !r.crop.toLowerCase().includes(search)) return false;
+        if (city && r.market !== city) return false;
+        if (cat && r.cat !== cat) return false;
+        return true;
+    });
+    let csv = 'Crop,Market,Min,Max,Modal,Trend\n';
+    filtered.forEach(r => { csv += `"${r.crop}","${r.market}",${r.min},${r.max},${r.modal},${r.trend}\n`; });
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'agriverse_mandi_prices.csv';
+    a.click();
+}
+
+// ── Render ──
+const CAT_LABEL_EN = { veg:'🥬 Vegetables', cereal:'🌾 Cereals', pulse:'🫘 Pulses', oilseed:'🌻 Oilseeds', fruit:'🍎 Fruits' };
+let viewMode = 'grouped'; // 'grouped' or 'flat'
+
+function toggleView(mode) {
+    viewMode = mode;
+    pricePage = 1;
+    const bG = document.getElementById('btnGrouped');
+    const bF = document.getElementById('btnFlat');
+    if (bG) { bG.style.background=mode==='grouped'?'#2d6a4f':'#fff'; bG.style.color=mode==='grouped'?'#fff':'#555'; bG.style.border=mode==='grouped'?'2px solid #2d6a4f':'2px solid #ddd'; }
+    if (bF) { bF.style.background=mode==='flat'?'#2d6a4f':'#fff'; bF.style.color=mode==='flat'?'#fff':'#555'; bF.style.border=mode==='flat'?'2px solid #2d6a4f':'2px solid #ddd'; }
+    const thead = document.getElementById('priceTableHead');
+    if (thead) {
+        const L2 = isGujarati ? GUJ : ENG;
+        if (mode === 'grouped') {
+            thead.innerHTML = `<tr style="background:#2d6a4f;color:#fff;">
+                <th colspan="2" style="padding:10px 16px;text-align:left;font-size:0.9rem;">🌿 <span id="thCropG">${L2.crop||'Crop'}</span></th>
+                <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">${isGujarati?'રેન્જ (₹/100kg)':'Range (₹/100kg)'}</span></th>
+                <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">${isGujarati?'સરેરાશ Modal':'Avg Modal'}</span></th>
+                <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thTrendG">${L2.trend||'Trend'}</span></th>
+                <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thChgG">${isGujarati?'ફેરફાર%':'Change%'}</span></th>
+                <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thUpdG">${isGujarati?'અપડેટ':'Updated'}</span></th>
+            </tr>`;
+        } else {
+            thead.innerHTML = `<tr style="background:#2d6a4f;color:#fff;">
+                <th onclick="sortTable('crop')" style="padding:10px 16px;text-align:left;font-size:0.9rem;cursor:pointer;">🌿 ${L2.crop||'Crop'} <span id="srt_crop"></span></th>
+                <th onclick="sortTable('market')" style="padding:10px 16px;text-align:left;font-size:0.9rem;cursor:pointer;">📍 ${L2.market||'Market'} <span id="srt_market"></span></th>
+                <th onclick="sortTable('min')" style="padding:10px 16px;text-align:right;font-size:0.9rem;cursor:pointer;">${L2.min||'Min (₹/q)'} <span id="srt_min"></span></th>
+                <th onclick="sortTable('max')" style="padding:10px 16px;text-align:right;font-size:0.9rem;cursor:pointer;">${L2.max||'Max (₹/q)'} <span id="srt_max"></span></th>
+                <th onclick="sortTable('modal')" style="padding:10px 16px;text-align:right;font-size:0.9rem;cursor:pointer;">${L2.modal||'Modal (₹/q)'} <span id="srt_modal"></span></th>
+                <th style="padding:10px 16px;text-align:center;font-size:0.9rem;">${L2.trend||'Trend'}</th>
+                <th onclick="sortTable('chg')" style="padding:10px 16px;text-align:center;font-size:0.9rem;cursor:pointer;">${isGujarati?'ફેરફાર%':'Change%'} <span id="srt_chg"></span></th>
+                <th style="padding:10px 16px;text-align:center;font-size:0.9rem;">${isGujarati?'અપડેટ':'Updated'}</th>
+            </tr>`;
+        }
+    }
+    renderPriceTable();
+}
+
+function toggleCrop(id) {
+    const el = document.getElementById('cities_'+id);
+    const arrow = document.getElementById('arrow_'+id);
+    if (!el) return;
+    const open = el.style.display !== 'none';
+    el.style.display = open ? 'none' : '';
+    if (arrow) arrow.textContent = open ? '▶' : '▼';
+}
+
+function renderPriceTable() {
+    const L = isGujarati ? GUJ : ENG;
+    const CAT_LABEL = isGujarati
+        ? {veg:GUJ.veg, cereal:GUJ.cereal, pulse:GUJ.pulse, oilseed:GUJ.oilseed, fruit:GUJ.fruit}
+        : CAT_LABEL_EN;
+    const search = (document.getElementById('priceSearch')?.value || '').toLowerCase();
+    const city   = document.getElementById('cityFilter')?.value || '';
+    const cat    = document.getElementById('categoryFilter')?.value || '';
+    const trendIcon = {
+        up:  '<span style="color:#43a047;font-weight:700;">▲</span>',
+        down:'<span style="color:#e53935;font-weight:700;">▼</span>',
+        same:'<span style="color:#fb8c00;font-weight:700;">—</span>'
+    };
+    const today = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+
+    let filtered = MARKET_DATA.filter(r => {
+        if (search && !r.crop.toLowerCase().includes(search)) return false;
+        if (city && r.market !== city) return false;
+        if (cat && r.cat !== cat) return false;
+        return true;
+    });
+
+    // Sort
+    if (sortCol) {
+        filtered.sort((a,b) => {
+            let av = a[sortCol], bv = b[sortCol];
+            if (typeof av === 'string') av = av.toLowerCase(), bv = bv.toLowerCase();
+            return sortAsc ? (av > bv ? 1 : -1) : (av < bv ? 1 : -1);
+        });
     }
 
-    buildDots();
-    goTo(0);
-    resetAuto();
-    window.addEventListener('resize', () => { current = 0; buildDots(); goTo(0); });
-})();
+    document.getElementById('priceCount').textContent = `${filtered.length} ${L.records||'records'}`;
+
+    if (viewMode === 'grouped') {
+        renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city);
+    } else {
+        renderFlat(filtered, CAT_LABEL, trendIcon, today, L);
+    }
+}
+
+function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
+    // Group by cat → crop
+    const catGroups = {};
+    filtered.forEach(r => {
+        if (!catGroups[r.cat]) catGroups[r.cat] = {};
+        if (!catGroups[r.cat][r.crop]) catGroups[r.cat][r.crop] = [];
+        catGroups[r.cat][r.crop].push(r);
+    });
+
+    const catOrder = ['veg','cereal','pulse','oilseed','fruit'];
+    const uniqueCrops = [...new Set(filtered.map(r=>r.crop))];
+    const totalPages = Math.max(1, Math.ceil(uniqueCrops.length / PAGE_SIZE));
+    if (pricePage > totalPages) pricePage = totalPages;
+    document.getElementById('paginationInfo').textContent = uniqueCrops.length > PAGE_SIZE ? `Page ${pricePage}/${totalPages}` : '';
+    document.getElementById('prevPage').disabled = pricePage <= 1;
+    document.getElementById('nextPage').disabled = pricePage >= totalPages;
+    document.getElementById('prevPage').style.opacity = pricePage<=1 ? '0.4' : '1';
+    document.getElementById('nextPage').style.opacity = pricePage>=totalPages ? '0.4' : '1';
+
+    const pagedCrops = uniqueCrops.slice((pricePage-1)*PAGE_SIZE, pricePage*PAGE_SIZE);
+
+    if (pagedCrops.length === 0) {
+        document.getElementById('priceTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results found.'}</td></tr>`;
+        return;
+    }
+
+    let html = '';
+    catOrder.forEach(c => {
+        if (!catGroups[c]) return;
+        const cropsInCat = Object.keys(catGroups[c]).filter(cr => pagedCrops.includes(cr));
+        if (!cropsInCat.length) return;
+
+        html += `<tr><td colspan="8" style="background:#e8f5e9;padding:7px 16px;font-weight:700;color:#2d6a4f;font-size:0.95rem;">${CAT_LABEL[c]}</td></tr>`;
+
+        cropsInCat.forEach((cropName, idx) => {
+            const rows = catGroups[c][cropName];
+            const avgModal = Math.round(rows.reduce((s,r)=>s+r.modal,0)/rows.length);
+            const minAll   = Math.min(...rows.map(r=>r.min));
+            const maxAll   = Math.max(...rows.map(r=>r.max));
+            const mainTrend = rows[0].trend;
+            const avgChg    = (rows.reduce((s,r)=>s+(r.chg||0),0)/rows.length).toFixed(1);
+            const chgColor  = avgChg > 0 ? '#43a047' : avgChg < 0 ? '#e53935' : '#fb8c00';
+            const chgSign   = avgChg > 0 ? '+' : '';
+            const displayName = isGujarati ? (GUJ.crops[cropName] || cropName) : cropName;
+            const uid = c+'_'+idx;
+
+            const citiesLabel = !city ? '<span style="font-size:0.75rem;color:#999;font-weight:400;margin-left:6px;">('+rows.length+' '+(isGujarati?'શહેર':'cities')+')</span>' : '';
+            html += `<tr style="background:${idx%2===0?'#fff':'#f5fdf6'};border-bottom:1px solid #eee;cursor:pointer;" onclick="toggleCrop('${uid}')">
+                <td colspan="2" style="padding:8px 16px;font-weight:600;color:#2d6a4f;font-size:0.9rem;">
+                    <span id="arrow_${uid}" style="font-size:0.75rem;margin-right:6px;color:#888;">▶</span>${displayName}${citiesLabel}
+                </td>
+                <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.83rem;">₹${minAll.toLocaleString()} – ₹${maxAll.toLocaleString()}</td>
+                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${avgModal.toLocaleString()} <span style='font-size:0.75rem;color:#888;font-weight:400;'>(₹${(avgModal/100).toFixed(1)}/kg)</span></td>
+                <td style="padding:8px 16px;text-align:center;">${trendIcon[mainTrend]}</td>
+                <td style="padding:8px 16px;text-align:center;font-weight:700;color:${chgColor};font-size:0.88rem;">${chgSign}${avgChg}%</td>
+                <td style="padding:8px 16px;text-align:center;color:#999;font-size:0.78rem;">${today}</td>
+            </tr>`;
+
+            // City sub-rows (hidden by default)
+            html += `<tr id="cities_${uid}" style="display:none;"><td colspan="8" style="padding:0;background:#f0faf0;">
+                <table style="width:100%;border-collapse:collapse;">`;
+            rows.forEach((r,ri) => {
+                const rc = r.chg||0; const rcs = rc>0?'+':'';
+                const rcc = rc>0?'#43a047':rc<0?'#e53935':'#fb8c00';
+                html += `<tr style="background:${ri%2===0?'#f9fef9':'#e8f5e9'};">
+                    <td style="padding:6px 32px;color:#555;font-size:0.85rem;width:220px;">📍 ${r.market}</td>
+                    <td style="padding:6px 16px;text-align:right;color:#777;font-size:0.82rem;">₹${r.min.toLocaleString()} – ₹${r.max.toLocaleString()}</td>
+                    <td style="padding:6px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.85rem;">₹${r.modal.toLocaleString()} <span style='font-size:0.72rem;color:#888;font-weight:400;'>(₹${(r.modal/100).toFixed(1)}/kg)</span></td>
+                    <td style="padding:6px 16px;text-align:center;">${trendIcon[r.trend]}</td>
+                    <td style="padding:6px 16px;text-align:center;font-weight:700;color:${rcc};font-size:0.82rem;">${rcs}${rc}%</td>
+                    <td style="padding:6px 16px;text-align:center;color:#aaa;font-size:0.75rem;">${today}</td>
+                </tr>`;
+            });
+            html += `</table></td></tr>`;
+        });
+    });
+
+    document.getElementById('priceTableBody').innerHTML = html || `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results.'}</td></tr>`;
+}
+
+function renderFlat(filtered, CAT_LABEL, trendIcon, today, L) {
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (pricePage > totalPages) pricePage = totalPages;
+    document.getElementById('paginationInfo').textContent = total > PAGE_SIZE ? `Page ${pricePage}/${totalPages}` : '';
+    document.getElementById('prevPage').disabled = pricePage <= 1;
+    document.getElementById('nextPage').disabled = pricePage >= totalPages;
+    document.getElementById('prevPage').style.opacity = pricePage<=1 ? '0.4' : '1';
+    document.getElementById('nextPage').style.opacity = pricePage>=totalPages ? '0.4' : '1';
+
+    const pageData = filtered.slice((pricePage-1)*PAGE_SIZE, pricePage*PAGE_SIZE);
+
+    if (pageData.length === 0) {
+        document.getElementById('priceTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results found.'}</td></tr>`;
+        return;
+    }
+
+    const groups = {};
+    pageData.forEach(r => { if (!groups[r.cat]) groups[r.cat]=[]; groups[r.cat].push(r); });
+    const catOrder = ['veg','cereal','pulse','oilseed','fruit'];
+    let html = '';
+    catOrder.forEach(c => {
+        if (!groups[c]) return;
+        html += `<tr><td colspan="8" style="background:#e8f5e9;padding:7px 16px;font-weight:700;color:#2d6a4f;font-size:0.95rem;">${CAT_LABEL[c]}</td></tr>`;
+        groups[c].forEach((r,i) => {
+            const chgColor = r.chg>0?'#43a047':r.chg<0?'#e53935':'#fb8c00';
+            const chgSign  = r.chg>0?'+':'';
+            const cropName = isGujarati ? (GUJ.crops[r.crop]||r.crop) : r.crop;
+            html += `<tr style="background:${i%2===0?'#fff':'#f5fdf6'};border-bottom:1px solid #eee;">
+                <td style="padding:8px 16px;font-weight:600;color:#2d6a4f;font-size:0.9rem;">${cropName}</td>
+                <td style="padding:8px 16px;color:#555;font-size:0.9rem;">${r.market}</td>
+                <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.9rem;">₹${r.min.toLocaleString()}</td>
+                <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.9rem;">₹${r.max.toLocaleString()}</td>
+                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${r.modal.toLocaleString()} <span style='font-size:0.75rem;color:#888;font-weight:400;'>(₹${(r.modal/100).toFixed(1)}/kg)</span></td>
+                <td style="padding:8px 16px;text-align:center;">${trendIcon[r.trend]}</td>
+                <td style="padding:8px 16px;text-align:center;font-weight:700;color:${chgColor};font-size:0.88rem;">${chgSign}${r.chg||0}%</td>
+                <td style="padding:8px 16px;text-align:center;color:#999;font-size:0.78rem;">${today}</td>
+            </tr>`;
+        });
+    });
+    document.getElementById('priceTableBody').innerHTML = html;
+}
+
+function showSkeletons(grid) {
+    grid.innerHTML = Array(4).fill(`
+        <div class="skeleton-card">
+            <div class="skeleton skeleton-img"></div>
+            <div class="skeleton-body">
+                <div class="skeleton skeleton-line" style="width:40%"></div>
+                <div class="skeleton skeleton-line" style="width:85%"></div>
+                <div class="skeleton skeleton-line" style="width:70%"></div>
+                <div class="skeleton skeleton-line" style="width:55%"></div>
+            </div>
+        </div>`).join('');
+}
+
+// Filter tabs
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentQuery = this.dataset.query;
+        currentPage = 1;
+        fetchNews(currentQuery, 1);
+    });
+});
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('navMenu').classList.toggle('open');
+});
+
+// Back to top
+window.onscroll = function() {
+    document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+
+// Auth buttons
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+const authEl = document.getElementById('auth-buttons');
+if (isLoggedIn) {
+    const name = (user.name || 'User').split(' ')[0];
+    authEl.innerHTML = `<span style="background:#e8f5e9;color:#2e7d32;padding:6px 14px;border-radius:20px;font-weight:600;font-size:0.9rem;">👤 ${name}</span>`;
+} else {
+    authEl.innerHTML = `<a href="login.html" class="btn" style="padding:6px 16px;font-size:0.9rem;">Login</a>`;
+}
+
+// Newsletter
+document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    try {
+        await fetch('https://agri-project-ol6n.onrender.com/api/newsletter', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        alert('✅ Subscribed successfully!');
+        this.reset();
+    } catch { alert('Please try again.'); }
+});
+
+// Load news on start
+fetchNews(currentQuery, 1);
 </script>
 </body>
 </html>
