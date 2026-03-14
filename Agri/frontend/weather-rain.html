@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/weather-rain.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Verse | Rain Tracker & Crop Calendar</title>
+    <meta name="description" content="Gujarat district-wise rain tracker, crop calendar, and AI crop disease detector for farmers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --dark: #212121;
+            --gray: #757575;
+            --light: #f9f9f9;
+            --blue: #1565C0;
+            --rain: #29B6F6;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+        body { background:#f9f9f9; color:var(--dark); }
+
+        /* NAV */
+        header { background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
+        nav { display:flex; justify-content:space-between; align-items:center; padding:0.8rem 5%; max-width:1400px; margin:0 auto; }
+        .logo { font-size:1.6rem; font-weight:700; color:var(--primary); display:flex; align-items:center; text-decoration:none; }
+        .logo img { height:45px; width:45px; object-fit:cover; margin-right:8px; border-radius:50%; }
+        nav ul { display:flex; list-style:none; align-items:center; gap:1.5rem; }
+        nav ul li a { text-decoration:none; color:var(--dark); font-weight:500; font-size:0.95rem; transition:color 0.3s; }
+        nav ul li a:hover { color:var(--primary); }
+        .btn { background:var(--primary); color:#fff; padding:0.5rem 1.1rem; border-radius:4px; text-decoration:none; font-weight:600; transition:background 0.3s; }
+        .btn:hover { background:var(--primary-dark); }
+        .hamburger { display:none; font-size:1.5rem; cursor:pointer; color:var(--primary); background:none; border:none; }
+        @media(max-width:768px){
+            .hamburger{display:block;}
+            nav ul{display:none;flex-direction:column;position:absolute;top:65px;left:0;right:0;background:#fff;padding:15px 20px;box-shadow:0 5px 15px rgba(0,0,0,0.15);z-index:9999;}
+            nav ul.active{display:flex;}
+        }
+
+        /* PAGE TABS */
+        .page-tabs { display:flex; justify-content:center; gap:10px; padding:1.5rem 5% 0; flex-wrap:wrap; }
+        .tab-btn { padding:10px 24px; border-radius:25px; border:2px solid #ddd; background:#fff; color:#555; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.3s; }
+        .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .tab-btn:hover:not(.active) { border-color:var(--primary); color:var(--primary); }
+
+        /* SECTIONS */
+        .tab-section { display:none; padding:2rem 5%; max-width:1200px; margin:0 auto; }
+        .tab-section.active { display:block; }
+
+        /* ── RAIN TRACKER ── */
+        .rain-header { text-align:center; margin-bottom:2rem; }
+        .rain-header h1 { font-size:2rem; color:var(--primary-dark); }
+        .rain-header p { color:var(--gray); margin-top:0.5rem; }
+
+        .district-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:2rem; }
+        .district-btn { padding:10px 8px; border-radius:10px; border:2px solid #ddd; background:#fff; cursor:pointer; font-size:0.85rem; font-weight:600; color:#555; transition:all 0.3s; text-align:center; }
+        .district-btn.active { border-color:var(--rain); background:#e1f5fe; color:#0277bd; }
+        .district-btn:hover:not(.active) { border-color:var(--rain); color:var(--rain); }
+
+        .rain-chart-box { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:1.5rem; margin-bottom:1.5rem; }
+        .rain-chart-box h3 { color:var(--primary-dark); margin-bottom:1rem; font-size:1.1rem; }
+        .rain-bars { display:flex; align-items:flex-end; gap:8px; height:160px; overflow-x:auto; padding-bottom:5px; }
+        .rain-bar-wrap { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:38px; }
+        .rain-bar { width:32px; border-radius:6px 6px 0 0; transition:height 0.6s ease; background:linear-gradient(to top,#0288d1,#29b6f6); position:relative; cursor:pointer; }
+        .rain-bar:hover { opacity:0.85; }
+        .rain-bar .tooltip { position:absolute; top:-30px; left:50%; transform:translateX(-50%); background:#333; color:#fff; font-size:0.7rem; padding:2px 6px; border-radius:4px; white-space:nowrap; display:none; }
+        .rain-bar:hover .tooltip { display:block; }
+        .rain-bar-label { font-size:0.7rem; color:#888; text-align:center; }
+        .rain-bar-val { font-size:0.68rem; font-weight:700; color:#0277bd; }
+
+        .rain-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+        .stat-box { background:linear-gradient(135deg,#e1f5fe,#b3e5fc); border-radius:12px; padding:1rem; text-align:center; }
+        .stat-box h4 { font-size:1.5rem; color:#0277bd; font-weight:700; }
+        .stat-box p { font-size:0.8rem; color:#555; margin-top:4px; }
+
+        /* ── CROP CALENDAR ── */
+        .cal-header { text-align:center; margin-bottom:2rem; }
+        .cal-header h1 { font-size:2rem; color:var(--primary-dark); }
+        .season-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:1.5rem; flex-wrap:wrap; }
+        .season-tab { padding:8px 20px; border-radius:20px; border:2px solid #ddd; background:#fff; cursor:pointer; font-weight:600; font-size:0.9rem; transition:all 0.3s; }
+        .season-tab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+
+        .cal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.2rem; }
+        .crop-card { background:#fff; border-radius:14px; box-shadow:0 3px 15px rgba(0,0,0,0.07); padding:1.2rem; border-left:4px solid var(--primary); transition:transform 0.3s; }
+        .crop-card:hover { transform:translateY(-4px); }
+        .crop-card h3 { color:var(--primary-dark); font-size:1rem; margin-bottom:0.5rem; }
+        .crop-info { display:flex; flex-wrap:wrap; gap:8px; margin-top:0.5rem; }
+        .crop-tag { background:#e8f5e9; color:#2d6a4f; padding:3px 10px; border-radius:12px; font-size:0.78rem; font-weight:600; }
+        .crop-tag.water { background:#e1f5fe; color:#0277bd; }
+        .crop-tag.time { background:#fff3e0; color:#e65100; }
+        .crop-tag.soil { background:#fce4ec; color:#880e4f; }
+
+        /* ── AI CROP DOCTOR ── */
+        .ai-header { text-align:center; margin-bottom:2rem; }
+        .ai-header h1 { font-size:2rem; color:var(--primary-dark); }
+        .ai-header p { color:var(--gray); margin-top:0.5rem; }
+
+        .upload-zone { border:3px dashed #a5d6a7; border-radius:16px; padding:3rem; text-align:center; background:#f1f8e9; cursor:pointer; transition:all 0.3s; margin-bottom:1.5rem; }
+        .upload-zone:hover { border-color:var(--primary); background:#e8f5e9; }
+        .upload-zone i { font-size:3rem; color:var(--primary); margin-bottom:1rem; }
+        .upload-zone p { color:#555; font-size:0.95rem; }
+        .upload-zone input { display:none; }
+
+        .or-divider { text-align:center; color:#aaa; margin:1rem 0; font-size:0.9rem; }
+        .symptom-input { width:100%; padding:1rem; border:2px solid #ddd; border-radius:12px; font-size:0.95rem; resize:vertical; min-height:100px; outline:none; transition:border 0.3s; }
+        .symptom-input:focus { border-color:var(--primary); }
+        .ai-btn { background:var(--primary); color:#fff; border:none; padding:12px 32px; border-radius:25px; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.3s; display:block; margin:1rem auto 0; }
+        .ai-btn:hover { background:var(--primary-dark); transform:translateY(-2px); }
+
+        .ai-result { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:1.5rem; margin-top:1.5rem; display:none; }
+        .ai-result h3 { color:var(--primary-dark); margin-bottom:1rem; }
+        .ai-result-content { color:#333; line-height:1.8; }
+        .ai-loading { text-align:center; padding:2rem; color:var(--gray); }
+        .ai-loading i { font-size:2rem; color:var(--primary); animation:spin 1s linear infinite; }
+        @keyframes spin { to{transform:rotate(360deg);} }
+
+        /* ── MANDI MAP ── */
+        .map-header { text-align:center; margin-bottom:1.5rem; }
+        .map-header h1 { font-size:2rem; color:var(--primary-dark); }
+        .map-container { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+        @media(max-width:768px){ .map-container{grid-template-columns:1fr;} }
+        .gujarat-map { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:1rem; }
+        .map-city-list { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:1.2rem; max-height:500px; overflow-y:auto; }
+        .map-city-list h3 { color:var(--primary-dark); margin-bottom:1rem; font-size:1rem; border-bottom:2px solid #e8f5e9; padding-bottom:0.5rem; }
+        .city-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f0f0f0; cursor:pointer; transition:background 0.2s; border-radius:6px; padding:8px; }
+        .city-row:hover { background:#f1f8e9; }
+        .city-row .city-name { font-weight:600; color:#333; font-size:0.9rem; }
+        .city-row .city-top { font-size:0.78rem; color:var(--gray); }
+        .city-row .city-price { font-weight:700; color:var(--primary-dark); font-size:0.9rem; }
+        .map-dot { fill:#4CAF50; cursor:pointer; transition:r 0.2s; }
+        .map-dot:hover { r:10; fill:#388E3C; }
+        .map-dot.active { fill:#FF5722; r:10; }
+        .city-tooltip { font-size:11px; fill:#fff; pointer-events:none; }
+
+        /* FOOTER */
+        footer { background:var(--dark); color:#fff; padding:2rem 5%; margin-top:3rem; }
+        .footer-bottom { text-align:center; padding-top:1rem; opacity:0.7; font-size:0.85rem; }
+
+        /* Back to top */
+        #backToTop { position:fixed; bottom:30px; right:30px; background:var(--primary); color:#fff; border:none; border-radius:50%; width:45px; height:45px; font-size:1.3rem; cursor:pointer; display:none; z-index:999; box-shadow:0 3px 10px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logoss.jpg" alt="logo">
+            <span>Agri-Verse</span>
+        </a>
+        <ul id="navMenu">
+            <li><a href="Feritlizer.html">Fertilizers</a></li>
+            <li><a href="Seeds.html">Seeds</a></li>
+            <li><a href="tools.html">Implements</a></li>
+            <li><a href="weather.html">Weather</a></li>
+            <li><a href="news.html">Agri-News</a></li>
+            <li><a href="farmingtypes.html">Farming Types</a></li>
+            <li id="auth-buttons"></li>
+        </ul>
+        <button class="hamburger" id="hamburger">☰</button>
+    </nav>
+</header>
+
+<!-- TABS -->
+<div class="page-tabs">
+    <button class="tab-btn active" onclick="switchTab('rain')">🌧️ Rain Tracker</button>
+    <button class="tab-btn" onclick="switchTab('calendar')">📅 Crop Calendar</button>
+    <button class="tab-btn" onclick="switchTab('doctor')">🤖 AI Crop Doctor</button>
+    <button class="tab-btn" onclick="switchTab('map')">🗺️ Mandi Map</button>
+</div>
+
+<!-- ══ RAIN TRACKER ══ -->
+<div class="tab-section active" id="tab-rain">
+    <div class="rain-header">
+        <h1>🌧️ Gujarat Rain Tracker</h1>
+        <p>Last 30 days rainfall by district — powered by Open-Meteo</p>
+    </div>
+
+    <div class="district-grid" id="districtGrid"></div>
+
+    <div class="rain-chart-box">
+        <h3 id="rainChartTitle">📍 Select a district</h3>
+        <div class="rain-bars" id="rainBars">
+            <p style="color:#aaa;padding:2rem;">Select a district above to view rainfall data</p>
+        </div>
+    </div>
+
+    <div class="rain-stats" id="rainStats" style="display:none;">
+        <div class="stat-box">
+            <h4 id="stat-total">--</h4>
+            <p>Total Rainfall (30 days)</p>
+        </div>
+        <div class="stat-box">
+            <h4 id="stat-max">--</h4>
+            <p>Highest Single Day</p>
+        </div>
+        <div class="stat-box">
+            <h4 id="stat-days">--</h4>
+            <p>Rainy Days</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══ CROP CALENDAR ══ -->
+<div class="tab-section" id="tab-calendar">
+    <div class="cal-header">
+        <h1>📅 Gujarat Crop Calendar</h1>
+        <p>Season-wise crops for Gujarat farmers</p>
+    </div>
+    <div class="season-tabs">
+        <button class="season-tab active" onclick="showSeason('kharif')">🌱 Kharif (June-Oct)</button>
+        <button class="season-tab" onclick="showSeason('rabi')">🌾 Rabi (Oct-Mar)</button>
+        <button class="season-tab" onclick="showSeason('zaid')">☀️ Zaid (Mar-Jun)</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+</div>
+
+<!-- ══ AI CROP DOCTOR ══ -->
+<div class="tab-section" id="tab-doctor">
+    <div class="ai-header">
+        <h1>🤖 AI Crop Doctor</h1>
+        <p>Describe your crop problem — AI will diagnose and suggest treatment</p>
+    </div>
+
+    <div class="upload-zone" onclick="document.getElementById('cropImg').click()">
+        <i class="fas fa-camera"></i>
+        <p><strong>Upload crop photo</strong> or click to browse</p>
+        <p style="font-size:0.8rem;color:#aaa;margin-top:4px;">JPG, PNG supported</p>
+        <input type="file" id="cropImg" accept="image/*" onchange="previewImage(this)">
+    </div>
+    <div id="imgPreview" style="text-align:center;margin-bottom:1rem;display:none;">
+        <img id="previewImg" style="max-height:200px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+    </div>
+
+    <div class="or-divider">— OR describe symptoms —</div>
+    <textarea class="symptom-input" id="symptomText" placeholder="e.g. Tomato leaves turning yellow with brown spots, wilting in afternoon..."></textarea>
+    <button class="ai-btn" onclick="diagnose()">🔍 Diagnose Disease</button>
+
+    <div class="ai-result" id="aiResult">
+        <h3>🩺 AI Diagnosis</h3>
+        <div class="ai-result-content" id="aiResultContent"></div>
+    </div>
+</div>
+
+<!-- ══ MANDI MAP ══ -->
+<div class="tab-section" id="tab-map">
+    <div class="map-header">
+        <h1>🗺️ Gujarat Mandi Map</h1>
+        <p>Click any city to see top crop prices</p>
+    </div>
+    <div class="map-container">
+        <div class="gujarat-map">
+            <svg viewBox="0 0 400 420" width="100%" id="mandiSvg">
+                <!-- Simple Gujarat outline -->
+                <rect width="400" height="420" fill="#f0faf0" rx="12"/>
+                <text x="200" y="30" text-anchor="middle" font-size="14" fill="#2d6a4f" font-weight="700">Gujarat Districts</text>
+                <!-- City dots -->
+                <g id="cityDots"></g>
+            </svg>
+        </div>
+        <div class="map-city-list">
+            <h3>📍 City Prices — click to see details</h3>
+            <div id="cityList"></div>
+        </div>
+    </div>
+    <div id="cityDetail" style="display:none;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.08);padding:1.5rem;margin-top:1.5rem;">
+        <h3 id="cityDetailTitle" style="color:#2d6a4f;margin-bottom:1rem;"></h3>
+        <div id="cityDetailContent"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <p>© 2026 Agri-Verse | Developed by Kavin Dobariya</p>
+    </div>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── Tab Switch ──
+function switchTab(tab) {
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// ── RAIN TRACKER ──
+const DISTRICTS = [
+    { name:'Ahmedabad', lat:23.03, lon:72.58 },
+    { name:'Rajkot',    lat:22.30, lon:70.78 },
+    { name:'Junagadh',  lat:21.52, lon:70.46 },
+    { name:'Surat',     lat:21.17, lon:72.83 },
+    { name:'Vadodara',  lat:22.31, lon:73.19 },
+    { name:'Bhavnagar', lat:21.77, lon:72.15 },
+    { name:'Anand',     lat:22.56, lon:72.95 },
+    { name:'Mehsana',   lat:23.59, lon:72.37 },
+    { name:'Gandhinagar',lat:23.22,lon:72.65 },
+    { name:'Kutch',     lat:23.73, lon:69.86 },
+    { name:'Amreli',    lat:21.60, lon:71.22 },
+    { name:'Porbandar', lat:21.64, lon:69.60 },
+];
+
+// Build district buttons
+const dGrid = document.getElementById('districtGrid');
+DISTRICTS.forEach((d, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'district-btn';
+    btn.textContent = '📍 ' + d.name;
+    btn.onclick = () => loadRain(d, btn);
+    dGrid.appendChild(btn);
+});
+
+async function loadRain(district, btn) {
+    document.querySelectorAll('.district-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('rainChartTitle').textContent = '⏳ Loading ' + district.name + '...';
+    document.getElementById('rainBars').innerHTML = '<div class="ai-loading"><i class="fas fa-spinner"></i><p style="margin-top:8px;">Fetching live data...</p></div>';
+
+    try {
+        const end = new Date().toISOString().slice(0,10);
+        const start = new Date(Date.now() - 30*24*60*60*1000).toISOString().slice(0,10);
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`;
+        const res = await fetch(url);
+        const data = await res.json();
+        renderRain(district.name, data.daily);
+    } catch(e) {
+        document.getElementById('rainBars').innerHTML = '<p style="color:#e53935;padding:1rem;">Failed to load. Please try again.</p>';
+    }
+}
+
+function renderRain(name, daily) {
+    const dates = daily.time;
+    const rain = daily.precipitation_sum;
+    const maxR = Math.max(...rain, 1);
+
+    document.getElementById('rainChartTitle').textContent = '🌧️ ' + name + ' — Last 30 Days Rainfall';
+
+    let html = '';
+    dates.forEach((d, i) => {
+        const mm = rain[i] || 0;
+        const h = Math.round((mm / maxR) * 140);
+        const date = new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+        html += `<div class="rain-bar-wrap">
+            <span class="rain-bar-val">${mm > 0 ? mm.toFixed(1) : ''}</span>
+            <div class="rain-bar" style="height:${h || 4}px;${mm===0?'background:#e0e0e0;':''}">
+                <span class="tooltip">${date}: ${mm.toFixed(1)}mm</span>
+            </div>
+            <span class="rain-bar-label">${date.split(' ')[0]}</span>
+        </div>`;
+    });
+    document.getElementById('rainBars').innerHTML = html;
+
+    const total = rain.reduce((a,b) => a + (b||0), 0);
+    const maxDay = Math.max(...rain);
+    const rainyDays = rain.filter(r => r > 0.5).length;
+    document.getElementById('stat-total').textContent = total.toFixed(1) + ' mm';
+    document.getElementById('stat-max').textContent = maxDay.toFixed(1) + ' mm';
+    document.getElementById('stat-days').textContent = rainyDays + ' days';
+    document.getElementById('rainStats').style.display = 'grid';
+}
+
+// ── CROP CALENDAR ──
+const CROPS = {
+    kharif: [
+        { name:'🥜 Groundnut (Magfali)', sow:'Jun–Jul', harvest:'Oct–Nov', water:'Medium', soil:'Sandy loam', days:'120-130' },
+        { name:'🌿 Cotton (Kapas)',       sow:'May–Jun', harvest:'Nov–Jan', water:'Medium', soil:'Black cotton', days:'150-180' },
+        { name:'🌽 Maize (Makkai)',       sow:'Jun–Jul', harvest:'Sep–Oct', water:'Medium', soil:'Loamy', days:'90-100' },
+        { name:'🫘 Moong (Green gram)',   sow:'Jun–Jul', harvest:'Aug–Sep', water:'Low',    soil:'Well drained', days:'60-70' },
+        { name:'🌾 Bajra (Pearl millet)', sow:'Jun–Jul', harvest:'Sep–Oct', water:'Low',    soil:'Sandy', days:'75-90' },
+        { name:'🍅 Tomato',               sow:'Jun–Jul', harvest:'Sep–Nov', water:'High',   soil:'Loamy', days:'90-120' },
+        { name:'🧅 Onion',                sow:'Jun–Jul', harvest:'Oct–Nov', water:'Medium', soil:'Well drained', days:'120-140' },
+        { name:'🌻 Til (Sesame)',         sow:'Jun–Jul', harvest:'Sep–Oct', water:'Low',    soil:'Sandy loam', days:'80-90' },
+        { name:'🫘 Toor (Pigeon pea)',    sow:'Jun–Jul', harvest:'Dec–Jan', water:'Low',    soil:'Any', days:'150-180' },
+        { name:'🌾 Jowar (Sorghum)',      sow:'Jun–Jul', harvest:'Sep–Oct', water:'Low',    soil:'Any', days:'90-100' },
+    ],
+    rabi: [
+        { name:'🌾 Wheat (Ghau)',         sow:'Oct–Nov', harvest:'Feb–Mar', water:'Medium', soil:'Loamy', days:'110-120' },
+        { name:'🧄 Garlic (Lasan)',       sow:'Oct–Nov', harvest:'Feb–Mar', water:'Medium', soil:'Well drained', days:'130-150' },
+        { name:'🧅 Onion (Dungali)',      sow:'Oct–Nov', harvest:'Feb–Mar', water:'Medium', soil:'Loamy', days:'120-140' },
+        { name:'🥔 Potato (Bataka)',      sow:'Oct–Nov', harvest:'Jan–Feb', water:'Medium', soil:'Sandy loam', days:'75-90' },
+        { name:'🫘 Chana (Chickpea)',     sow:'Oct–Nov', harvest:'Feb–Mar', water:'Low',    soil:'Well drained', days:'90-120' },
+        { name:'🌿 Mustard (Sarson)',     sow:'Oct–Nov', harvest:'Feb–Mar', water:'Low',    soil:'Loamy', days:'90-110' },
+        { name:'🥕 Carrot (Gajar)',       sow:'Oct–Nov', harvest:'Jan–Feb', water:'Medium', soil:'Sandy loam', days:'80-90' },
+        { name:'🌾 Ragi (Nachni)',        sow:'Oct–Nov', harvest:'Feb–Mar', water:'Low',    soil:'Red loamy', days:'100-120' },
+    ],
+    zaid: [
+        { name:'🍉 Watermelon (Tarbooch)',sow:'Feb–Mar', harvest:'May–Jun', water:'Medium', soil:'Sandy', days:'80-90' },
+        { name:'🥒 Cucumber (Kakadi)',    sow:'Feb–Mar', harvest:'Apr–May', water:'Medium', soil:'Loamy', days:'50-60' },
+        { name:'🎃 Bitter Gourd (Karela)',sow:'Feb–Mar', harvest:'May–Jun', water:'Medium', soil:'Well drained', days:'55-65' },
+        { name:'🫘 Moong (Green gram)',   sow:'Mar–Apr', harvest:'May–Jun', water:'Low',    soil:'Any', days:'55-65' },
+        { name:'🌽 Maize (Makkai)',       sow:'Feb–Mar', harvest:'May–Jun', water:'Medium', soil:'Loamy', days:'85-95' },
+        { name:'🍅 Tomato',               sow:'Jan–Feb', harvest:'Apr–May', water:'High',   soil:'Loamy', days:'90-110' },
+    ]
+};
+
+function showSeason(season) {
+    document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    const crops = CROPS[season];
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = crops.map(c => `
+        <div class="crop-card">
+            <h3>${c.name}</h3>
+            <div class="crop-info">
+                <span class="crop-tag">🌱 Sow: ${c.sow}</span>
+                <span class="crop-tag">🌾 Harvest: ${c.harvest}</span>
+                <span class="crop-tag time">⏱️ ${c.days} days</span>
+                <span class="crop-tag water">💧 Water: ${c.water}</span>
+                <span class="crop-tag soil">🪨 Soil: ${c.soil}</span>
+            </div>
+        </div>`).join('');
+}
+showSeason('kharif'); // init
+
+// ── AI CROP DOCTOR ──
+let cropImageBase64 = null;
+
+function previewImage(input) {
+    if (!input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('imgPreview').style.display = 'block';
+        cropImageBase64 = e.target.result.split(',')[1];
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+async function diagnose() {
+    const symptom = document.getElementById('symptomText').value.trim();
+    if (!symptom && !cropImageBase64) {
+        alert('Please upload a photo or describe the symptoms!');
+        return;
+    }
+
+    const resultDiv = document.getElementById('aiResult');
+    const content = document.getElementById('aiResultContent');
+    resultDiv.style.display = 'block';
+    content.innerHTML = '<div class="ai-loading"><i class="fas fa-spinner"></i><p style="margin-top:8px;">AI is analyzing your crop...</p></div>';
+
+    try {
+        const messages = [];
+        if (cropImageBase64) {
+            messages.push({ role:'user', content: [
+                { type:'image', source:{ type:'base64', media_type:'image/jpeg', data: cropImageBase64 }},
+                { type:'text', text: `You are an expert agricultural scientist specializing in crop diseases in Gujarat, India. Analyze this crop image and diagnose any disease, pest, or deficiency. Provide: 1) Disease/Problem name, 2) Symptoms description, 3) Cause, 4) Treatment in simple language, 5) Prevention tips. Keep response concise and practical for a Gujarat farmer. ${symptom ? 'Additional farmer notes: ' + symptom : ''}` }
+            ]});
+        } else {
+            messages.push({ role:'user', content: `You are an expert agricultural scientist specializing in crop diseases in Gujarat, India. A farmer describes: "${symptom}". Diagnose the crop problem and provide: 1) Disease/Problem name, 2) Symptoms, 3) Cause, 4) Treatment (including available medicines/pesticides in India), 5) Prevention tips. Be practical and simple for a Gujarat farmer.` });
+        }
+
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages })
+        });
+        const data = await res.json();
+        const text = data.content?.[0]?.text || 'Could not analyze. Please try again.';
+        content.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    } catch(e) {
+        content.innerHTML = '<p style="color:#e53935;">Error connecting to AI. Please try again.</p>';
+    }
+}
+
+// ── MANDI MAP ──
+const CITY_POSITIONS = [
+    { name:'Ahmedabad',  x:220, y:180, topCrop:'Tomato',    price:'₹1,450' },
+    { name:'Rajkot',     x:130, y:220, topCrop:'Groundnut', price:'₹5,850' },
+    { name:'Junagadh',   x:100, y:280, topCrop:'Groundnut', price:'₹5,940' },
+    { name:'Surat',      x:200, y:330, topCrop:'Banana',    price:'₹1,145' },
+    { name:'Vadodara',   x:230, y:250, topCrop:'Cotton',    price:'₹6,760' },
+    { name:'Bhavnagar',  x:160, y:290, topCrop:'Cotton',    price:'₹6,800' },
+    { name:'Anand',      x:210, y:220, topCrop:'Potato',    price:'₹1,015' },
+    { name:'Mehsana',    x:195, y:145, topCrop:'Bajra',     price:'₹2,080' },
+    { name:'Gandhinagar',x:215, y:165, topCrop:'Wheat',     price:'₹2,215' },
+    { name:'Kutch',      x:60,  y:120, topCrop:'Cotton',    price:'₹6,700' },
+    { name:'Amreli',     x:140, y:260, topCrop:'Groundnut', price:'₹5,890' },
+    { name:'Porbandar',  x:70,  y:270, topCrop:'Groundnut', price:'₹5,940' },
+    { name:'Bharuch',    x:210, y:295, topCrop:'Cotton',    price:'₹6,725' },
+    { name:'Navsari',    x:195, y:350, topCrop:'Chikoo',    price:'₹1,920' },
+    { name:'Morbi',      x:145, y:175, topCrop:'Cotton',    price:'₹6,725' },
+    { name:'Surendranagar',x:165,y:210,topCrop:'Cotton',    price:'₹6,800' },
+];
+
+// Build SVG dots
+const svg = document.getElementById('cityDots');
+CITY_POSITIONS.forEach((c, i) => {
+    svg.innerHTML += `
+        <circle class="map-dot" cx="${c.x}" cy="${c.y}" r="7" onclick="showCityDetail('${c.name}', ${i})" id="dot_${i}"/>
+        <text x="${c.x}" y="${c.y - 12}" text-anchor="middle" font-size="9" fill="#333">${c.name}</text>`;
+});
+
+// City list
+const cityList = document.getElementById('cityList');
+CITY_POSITIONS.forEach((c, i) => {
+    cityList.innerHTML += `<div class="city-row" onclick="showCityDetail('${c.name}', ${i})">
+        <div><div class="city-name">📍 ${c.name}</div><div class="city-top">Top: ${c.topCrop}</div></div>
+        <div class="city-price">${c.price}/q</div>
+    </div>`;
+});
+
+function showCityDetail(cityName, idx) {
+    document.querySelectorAll('.map-dot').forEach(d => d.classList.remove('active'));
+    document.getElementById('dot_' + idx)?.classList.add('active');
+
+    const MARKET_PREVIEW = {
+        'Ahmedabad': [{crop:'Tomato',modal:1450},{crop:'Onion',modal:870},{crop:'Potato',modal:985},{crop:'Wheat',modal:2215},{crop:'Groundnut',modal:5860}],
+        'Rajkot':    [{crop:'Groundnut',modal:5850},{crop:'Cotton',modal:6750},{crop:'Bajra',modal:2100},{crop:'Tomato',modal:1400},{crop:'Onion',modal:800}],
+        'Junagadh':  [{crop:'Groundnut',modal:5940},{crop:'Cotton',modal:6800},{crop:'Lemon',modal:2420},{crop:'Mango (Kesar)',modal:3800},{crop:'Dry Chilli',modal:12000}],
+        'Surat':     [{crop:'Banana',modal:1145},{crop:'Tomato',modal:1300},{crop:'Onion',modal:820},{crop:'Chikoo',modal:1950},{crop:'Cotton',modal:6700}],
+        'Vadodara':  [{crop:'Cotton',modal:6760},{crop:'Tomato',modal:1320},{crop:'Wheat',modal:2240},{crop:'Potato',modal:995},{crop:'Grapes',modal:3300}],
+    };
+
+    const prices = MARKET_PREVIEW[cityName] || CITY_POSITIONS.filter(c=>c.name===cityName).map(c=>({crop:c.topCrop,modal:parseInt(c.price.replace(/[₹,]/g,''))}));
+
+    document.getElementById('cityDetailTitle').textContent = '📍 ' + cityName + ' — Top Prices Today';
+    document.getElementById('cityDetailContent').innerHTML = `
+        <table style="width:100%;border-collapse:collapse;">
+            <tr style="background:#e8f5e9;"><th style="padding:8px 12px;text-align:left;">Crop</th><th style="padding:8px 12px;text-align:right;">Modal (₹/q)</th><th style="padding:8px 12px;text-align:right;">Per kg</th></tr>
+            ${prices.map((p,i)=>`<tr style="background:${i%2===0?'#fff':'#f9f9f9'};border-bottom:1px solid #eee;">
+                <td style="padding:8px 12px;font-weight:600;color:#2d6a4f;">${p.crop}</td>
+                <td style="padding:8px 12px;text-align:right;font-weight:700;">₹${p.modal.toLocaleString()}</td>
+                <td style="padding:8px 12px;text-align:right;color:#888;">₹${(p.modal/100).toFixed(1)}</td>
+            </tr>`).join('')}
+        </table>
+        <p style="margin-top:8px;font-size:0.8rem;color:#aaa;">* Indicative prices. <a href="news.html" style="color:#4CAF50;">View full market prices →</a></p>`;
+    document.getElementById('cityDetail').style.display = 'block';
+}
+
+// ── Auth ──
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+const user = JSON.parse(localStorage.getItem('user') || '{}');
+const authEl = document.getElementById('auth-buttons');
+if (authEl) {
+    if (isLoggedIn) {
+        const name = (user.name || 'User').split(' ')[0];
+        authEl.innerHTML = `<span style="background:#e8f5e9;color:#2e7d32;padding:6px 14px;border-radius:20px;font-weight:600;font-size:0.9rem;">👤 ${name}</span>`;
+    } else {
+        authEl.innerHTML = `<a href="login.html" class="btn" style="padding:6px 16px;font-size:0.9rem;">Login</a>`;
+    }
+}
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('navMenu').classList.toggle('active');
+});
+
+// Back to top
+window.onscroll = function() {
+    document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+};
+</script>
+</body>
+</html>
