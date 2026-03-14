@@ -161,7 +161,11 @@
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1.2rem;">
             <div>
                 <h2 style="color:#2d6a4f;font-size:1.5rem;">📊 <span id="lblTitle">Daily Mandi Prices — Gujarat</span></h2>
-                <p style="color:#666;font-size:0.9rem;margin-top:4px;"><span id="lblSource">Source: Agmarknet APMC</span> &nbsp;|&nbsp; <span id="lblUpdated">Updated:</span> <span id="priceDate"></span></p>
+                <p style="color:#666;font-size:0.9rem;margin-top:4px;"><span id="lblSource">Source: Agmarknet APMC</span> &nbsp;|&nbsp; <span id="lblUpdated">Updated:</span> <span id="priceDate"></span>
+                &nbsp;
+                <span id="liveDataBadge" style="display:none;background:#e8f5e9;color:#2d6a4f;padding:2px 8px;border-radius:10px;font-size:0.78rem;font-weight:600;">🟢 Live Data</span>
+                <span id="staticDataBadge" style="background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;font-size:0.78rem;font-weight:600;">📋 Indicative Data</span>
+            </p>
             </div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                 <button onclick="toggleLang()" id="langBtn" style="background:#fff3e0;color:#e65100;padding:7px 16px;border-radius:20px;font-weight:700;font-size:0.85rem;border:2px solid #ffcc80;cursor:pointer;">🇮🇳 ગુજરાતી</button>
@@ -205,8 +209,8 @@
                 <thead id="priceTableHead">
                     <tr style="background:#2d6a4f;color:#fff;">
                         <th colspan="2" style="padding:10px 16px;text-align:left;font-size:0.9rem;">🌿 <span id="thCropG">Crop</span></th>
-                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">Range (₹/q)</span></th>
-                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">Avg Modal</span></th>
+                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">Range (₹/100kg)</span></th>
+                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">Modal Price</span></th>
                         <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thTrendG">Trend</span></th>
                         <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thChgG">Change%</span></th>
                         <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thUpdG">Updated</span></th>
@@ -891,6 +895,56 @@ function showFallbackNews(query, grid) {
     renderNews(items, grid, 'Agri News');
 }
 
+let LIVE_DATA_LOADED = false;
+
+async function fetchLiveMandi() {
+    const API_KEY = '579b464db66ec23bdd000001928c4607c9b1413466dcc360239c57ba';
+    const URL = `https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=${API_KEY}&format=json&filters%5Bstate%5D=Gujarat&limit=500&offset=0`;
+    
+    try {
+        const res = await fetch(URL);
+        if (!res.ok) throw new Error('API error');
+        const json = await res.json();
+        const records = json.records || json.data || [];
+        if (!records.length) throw new Error('No data');
+
+        // Convert to our format
+        const catMap = {
+            'vegetables':'veg', 'vegetable':'veg',
+            'cereals':'cereal', 'cereal':'cereal',
+            'pulses':'pulse', 'pulse':'pulse',
+            'oilseeds':'oilseed', 'oilseed':'oilseed',
+            'fruits':'fruit', 'fruit':'fruit',
+            'spices':'veg', 'flowers':'fruit'
+        };
+
+        const liveData = records.map(r => {
+            const grp = (r['commodity_group'] || r['Commodity Group'] || 'vegetables').toLowerCase();
+            const cat = catMap[grp] || 'veg';
+            const modal = parseFloat(r['modal_price'] || r['Modal Price'] || 0);
+            const min   = parseFloat(r['min_price']   || r['Min Price']   || 0);
+            const max   = parseFloat(r['max_price']   || r['Max Price']   || 0);
+            const crop  = r['commodity'] || r['Commodity'] || '';
+            const market= (r['market']   || r['Market']   || '').replace(' APMC','').replace(' Mandi','');
+            const trend = 'same';
+            const chg   = 0;
+            return { cat, crop, market, min, max, modal, trend, chg };
+        }).filter(r => r.crop && r.market && r.modal > 0);
+
+        if (liveData.length > 0) {
+            // Replace MARKET_DATA with live data
+            window.MARKET_DATA = liveData;
+            LIVE_DATA_LOADED = true;
+            document.getElementById('liveDataBadge').style.display = 'inline-block';
+            document.getElementById('staticDataBadge').style.display = 'none';
+        }
+    } catch(e) {
+        console.warn('Live data failed, using static:', e);
+    }
+    // Always render after attempt
+    setTimeout(() => { toggleView('grouped'); }, 10);
+}
+
 function showMarketPrice() {
     document.getElementById('newsGrid').style.display = 'none';
     document.getElementById('pagination').style.display = 'none';
@@ -899,8 +953,14 @@ function showMarketPrice() {
     const today = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
     document.getElementById('priceDate').textContent = today;
     viewMode = 'grouped';
-    // small delay so DOM is ready
-    setTimeout(() => { toggleView('grouped'); }, 10);
+
+    if (!LIVE_DATA_LOADED) {
+        // Show loading state
+        document.getElementById('priceTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:#2d6a4f;font-size:1rem;">🔄 Loading live mandi data...</td></tr>';
+        fetchLiveMandi();
+    } else {
+        setTimeout(() => { toggleView('grouped'); }, 10);
+    }
 }
 
 // ── Language ──
@@ -1025,7 +1085,7 @@ function toggleView(mode) {
         if (mode === 'grouped') {
             thead.innerHTML = `<tr style="background:#2d6a4f;color:#fff;">
                 <th colspan="2" style="padding:10px 16px;text-align:left;font-size:0.9rem;">🌿 <span id="thCropG">${L2.crop||'Crop'}</span></th>
-                <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">${isGujarati?'રેન્જ (₹/q)':'Range (₹/q)'}</span></th>
+                <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">${isGujarati?'રેન્જ (₹/100kg)':'Range (₹/100kg)'}</span></th>
                 <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">${isGujarati?'સરેરાશ Modal':'Avg Modal'}</span></th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thTrendG">${L2.trend||'Trend'}</span></th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thChgG">${isGujarati?'ફેરફાર%':'Change%'}</span></th>
@@ -1148,7 +1208,7 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
                     <span id="arrow_${uid}" style="font-size:0.75rem;margin-right:6px;color:#888;">▶</span>${displayName}${citiesLabel}
                 </td>
                 <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.83rem;">₹${minAll.toLocaleString()} – ₹${maxAll.toLocaleString()}</td>
-                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${avgModal.toLocaleString()}</td>
+                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${avgModal.toLocaleString()} <span style='font-size:0.75rem;color:#888;font-weight:400;'>(₹${(avgModal/100).toFixed(1)}/kg)</span></td>
                 <td style="padding:8px 16px;text-align:center;">${trendIcon[mainTrend]}</td>
                 <td style="padding:8px 16px;text-align:center;font-weight:700;color:${chgColor};font-size:0.88rem;">${chgSign}${avgChg}%</td>
                 <td style="padding:8px 16px;text-align:center;color:#999;font-size:0.78rem;">${today}</td>
@@ -1163,7 +1223,7 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
                 html += `<tr style="background:${ri%2===0?'#f9fef9':'#e8f5e9'};">
                     <td style="padding:6px 32px;color:#555;font-size:0.85rem;width:220px;">📍 ${r.market}</td>
                     <td style="padding:6px 16px;text-align:right;color:#777;font-size:0.82rem;">₹${r.min.toLocaleString()} – ₹${r.max.toLocaleString()}</td>
-                    <td style="padding:6px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.85rem;">₹${r.modal.toLocaleString()}</td>
+                    <td style="padding:6px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.85rem;">₹${r.modal.toLocaleString()} <span style='font-size:0.72rem;color:#888;font-weight:400;'>(₹${(r.modal/100).toFixed(1)}/kg)</span></td>
                     <td style="padding:6px 16px;text-align:center;">${trendIcon[r.trend]}</td>
                     <td style="padding:6px 16px;text-align:center;font-weight:700;color:${rcc};font-size:0.82rem;">${rcs}${rc}%</td>
                     <td style="padding:6px 16px;text-align:center;color:#aaa;font-size:0.75rem;">${today}</td>
@@ -1209,7 +1269,7 @@ function renderFlat(filtered, CAT_LABEL, trendIcon, today, L) {
                 <td style="padding:8px 16px;color:#555;font-size:0.9rem;">${r.market}</td>
                 <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.9rem;">₹${r.min.toLocaleString()}</td>
                 <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.9rem;">₹${r.max.toLocaleString()}</td>
-                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${r.modal.toLocaleString()}</td>
+                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${r.modal.toLocaleString()} <span style='font-size:0.75rem;color:#888;font-weight:400;'>(₹${(r.modal/100).toFixed(1)}/kg)</span></td>
                 <td style="padding:8px 16px;text-align:center;">${trendIcon[r.trend]}</td>
                 <td style="padding:8px 16px;text-align:center;font-weight:700;color:${chgColor};font-size:0.88rem;">${chgSign}${r.chg||0}%</td>
                 <td style="padding:8px 16px;text-align:center;color:#999;font-size:0.78rem;">${today}</td>
