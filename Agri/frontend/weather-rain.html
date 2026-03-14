@@ -280,11 +280,12 @@
 
 <script>
 // ── Tab Switch ──
-function switchTab(tab) {
+function switchTab(tab, btn) {
     document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
-    event.target.classList.add('active');
+    if (btn) btn.classList.add('active');
+    else document.querySelector(`[onclick*="'${tab}'"]`)?.classList.add('active');
 }
 
 // ── RAIN TRACKER ──
@@ -486,25 +487,44 @@ const CITY_POSITIONS = [
 ];
 
 // Build SVG dots
-const svg = document.getElementById('cityDots');
+const svgNS = 'http://www.w3.org/2000/svg';
+const svgG = document.getElementById('cityDots');
 CITY_POSITIONS.forEach((c, i) => {
-    svg.innerHTML += `
-        <circle class="map-dot" cx="${c.x}" cy="${c.y}" r="7" onclick="showCityDetail('${c.name}', ${i})" id="dot_${i}"/>
-        <text x="${c.x}" y="${c.y - 12}" text-anchor="middle" font-size="9" fill="#333">${c.name}</text>`;
+    const circle = document.createElementNS(svgNS, 'circle');
+    circle.setAttribute('cx', c.x);
+    circle.setAttribute('cy', c.y);
+    circle.setAttribute('r', '7');
+    circle.setAttribute('class', 'map-dot');
+    circle.setAttribute('id', 'dot_' + i);
+    circle.setAttribute('fill', '#4CAF50');
+    circle.style.cursor = 'pointer';
+    circle.addEventListener('click', () => showCityDetail(c.name, i));
+    svgG.appendChild(circle);
+
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', c.x);
+    text.setAttribute('y', c.y - 12);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('font-size', '9');
+    text.setAttribute('fill', '#333');
+    text.textContent = c.name;
+    svgG.appendChild(text);
 });
 
 // City list
 const cityList = document.getElementById('cityList');
 CITY_POSITIONS.forEach((c, i) => {
-    cityList.innerHTML += `<div class="city-row" onclick="showCityDetail('${c.name}', ${i})">
-        <div><div class="city-name">📍 ${c.name}</div><div class="city-top">Top: ${c.topCrop}</div></div>
-        <div class="city-price">${c.price}/q</div>
-    </div>`;
+    const row = document.createElement('div');
+    row.className = 'city-row';
+    row.innerHTML = `<div><div class="city-name">📍 ${c.name}</div><div class="city-top">Top: ${c.topCrop}</div></div><div class="city-price">${c.price}/q</div>`;
+    row.addEventListener('click', () => showCityDetail(c.name, i));
+    cityList.appendChild(row);
 });
 
 function showCityDetail(cityName, idx) {
     document.querySelectorAll('.map-dot').forEach(d => d.classList.remove('active'));
-    document.getElementById('dot_' + idx)?.classList.add('active');
+    const dot = document.getElementById('dot_' + idx);
+    if(dot){ dot.setAttribute('fill','#FF5722'); dot.setAttribute('r','10'); }
 
     const MARKET_PREVIEW = {
         'Ahmedabad': [{crop:'Tomato',modal:1450},{crop:'Onion',modal:870},{crop:'Potato',modal:985},{crop:'Wheat',modal:2215},{crop:'Groundnut',modal:5860}],
