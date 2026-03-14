@@ -230,11 +230,65 @@
             display: block;
         }
         
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        /* Services Slider */
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
         }
+        .services-grid {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .service-card {
+            width: 33.333%;
+            min-width: 33.333%;
+            flex-shrink: 0;
+            padding: 0 0.75rem;
+            box-sizing: border-box;
+        }
+        @media (max-width: 992px) {
+            .service-card { width: 50%; min-width: 50%; }
+        }
+        @media (max-width: 600px) {
+            .service-card { width: 100%; min-width: 100%; }
+        }
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+        .slider-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(76,175,80,0.3);
+        }
+        .slider-btn:hover { background: #388E3C; transform: scale(1.1); }
+        .slider-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .slider-dot.active { background: #4CAF50; }
         
         .service-card {
             background-color: white;
@@ -783,50 +837,54 @@
                 <h2>Our Services</h2>
                 <p>Comprehensive solutions tailored to meet the diverse needs of modern agriculture.</p>
             </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Smart Irrigation">
+            <div class="slider-wrapper">
+                <div class="services-grid" id="servicesSlider">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Fertilizers">
+                        </div>
+                        <div class="service-content">
+                            <h3>🧪 Fertilizers Information</h3>
+                            <p>Agri-Verse provides complete fertilizer information to help farmers choose the right nutrients for their soil. Improve crop yield, enhance soil health, and reduce fertilizer costs with our expert guidance.</p>
+                            <a href="Feritlizer.html" class="btn">Learn More</a>
+                        </div>
                     </div>
-                    <div class="service-content">
-                        <h3>Fertilizers Information</h3>
-                        <p>Agri-Verse provides complete fertilizer information to help farmers choose the right nutrients for their soil. Improve crop yield, enhance soil health, and reduce fertilizer costs with our expert guidance. 🌱💡</p>
-                        <a href="Feritlizer.html" class="btn">Learn More</a>
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/Seeds.png" alt="Seeds">
+                        </div>
+                        <div class="service-content">
+                            <h3>🌱 Seeds Information</h3>
+                            <p>Agri-Verse provides detailed seed information to help farmers choose the right seeds based on soil type, climate, and crop requirements. Maximize your yield with precision-guided seed selection.</p>
+                            <a href="Seeds.html" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/weather-service.jpg" alt="Weather" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
+                        </div>
+                        <div class="service-content">
+                            <h3>🌤️ Weather Forecast</h3>
+                            <p>Get real-time weather updates for your farm location. Check temperature, humidity, rainfall, and wind conditions. Make smarter decisions with accurate 5-day forecasts and protect your crops from adverse weather.</p>
+                            <a href="weather.html" class="btn">Check Weather</a>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/farm-mechanization-1.jpg" alt="Implements" onerror="this.src='https://images.unsplash.com/photo-1592982537447-6f2a6a0a5b1a?w=600&q=80';this.onerror=null;">
+                        </div>
+                        <div class="service-content">
+                            <h3>🚜 Agricultural Implements</h3>
+                            <p>Find the right machinery for your farm to enhance efficiency, reduce labor costs, and improve productivity. Comprehensive information on agricultural implements and tools.</p>
+                            <a href="tools.html" class="btn">Learn More</a>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="images/Seeds.png" alt="Soil Analysis">
-                    </div>
-                    <div class="service-content">
-                        <h3>Seeds Information</h3>
-                        <p>Agri-Verse provides detailed seed information to help farmers choose the right seeds based on soil type, climate, and crop requirements. Maximize your yield with precision-guided seed selection. 🌾</p>
-                        <a href="Seeds.html" class="btn">Learn More</a>
-                    </div>
-                </div>
-                
-
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="images/weather-service.jpg" alt="Weather Forecast" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
-                    </div>
-                    <div class="service-content">
-                        <h3>🌤️ Weather Forecast</h3>
-                        <p>Get real-time weather updates for your farm location. Check temperature, humidity, rainfall, and wind conditions to plan your farming activities effectively. Make smarter decisions with accurate 5-day forecasts and protect your crops from adverse weather conditions.</p>
-                        <a href="weather.html" class="btn">Check Weather</a>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-img">
-                        <img src="images/farm-mechanization-1.jpg" alt="Crop Monitoring" onerror="this.src='https://images.unsplash.com/photo-1592982537447-6f2a6a0a5b1a?w=600&q=80';this.onerror=null;">
-                    </div>
-                    <div class="service-content">
-                        <h3>Agricultural Implements</h3>
-                        <p>Agri-Verse provides comprehensive information on agricultural implements and tools. Find the right machinery for your farm to enhance efficiency, reduce labor costs, and improve productivity. 🚜</p>
-                        <a href="tools.html" class="btn">Learn More</a>
-                    </div>
+                <!-- Slider Controls -->
+                <div class="slider-controls">
+                    <button class="slider-btn" id="slidePrev" onclick="slideServices(-1)">&#8249;</button>
+                    <div class="slider-dots" id="sliderDots"></div>
+                    <button class="slider-btn" id="slideNext" onclick="slideServices(1)">&#8250;</button>
                 </div>
             </div>
         </section>
@@ -1114,6 +1172,67 @@ if ('serviceWorker' in navigator) {
             .catch(function(err) { console.warn('SW skipped:', err); });
     });
 }
+</script>
+
+<script>
+// Services Slider
+(function() {
+    const slider = document.getElementById('servicesSlider');
+    if (!slider) return;
+    const cards = slider.querySelectorAll('.service-card');
+    const total = cards.length;
+    let current = 0;
+    let autoTimer;
+
+    function getVisible() {
+        if (window.innerWidth <= 600) return 1;
+        if (window.innerWidth <= 992) return 2;
+        return 3;
+    }
+
+    function getMaxIndex() {
+        return Math.max(0, total - getVisible());
+    }
+
+    function buildDots() {
+        const dotsEl = document.getElementById('sliderDots');
+        if (!dotsEl) return;
+        dotsEl.innerHTML = '';
+        const max = getMaxIndex() + 1;
+        for (let i = 0; i < max; i++) {
+            const d = document.createElement('span');
+            d.className = 'slider-dot' + (i === current ? ' active' : '');
+            d.onclick = () => { goTo(i); resetAuto(); };
+            dotsEl.appendChild(d);
+        }
+    }
+
+    function goTo(idx) {
+        current = Math.max(0, Math.min(idx, getMaxIndex()));
+        const pct = (100 / getVisible()) * current;
+        slider.style.transform = `translateX(-${pct}%)`;
+        document.querySelectorAll('.slider-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+    }
+
+    window.slideServices = function(dir) {
+        goTo(current + dir);
+        resetAuto();
+    };
+
+    function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+            goTo(current >= getMaxIndex() ? 0 : current + 1);
+        }, 3500);
+    }
+
+    buildDots();
+    goTo(0);
+    resetAuto();
+    window.addEventListener('resize', () => { current = 0; buildDots(); goTo(0); });
+})();
 </script>
 </body>
 </html>
