@@ -282,6 +282,20 @@
 
             <div class="seeds-grid" id="seedsGrid"></div>
         </section>
+
+        <!-- ===== CROP CALENDAR ===== -->
+        <section class="seeds-container" style="padding-top:2rem;">
+            <div class="section-title">
+                <h2>📅 Gujarat Crop Calendar</h2>
+                <p>Season-wise sowing & harvest guide for Gujarat farmers</p>
+            </div>
+            <div class="season-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;">
+                <button class="season-btn active" onclick="showSeason('kharif',this)" style="padding:10px 22px;border-radius:25px;border:2px solid #4CAF50;background:#4CAF50;color:#fff;cursor:pointer;font-weight:600;font-size:0.88rem;transition:all 0.25s;font-family:'Segoe UI',sans-serif;">🌱 Kharif (Jun–Oct)</button>
+                <button class="season-btn" onclick="showSeason('rabi',this)" style="padding:10px 22px;border-radius:25px;border:2px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer;font-weight:600;font-size:0.88rem;transition:all 0.25s;font-family:'Segoe UI',sans-serif;">🌾 Rabi (Oct–Mar)</button>
+                <button class="season-btn" onclick="showSeason('zaid',this)" style="padding:10px 22px;border-radius:25px;border:2px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer;font-weight:600;font-size:0.88rem;transition:all 0.25s;font-family:'Segoe UI',sans-serif;">☀️ Zaid (Mar–Jun)</button>
+            </div>
+            <div class="crop-grid" id="calGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;"></div>
+        </section>
     </main>
     
     <footer>
@@ -383,6 +397,71 @@
 
     <button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
     <script>window.onscroll=function(){document.getElementById("backToTop").style.display=window.scrollY>300?"block":"none";};</script>
+
+    <!-- ===== CROP CALENDAR JS ===== -->
+    <script>
+    const CROPS = {
+        kharif:[
+            {name:'🥜 Groundnut (Magfali)',sow:'Jun–Jul',harvest:'Oct–Nov',water:'Medium',soil:'Sandy loam',days:'120-130'},
+            {name:'🌿 Cotton (Kapas)',sow:'May–Jun',harvest:'Nov–Jan',water:'Medium',soil:'Black cotton',days:'150-180'},
+            {name:'🌽 Maize (Makkai)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Medium',soil:'Loamy',days:'90-100'},
+            {name:'🫘 Moong (Green gram)',sow:'Jun–Jul',harvest:'Aug–Sep',water:'Low',soil:'Well drained',days:'60-70'},
+            {name:'🌾 Bajra (Pearl millet)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Sandy',days:'75-90'},
+            {name:'🍅 Tomato',sow:'Jun–Jul',harvest:'Sep–Nov',water:'High',soil:'Loamy',days:'90-120'},
+            {name:'🧅 Onion',sow:'Jun–Jul',harvest:'Oct–Nov',water:'Medium',soil:'Well drained',days:'120-140'},
+            {name:'🌻 Til (Sesame)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Sandy loam',days:'80-90'},
+            {name:'🫘 Toor (Pigeon pea)',sow:'Jun–Jul',harvest:'Dec–Jan',water:'Low',soil:'Any',days:'150-180'},
+            {name:'🌾 Jowar (Sorghum)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Any',days:'90-100'},
+        ],
+        rabi:[
+            {name:'🌾 Wheat (Ghau)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Loamy',days:'110-120'},
+            {name:'🧄 Garlic (Lasan)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Well drained',days:'130-150'},
+            {name:'🧅 Onion (Dungali)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Loamy',days:'120-140'},
+            {name:'🥔 Potato (Bataka)',sow:'Oct–Nov',harvest:'Jan–Feb',water:'Medium',soil:'Sandy loam',days:'75-90'},
+            {name:'🫘 Chana (Chickpea)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Well drained',days:'90-120'},
+            {name:'🌿 Mustard (Sarson)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Loamy',days:'90-110'},
+            {name:'🥕 Carrot (Gajar)',sow:'Oct–Nov',harvest:'Jan–Feb',water:'Medium',soil:'Sandy loam',days:'80-90'},
+            {name:'🌾 Ragi (Nachni)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Red loamy',days:'100-120'},
+        ],
+        zaid:[
+            {name:'🍉 Watermelon',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Sandy',days:'80-90'},
+            {name:'🥒 Cucumber (Kakadi)',sow:'Feb–Mar',harvest:'Apr–May',water:'Medium',soil:'Loamy',days:'50-60'},
+            {name:'🎃 Bitter Gourd (Karela)',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Well drained',days:'55-65'},
+            {name:'🫘 Moong (Green gram)',sow:'Mar–Apr',harvest:'May–Jun',water:'Low',soil:'Any',days:'55-65'},
+            {name:'🌽 Maize (Makkai)',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Loamy',days:'85-95'},
+            {name:'🍅 Tomato',sow:'Jan–Feb',harvest:'Apr–May',water:'High',soil:'Loamy',days:'90-110'},
+        ]
+    };
+
+    function showSeason(season, btn) {
+        document.querySelectorAll('.season-btn').forEach(b => {
+            b.style.background = 'var(--card-bg)';
+            b.style.color = 'var(--text)';
+            b.style.borderColor = 'var(--border)';
+        });
+        if(btn) {
+            btn.style.background = '#4CAF50';
+            btn.style.color = '#fff';
+            btn.style.borderColor = '#4CAF50';
+        }
+        const grid = document.getElementById('calGrid');
+        grid.innerHTML = CROPS[season].map(c => `
+            <div style="background:var(--card-bg);border-radius:14px;padding:1.2rem;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.06);border-left:4px solid #4CAF50;transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                <h3 style="font-size:0.95rem;font-weight:700;color:#388E3C;margin-bottom:0.7rem;">${c.name}</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                    <span style="background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;">🌱 Sow: ${c.sow}</span>
+                    <span style="background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;">🌾 Harvest: ${c.harvest}</span>
+                    <span style="background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;">⏱️ ${c.days}d</span>
+                    <span style="background:#e3f2fd;color:#1565c0;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;">💧 ${c.water}</span>
+                    <span style="background:#f3e5f5;color:#6a1b9a;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;">🪨 ${c.soil}</span>
+                </div>
+            </div>`).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        showSeason('kharif');
+    });
+    </script>
 
     <!-- Shared nav + dark mode (must be last) -->
     <script src="nav.js"></script>
