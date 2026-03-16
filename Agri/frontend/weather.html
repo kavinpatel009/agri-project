@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse Weather - Real-time weather forecast for farmers across India.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="weather.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:#f5f7fa; --card-bg:#fff; --nav-bg:#fff;
+            --text:#212121; --gray:#666; --border:#e0e0e0;
+            --detail-bg:#f9f9f9; --primary:#4CAF50;
+            --shadow:0 4px 20px rgba(0,0,0,0.08);
+        }
+        [data-theme="dark"] {
+            --bg:#0f1923; --card-bg:#1a2535; --nav-bg:#1a2535;
+            --text:#e8f5e9; --gray:#b0bec5; --border:#2d3e50;
+            --detail-bg:#1e2d3d; --shadow:0 4px 20px rgba(0,0,0,0.4);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+
+        /* NAV */
+        .main-nav{background:var(--nav-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000;box-shadow:0 2px 15px rgba(0,0,0,0.08);transition:background 0.3s;}
+        .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;}
+        .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+        .nav-logo img{height:38px;width:38px;object-fit:cover;border-radius:6px;}
+        .nav-logo span{font-size:1.3rem;font-weight:700;color:var(--primary);white-space:nowrap;}
+        .nav-links{display:flex;list-style:none;align-items:center;gap:2px;}
+        .nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;transition:all 0.2s;white-space:nowrap;}
+        .nav-links a:hover,.nav-links a.active{color:var(--primary);background:rgba(76,175,80,0.08);}
+        .nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+        .nav-icon-btn{background:rgba(76,175,80,0.1);border:none;color:var(--primary);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+        .nav-icon-btn:hover{background:var(--primary);color:white;}
+        .hamburger{display:none;font-size:1.5rem;cursor:pointer;color:var(--primary);background:none;border:none;}
+        @media(max-width:900px){
+            .hamburger{display:block;}
+            .nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--nav-bg);padding:15px 20px;box-shadow:0 8px 25px rgba(0,0,0,0.15);z-index:9999;}
+            .nav-links.open{display:flex;}
+        }
+
+        /* WEATHER */
+        .weather-wrapper{max-width:1000px;margin:2rem auto;padding:0 1.5rem 3rem;}
+        .weather-card{background:var(--card-bg);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border);}
+        .weather-header{background:linear-gradient(135deg,#1b4332,#2d6a4f,#4CAF50);color:white;padding:2rem 2rem 1.5rem;text-align:center;}
+        .weather-header h1{font-size:1.8rem;font-weight:600;margin-bottom:1.2rem;}
+        .search-container{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+        .search-container input{padding:11px 18px;border:none;border-radius:30px;width:300px;font-size:0.95rem;outline:none;font-family:'Poppins',sans-serif;background:rgba(255,255,255,0.95);color:#333;}
+        .search-container button{padding:11px 22px;border:1.5px solid rgba(255,255,255,0.5);border-radius:30px;background:rgba(255,255,255,0.2);color:white;font-weight:600;cursor:pointer;transition:all 0.3s;font-family:'Poppins',sans-serif;}
+        .search-container button:hover{background:rgba(255,255,255,0.35);}
+        main{padding:2rem;}
+        .current-weather{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+        .weather-info h2{font-size:1.6rem;font-weight:600;margin-bottom:0.5rem;color:var(--text);}
+        .temperature{display:flex;align-items:flex-start;margin-bottom:0.5rem;}
+        .temperature span:first-child{font-size:4rem;font-weight:300;line-height:1;color:var(--text);}
+        .unit{font-size:1.4rem;margin-left:4px;color:var(--gray);}
+        #weather-description{font-size:1rem;color:var(--gray);text-transform:capitalize;}
+        .weather-details{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:2rem;}
+        .detail{background:var(--detail-bg);padding:1.2rem;border-radius:14px;text-align:center;border:1px solid var(--border);transition:transform 0.2s;}
+        .detail:hover{transform:translateY(-3px);}
+        .label{display:block;color:var(--gray);font-size:0.82rem;margin-bottom:6px;}
+        .detail span:last-child{font-weight:700;font-size:1.1rem;color:var(--text);}
+        .forecast{margin-bottom:2rem;}
+        .forecast h3{margin-bottom:1rem;font-weight:600;color:var(--text);}
+        .forecast-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+        .forecast-item{background:var(--detail-bg);padding:1rem;border-radius:14px;text-align:center;border:1px solid var(--border);transition:transform 0.2s;}
+        .forecast-item:hover{transform:translateY(-3px);}
+        .forecast-day{font-weight:600;margin-bottom:8px;font-size:0.9rem;color:var(--text);}
+        .forecast-icon img{width:50px;height:50px;margin:5px 0;}
+        .forecast-temp{display:flex;justify-content:center;gap:10px;}
+        .max-temp{font-weight:600;color:var(--text);}
+        .min-temp{color:var(--gray);}
+        .saved-locations{margin-top:1.5rem;}
+        .saved-locations h3{margin-bottom:1rem;font-weight:600;color:var(--text);}
+        #saved-locations-list{list-style:none;margin-bottom:12px;}
+        #saved-locations-list li{padding:10px 15px;background:var(--detail-bg);border-radius:10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border:1px solid var(--border);transition:all 0.2s;color:var(--text);}
+        #saved-locations-list li:hover{background:rgba(76,175,80,0.08);color:var(--primary);}
+        #saved-locations-list li .delete-btn{color:#ff6b6b;background:none;border:none;cursor:pointer;font-size:1rem;}
+        #save-location-btn{padding:10px 20px;background:linear-gradient(135deg,#1b4332,#4CAF50);color:white;border:none;border-radius:25px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.88rem;transition:all 0.3s;box-shadow:0 4px 12px rgba(76,175,80,0.3);}
+        #save-location-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(76,175,80,0.4);}
+        #backToTop{position:fixed;bottom:25px;right:25px;background:var(--primary);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:1.2rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 12px rgba(0,0,0,0.2);transition:all 0.3s;}
+        #backToTop:hover{background:#388E3C;transform:translateY(-3px);}
+        @media(max-width:768px){
+            .current-weather{flex-direction:column;text-align:center;}
+            .weather-details{grid-template-columns:1fr;}
+            .weather-header h1{font-size:1.4rem;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- SINGLE CLEAN NAV -->
+<header class="main-nav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <img src="images/logoss.jpg" alt="Logo">
+            <span>Agri-Verse</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="Seeds.html">🌱 Seeds</a></li>
+            <li><a href="Feritlizer.html">🧪 Fertilizers</a></li>
+            <li><a href="mandi.html">📊 Mandi</a></li>
+            <li><a href="weather.html" class="active">🌤️ Weather</a></li>
+            <li><a href="news.html">📰 News</a></li>
+            <li><a href="tools.html">🚜 Implements</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="nav-icon-btn" id="darkToggle" onclick="toggleDark()" title="Dark Mode">🌙</button>
+            <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        </div>
+    </div>
+</header>
+
+<!-- WEATHER CONTENT -->
+<div class="weather-wrapper">
+    <div class="weather-card">
+        <div class="weather-header">
+            <h1>🌤 Weather Forecast</h1>
+            <div class="search-container">
+                <input type="text" id="location-input" placeholder="Enter city name...">
+                <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+                <button id="use-location-btn"><i class="fas fa-map-marker-alt"></i> My Location</button>
+            </div>
+        </div>
+
+        <main>
+            <div class="current-weather">
+                <div class="weather-info">
+                    <h2 id="city-name" style="color:var(--gray);">Search a city...</h2>
+                    <div class="temperature">
+                        <span id="current-temp">--</span>
+                        <span class="unit">°C</span>
+                    </div>
+                    <div id="weather-description">--</div>
+                </div>
+                <div class="weather-icon">
+                    <img id="weather-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="Weather icon" style="width:120px;height:120px;opacity:0.4;">
+                </div>
+            </div>
+
+            <div class="weather-details">
+                <div class="detail">
+                    <span class="label"><i class="fas fa-tint"></i> Humidity</span>
+                    <span id="humidity">--%</span>
+                </div>
+                <div class="detail">
+                    <span class="label"><i class="fas fa-wind"></i> Wind Speed</span>
+                    <span id="wind-speed">-- km/h</span>
+                </div>
+                <div class="detail">
+                    <span class="label"><i class="fas fa-compress-arrows-alt"></i> Pressure</span>
+                    <span id="pressure">-- hPa</span>
+                </div>
+            </div>
+
+            <div class="forecast">
+                <h3>📅 5-Day Forecast</h3>
+                <div class="forecast-container" id="forecast-container"></div>
+            </div>
+
+            <div class="saved-locations">
+                <h3>📍 Saved Locations</h3>
+                <ul id="saved-locations-list"></ul>
+                <button id="save-location-btn"><i class="fas fa-bookmark"></i> Save Current Location</button>
+            </div>
+        </main>
+    </div>
+</div>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="weather.js"></script>
+<script>
+// Dark Mode — sync with whole site
+(function(){
+    const saved = localStorage.getItem('agri-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', function(){
+        const btn = document.getElementById('darkToggle');
+        if(btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+})();
+function toggleDark(){
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('darkToggle').textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('agri-theme', isDark ? 'light' : 'dark');
+}
+window.addEventListener('scroll', function(){
+    document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

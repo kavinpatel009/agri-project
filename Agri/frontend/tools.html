@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+    <html lang="en" data-theme="light">
+    <head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/tools.html">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Implements | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse Implements - Agricultural tools and machinery guide for modern farming.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #4CAF50;
+                --primary-dark: #388E3C;
+                --secondary: #FFC107;
+                --light: #F5F5F5;
+                --dark: #212121;
+                --gray: #757575;
+                --card-bg: #ffffff;
+                --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+                --card-radius: 16px;
+                --bg: #f9f9f9;
+                --text: #212121;
+                --border: #e0e0e0;
+            }
+            [data-theme="dark"] {
+                --card-bg: #1a2535;
+                --card-shadow: 0 10px 30px rgba(0,0,0,0.4);
+                --bg: #0f1923;
+                --text: #e8f5e9;
+                --dark: #e8f5e9;
+                --gray: #b0bec5;
+                --border: #2d3e50;
+                --light: #1e2d3d;
+                --primary-dark: #81c784;
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+            
+            body {
+                background-color: var(--bg);
+                color: var(--text);
+                line-height: 1.6;
+                transition: background 0.3s, color 0.3s;
+            }
+            
+            header {
+                background-color: var(--card-bg);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+            
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 5%;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: var(--primary);
+                display: flex;
+                align-items: center;
+            }
+            
+            .logo i {
+                margin-right: 10px;
+                color: var(--secondary);
+            }
+            
+            nav ul {
+                display: flex;
+                list-style: none;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin-left: 2rem;
+            }
+            
+            nav ul li a {
+                text-decoration: none;
+                color: var(--dark);
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+            
+            nav ul li a:hover {
+                color: var(--primary);
+            }
+            
+            .btn {
+                display: inline-block;
+                background-color: var(--primary);
+                color: white;
+                padding: 0.6rem 1.2rem;
+                border-radius: 4px;
+                text-decoration: none;
+                font-weight: 500;
+                transition: background-color 0.3s;
+                border: none;
+                cursor: pointer;
+            }
+            
+            .btn:hover {
+                background-color: var(--primary-dark);
+            }
+
+            /* Modern Hero Section */
+            .hero {
+                background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(56, 142, 60, 0.9)), 
+                            url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+                background-size: cover;
+                background-position: center;
+                height: 350px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                color: white;
+                padding: 0 1rem;
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+                margin-bottom: 3rem;
+            }
+
+            .hero h2 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+                max-width: 700px;
+                margin: 0 auto;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            }
+
+            /* Modern Filter Section */
+            .filter-section {
+                display: flex;
+                justify-content: space-between;
+                padding: 1.5rem 5%;
+                background-color: var(--card-bg);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+                margin: -3rem auto 3rem;
+                max-width: 1200px;
+                border-radius: 12px;
+                position: relative;
+                z-index: 2;
+            }
+
+            .search-box {
+                display: flex;
+                width: 60%;
+                position: relative;
+            }
+
+            .search-box input {
+                width: 100%;
+                padding: 1rem 1.5rem;
+                border: 2px solid var(--border);
+                border-radius: 50px;
+                font-size: 1rem;
+                transition: all 0.3s;
+                padding-right: 50px;
+                background-color: var(--bg);
+                color: var(--text);
+            }
+
+            .search-box input:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            }
+
+            .search-box button {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                padding: 0.6rem;
+                background-color: var(--primary);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .search-box button:hover {
+                background-color: var(--primary-dark);
+            }
+
+            .category-filter select {
+                padding: 1rem 1.5rem;
+                border: 2px solid var(--border);
+                border-radius: 50px;
+                font-size: 1rem;
+                cursor: pointer;
+                appearance: none;
+                background-color: var(--bg);
+                color: var(--text);
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 1rem center;
+                background-size: 1em;
+                padding-right: 2.5rem;
+                transition: all 0.3s;
+            }
+
+            .category-filter select:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            }
+
+            /* Unique Card Design */
+            .implements-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 2.5rem;
+                padding: 2rem 5%;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .implement-card {
+                background-color: var(--card-bg);
+                border-radius: var(--card-radius);
+                overflow: hidden;
+                box-shadow: var(--card-shadow);
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+                position: relative;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .implement-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            }
+
+            .card-image {
+                height: 220px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .card-image::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+                z-index: 1;
+            }
+
+            .card-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+            }
+
+            .implement-card:hover .card-image img {
+                transform: scale(1.1);
+            }
+
+            .category-tag {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 0.4rem 1rem;
+                border-radius: 50px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: var(--primary-dark);
+                z-index: 2;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .card-content {
+                padding: 1.8rem;
+                position: relative;
+            }
+
+            .card-content h3 {
+                font-size: 1.5rem;
+                margin-bottom: 0.8rem;
+                color: var(--primary-dark);
+                font-weight: 600;
+                position: relative;
+                display: inline-block;
+            }
+
+            .card-content h3::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 50px;
+                height: 3px;
+                background-color: var(--secondary);
+            }
+
+            .price-badge {
+                position: absolute;
+                top: -50px;
+                right: 10px;
+                background-color: var(--secondary);
+                color: var(--dark);
+                padding: 0.5rem 1.2rem;
+                border-radius: 50px;
+                font-weight: 700;
+                font-size: 1.1rem;
+                box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+            }
+
+            .description {
+                color: var(--gray);
+                margin-bottom: 1.5rem;
+                line-height: 1.7;
+            }
+
+            .uses-section {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px dashed var(--border);
+            }
+
+            .uses-section h4 {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                color: var(--primary-dark);
+                display: flex;
+                align-items: center;
+            }
+
+            .uses-section h4 i {
+                margin-right: 8px;
+                color: var(--secondary);
+            }
+
+            .uses-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .use-tag {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: var(--primary-dark);
+                padding: 0.4rem 0.8rem;
+                border-radius: 50px;
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+
+            /* Modern Footer (unchanged from your original) */
+            footer {
+                background-color: var(--dark);
+                color: white;
+                padding: 3rem 5% 1.5rem;
+                margin-top: 5rem;
+            }
+            
+            .footer-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            
+            .footer-col h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1.5rem;
+                position: relative;
+                padding-bottom: 0.5rem;
+            }
+            
+            .footer-col h3::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 50px;
+                height: 2px;
+                background-color: var(--primary);
+            }
+            
+            .footer-col p {
+                margin-bottom: 1rem;
+                opacity: 0.8;
+            }
+            
+            .footer-links li {
+                margin-bottom: 0.8rem;
+                list-style: none;
+            }
+            
+            .footer-links a {
+                color: white;
+                opacity: 0.8;
+                text-decoration: none;
+                transition: opacity 0.3s;
+            }
+            
+            .footer-links a:hover {
+                opacity: 1;
+            }
+            
+            .footer-bottom {
+                text-align: center;
+                padding-top: 2rem;
+                margin-top: 2rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* Responsive Design */
+            @media (max-width: 992px) {
+                .hero h2 {
+                    font-size: 2.5rem;
+                }
+                
+                .hero p {
+                    font-size: 1.1rem;
+                }
+            }
+
+                    @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1rem;
+                position: relative;
+            }
+            .logo { margin-bottom: 0; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0; right: 0;
+                background: var(--card-bg);
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                z-index: 999;
+                width: 100%;
+            }
+            nav ul.active, nav ul.open { display: flex; }
+            nav ul li { margin: 8px 0; }
+            .hamburger { display: flex !important; }
+
+                .filter-section {
+                    flex-direction: column;
+                    gap: 1.5rem;
+                    margin-top: -2rem;
+                padding: 1.5rem;
+                width: 90%;
+                }
+            
+                .search-box {
+                    width: 100%;
+                }
+                
+                .implements-container {
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 2rem;
+                }
+            }
+            
+            @media (max-width: 576px) {
+                .hero {
+                    height: 300px;
+                    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+                }
+                
+                .hero h2 {
+                    font-size: 2rem;
+                }
+                
+                .hero p {
+                    font-size: 1rem;
+                }
+                
+                .implements-container {
+                    grid-template-columns: 1fr;
+                    padding: 1.5rem;
+                }
+                
+                .implement-card {
+                    max-width: 100%;
+                }
+                
+                .price-badge {
+                    font-size: 1rem;
+                    padding: 0.4rem 1rem;
+                    top: -15px;
+                }
+            }
+
+            /* Animation for cards */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .implement-card {
+                animation: fadeInUp 0.6s ease forwards;
+                opacity: 0;
+            }
+
+            .implement-card:nth-child(1) { animation-delay: 0.1s; }
+            .implement-card:nth-child(2) { animation-delay: 0.2s; }
+            .implement-card:nth-child(3) { animation-delay: 0.3s; }
+            .implement-card:nth-child(4) { animation-delay: 0.4s; }
+            .implement-card:nth-child(5) { animation-delay: 0.5s; }
+            .implement-card:nth-child(6) { animation-delay: 0.6s; }
+        
+                
+    
+        /* Hamburger Menu */
+        .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; transition:all 0.3s; display:block; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
+        @media(max-width:768px) {
+            .hamburger { display:flex; }
+            nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:var(--card-bg); box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
+            nav ul.open { display:flex; }
+            nav { position:relative; }
+        }
+        </style>
+    </head>
+    <body>
+    
+
+            <header style="background:var(--nav-bg-page,#1a2535);border-bottom:1px solid var(--nav-border,#2d3e50);position:sticky;top:0;z-index:1000;transition:background 0.3s;">
+    <nav style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
+        <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover;border-radius:6px;">
+            <span style="font-size:1.3rem;font-weight:700;color:#4CAF50;white-space:nowrap;">Agri-Verse</span>
+        </a>
+        <ul id="pageNav" style="display:flex;list-style:none;align-items:center;gap:2px;flex-wrap:nowrap;">
+            <li><a href="index.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🏠 Home</a></li>
+            <li><a href="Seeds.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌱 Seeds</a></li>
+            <li><a href="Feritlizer.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🧪 Fertilizers</a></li>
+            <li><a href="mandi.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📊 Mandi</a></li>
+            <li><a href="weather.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌤️ Weather</a></li>
+            <li><a href="news.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📰 News</a></li>
+            <li><a href="tools.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🚜 Implements</a></li>
+            <li><a href="farmingtypes.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌾 Farming</a></li>
+            <li><a href="weather-rain.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌧️ Rain</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <button id="darkToggle" onclick="toggleDark()" title="Dark Mode" style="background:rgba(76,175,80,0.15);border:none;color:#4CAF50;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">🌙</button>
+            <button class="hamburger" id="pgHamburger" onclick="document.getElementById('pageNav').classList.toggle('open')" style="display:none;font-size:1.5rem;cursor:pointer;color:#4CAF50;background:none;border:none;">☰</button>
+        </div>
+    </nav>
+</header>
+
+        <div class="hero">
+            <h2>Quality Agriculture Implements</h2>
+            <p>Find the perfect tools for your farming needs</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search implements...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="category-filter">
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="tillage">Tillage Equipment</option>
+                    <option value="planting">Planting Equipment</option>
+                    <option value="harvesting">Harvesting Equipment</option>
+                    <option value="irrigation">Irrigation Equipment</option>
+                </select>
+            </div>
+        </div>
+
+        <main class="implements-container" id="implementsContainer">
+            <!-- Implement cards will be inserted here by JavaScript -->
+        </main>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Agri-Verse</h3>
+                    <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+                    <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="Seeds.html">Seeds</a></li>
+                        <li><a href="tools.html">Implements</a></li>
+                        <li><a href="Feritlizer.html">Fertilizers</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Equipment Guides</a></li>
+                        <li><a href="#">Maintenance Tips</a></li>
+                        <li><a href="#">Safety Procedures</a></li>
+                        <li><a href="#">Buying Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
+                    <form>
+                        <input type="email" placeholder="Your Email" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by Agri-Verse Team</p>
+            </div>
+        </footer>
+
+        <script>
+            // Static data for agriculture implements
+            const implementsData = [
+                {
+                    id: 1,
+                    name: "Plow",
+                    category: "tillage",
+                    price: "₹5,000 – ₹50,000",
+                    description: "A tool used for turning over and loosening the soil before planting. It helps in aeration and mixing organic matter.",
+                    uses: [
+                        "Soil preparation",
+                        "Provides controlled water supply",
+                        "Mixing compost",
+                        " Improves plant health and yield"
+                    ],
+                    image: "images/plowww.jpg"
+                },
+                {
+                    id: 2,
+                    name: "Harrow ",
+                    category: "tillage",
+                    price: "₹10,000 – ₹1,50,000",
+                    description: "A tool used to break up soil clumps, level the ground, and remove weeds after plowing  and its mix the fertilizwer with soil.",
+                    uses: [
+                        " Sharp metal discs for soil refinement",
+                        "Helps in soil aeration and weed control",
+                        " Ideal for preparing a fine seedbed",
+                        " Available in disc, tine, and chain harrow types   "
+                    ],
+                    image: "images/Harrow.jpg"
+                },
+                {
+                    id: 3,
+                    name: "Hoe",
+                    category: "tillage",
+                    price: "₹200 – ₹1,500",
+                    description: "A simple hand tool with a long handle and a flat metal blade used for weeding, loosening soil, and shaping planting beds.",
+                    uses: [
+                        " Ideal for small-scale farming and gardening",
+                        " Available in different blade shapes",
+                        "Helps in manual weed removal",
+                        "Easy to use in Gardening"
+                    ],
+                    image: "images/hoenew.jpg"
+                },
+                {
+                    id: 4,
+                    name: "Shovel",
+                    category:"planting",
+                    price: "₹300 – ₹2,500",
+                    description: "A tool with a broad, curved blade and a handle, used for digging, lifting, and moving soil, compost, or manure.",
+                    uses: [
+                        "Sturdy metal blade for durability",
+                        "Fertigation for small and large farms",
+                        "Ergonomic handle for a comfortable grip",
+                        "Multipurpose use in farming and construction"
+                    ],
+                    image: "images/shovwl.jpg"
+                },
+                {
+                    id: 5,
+                    name: "Spade",
+                    category: "tillage",
+                    price: "₹400 – ₹3,000",
+                    description: " A digging tool with a flat, sharp-edged blade used for cutting soil, digging trenches, and transplanting plants",
+                    uses: [
+                        "Strong, durable steel or iron material",
+                        " Sharp-edged blade for precise digging",
+                        "Straight or D-shaped handle for easy control",
+                        "Ideal for transplanting and soil turning"
+                    ],
+                    image: "images/spade.jpg"
+                },
+                {
+                    id: 6,
+                    name: "Rake",
+                    category: "tillage",
+                    price: "₹300 – ₹2,000",
+                    description: "A tool with a long handle and metal or plastic tines used for leveling soil, collecting debris, and spreading mulch",
+                    uses: [
+                        "Lightweight and easy to handle",
+                        "Available in leaf rake and garden rake types",
+                        "Helps in aerating and loosening topsoil",
+                        " Essential for landscaping and farming"
+                    ],
+                    image: "images/Rake.jpg"
+                },
+                {
+                    id: 7,
+                    name: "Cultivator",
+                    category: "harvesting",
+                    price: "₹3,000 – ₹50,000",
+                    description: "A tool or machine used to loosen soil, mix compost, and remove weeds before planting crops.   ",
+                    uses: [
+                        "Available in manual and tractor-mounted types",
+                        "Helps in weed control without damaging crops",
+                        "Improves soil aeration for better plant growth",
+                        "Reduces soil compaction"
+                    ],
+                    image: "images/cul.jpg"
+                }
+            ];
+
+            // Function to render implement cards with modern design
+            function renderImplements(implements) {
+                const container = document.getElementById('implementsContainer');
+                container.innerHTML = '';
+                
+                if (implements.length === 0) {
+                    container.innerHTML = '<div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--gray);"><i class="fas fa-tractor" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i><h3>No implements found matching your criteria</h3><p>Try adjusting your search or filter</p></div>';
+                    return;
+                }
+                
+                implements.forEach(implement => {
+                    const card = document.createElement('div'); 
+                    card.className = 'implement-card';
+                    
+                    // Format category for display
+                    const categoryText = implement.category === 'tillage' ? 'Tillage' :
+                                        implement.category === 'planting' ? 'Planting' :
+                                        implement.category === 'harvesting' ? 'Harvesting' :
+                                        'Irrigation';
+                    
+                    card.innerHTML = `
+                        <div class="card-image">
+                            <img src="${implement.image}" alt="${implement.name}" loading="lazy">
+                            <span class="category-tag">${categoryText}</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="price-badge">${implement.price}</div>
+                            <h3>${implement.name}</h3>
+                            <p class="description">${implement.description}</p>
+                            <div class="uses-section">
+                                <h4><i class="fas fa-check-circle"></i> Key Features</h4>
+                                <div class="uses-list">
+                                    ${implement.uses.map(use => `<span class="use-tag">${use}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+
+            // Function to filter implements based on search and category
+            function filterImplements() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const category = document.getElementById('categoryFilter').value;
+                
+                const filtered = implementsData.filter(implement => {
+                    const matchesSearch = implement.name.toLowerCase().includes(searchTerm) || 
+                                        implement.description.toLowerCase().includes(searchTerm) ||
+                                        implement.uses.some(use => use.toLowerCase().includes(searchTerm));
+                    const matchesCategory = category === 'all' || implement.category === category;
+                    return matchesSearch && matchesCategory;
+                });
+                
+                renderImplements(filtered);
+            }
+
+            // Event listeners
+            document.getElementById('searchInput').addEventListener('input', filterImplements);
+            document.getElementById('categoryFilter').addEventListener('change', filterImplements);
+            document.getElementById('searchBtn').addEventListener('click', filterImplements);
+
+            // Check login status
+            function checkLoginStatus() {
+                const token = localStorage.getItem('token');
+                const userEmail = localStorage.getItem('userEmail');
+                const authButtons = document.getElementById('auth-buttons');
+
+                if (token && userEmail) {
+                    authButtons.innerHTML = `
+                        <div class="user-info" style="display: flex; align-items: center;">
+                            <span style="margin-right: 1rem; font-size: 0.9rem;">${userEmail}</span>
+                            <button onclick="logout()" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    authButtons.innerHTML = `
+                        <a href="login.html" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            <i class="fas fa-user"></i> Login
+                        </a>
+                    `;
+                }
+            }
+
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userEmail');
+                window.location.href = 'index.html';
+            }
+
+            // Initial render
+            document.addEventListener('DOMContentLoaded', () => {
+                renderImplements(implementsData);
+                checkLoginStatus();
+                
+                // Add animation class after load
+                setTimeout(() => {
+                    document.querySelectorAll('.implement-card').forEach(card => {
+                        card.style.opacity = '1';
+                    });
+                }, 100);
+            });
+        </script>
+    <button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>window.onscroll=function(){document.getElementById("backToTop").style.display=window.scrollY>300?"block":"none";};</script>
+
+<script>
+var hamburger = document.getElementById('hamburger');
+var navUl = document.querySelector('nav ul');
+if(hamburger && navUl) {
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navUl.classList.toggle('open');
+    });
+}
+</script>
+<script src="nav.js"></script>
+</body>
+    </html>

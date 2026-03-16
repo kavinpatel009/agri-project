@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/Feritlizer.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizers | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse Fertilizers - Complete guide to organic and chemical fertilizers for better crop yield.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --light: #F5F5F5;
+            --dark: #212121;
+            --gray: #757575;
+        }
+        [data-theme="dark"] {
+            --card-bg: #1a2535;
+            --bg: #0f1923;
+            --text: #e8f5e9;
+            --dark: #e8f5e9;
+            --gray: #b0bec5;
+            --border: #2d3e50;
+            --light: #1e2d3d;
+            --primary-dark: #81c784;
+        }
+        [data-theme="dark"] body {
+            background-color: #0f1923 !important;
+            color: #e8f5e9 !important;
+        }
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-email {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .logout-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Fertilizer Page Specific Styles */
+        .fertilizer-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+        
+        .fertilizer-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .fertilizer-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+        }
+
+        .fertilizer-container {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .fertilizer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .fertilizer-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .fertilizer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .fertilizer-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .fertilizer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .fertilizer-card:hover .fertilizer-img img {
+            transform: scale(1.05);
+        }
+
+        .fertilizer-content {
+            padding: 1.5rem;
+        }
+
+        .fertilizer-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .fertilizer-type {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--text);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .fertilizer-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .fertilizer-details {
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--primary-dark);
+        }
+
+        .detail-value {
+            color: var(--gray);
+        }
+
+        /* Responsive styles */
+                @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1rem;
+                position: relative;
+            }
+            .logo { margin-bottom: 0; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0; right: 0;
+                background: #fff;
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                z-index: 999;
+                width: 100%;
+            }
+            nav ul.active, nav ul.open { display: flex; }
+            nav ul li { margin: 8px 0; }
+            .hamburger { display: flex !important; }
+
+            .fertilizer-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .fertilizer-hero p {
+                font-size: 1rem;
+            }
+
+            .user-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .fertilizer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 3rem 5% 1.5rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    
+                
+    
+        /* Hamburger Menu */
+        .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; transition:all 0.3s; display:block; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
+        @media(max-width:768px) {
+            .hamburger { display:flex; }
+            nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:#fff; box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
+            nav ul.open { display:flex; }
+            nav { position:relative; }
+        }
+        
+        @media(max-width:900px){
+            #pgHamburger { display:flex !important; }
+            #pageNav { display:none; flex-direction:column; position:absolute; top:60px; left:0; right:0; background:#1a2535; padding:15px 20px; box-shadow:0 8px 25px rgba(0,0,0,0.3); z-index:9999; }
+            #pageNav.open { display:flex !important; }
+        }
+
+        </style>
+</head>
+<body>
+    
+
+        <header style="background:var(--nav-bg-page,#1a2535);border-bottom:1px solid var(--nav-border,#2d3e50);position:sticky;top:0;z-index:1000;transition:background 0.3s;">
+    <nav style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
+        <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover;border-radius:6px;">
+            <span style="font-size:1.3rem;font-weight:700;color:#4CAF50;white-space:nowrap;">Agri-Verse</span>
+        </a>
+        <ul id="pageNav" style="display:flex;list-style:none;align-items:center;gap:2px;flex-wrap:nowrap;">
+            <li><a href="index.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🏠 Home</a></li>
+            <li><a href="Seeds.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌱 Seeds</a></li>
+            <li><a href="Feritlizer.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🧪 Fertilizers</a></li>
+            <li><a href="mandi.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📊 Mandi</a></li>
+            <li><a href="weather.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌤️ Weather</a></li>
+            <li><a href="news.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📰 News</a></li>
+            <li><a href="tools.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🚜 Implements</a></li>
+            <li><a href="farmingtypes.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌾 Farming</a></li>
+            <li><a href="weather-rain.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌧️ Rain</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <button id="darkToggle" onclick="toggleDark()" title="Dark Mode" style="background:rgba(76,175,80,0.15);border:none;color:#4CAF50;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">🌙</button>
+            <button class="hamburger" id="pgHamburger" onclick="document.getElementById('pageNav').classList.toggle('open')" style="display:none;font-size:1.5rem;cursor:pointer;color:#4CAF50;background:none;border:none;">☰</button>
+        </div>
+    </nav>
+</header>
+    
+    <main>
+        <section class="fertilizer-hero">
+            <h1>Fertilizer Information Center</h1>
+            <p>Discover the right fertilizers for your crops and learn how to use them effectively for optimal growth</p>
+        </section>
+
+        <section class="fertilizer-container">
+            <div class="section-title">
+                <h2>Fertilizers and Benefits</h2>
+                <p>Select the appropriate fertilizer based on your soil health analysis and crop requirements</p>
+            </div>
+
+            <div class="fertilizer-grid">
+                <!-- Fertilizer 1 -->
+                <div class="fertilizer-card">
+                    <div class="fertilizer-img">
+                        <img loading="lazy" src="images/Ureaaa.jpg" alt="Nitrogen-Based Fertilizer">
+                    </div>
+                    <div class="fertilizer-content">
+                        <h3>Urea</h3>
+                        <span class="fertilizer-type">Nitrogen-Based Fertilizer</span>
+                        <p>Urea is a source of Nitrogen, an essential nutrient crucial for crop growth and development. Urea is the
+                             most important nitrogenous fertilizer in the country because of its high N content (46%N)</p>
+                        
+                        <div class="fertilizer-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Best For:</span>
+                                <span class="detail-value">Rice, Wheat, Maize, Sugarcane and  Vegetables </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Average Price:</span>
+                                <span class="detail-value">1220 per 50kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application:</span>
+                                <span class="detail-value">Mix into soil before planting</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Benefits:</span>
+                                <span class="detail-value">Improves soil structure, slow-release nutrients</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fertilizer 2 -->
+                <div class="fertilizer-card">
+                    <div class="fertilizer-img">
+                        <img loading="lazy" src="images/Ammonium Nitrate.jpg" alt="Ammonium Nitrate">
+                    </div>
+                    <div class="fertilizer-content">
+                        <h3>Ammonium Nitrate</h3>
+                        <span class="fertilizer-type">Nitrogen Fertilizer</span>
+                        <p>Ammonium nitrate (NH₄NO₃) is a white, crystalline, water-soluble compound used as a fertilizer and a component in explosives. It's a strong oxidizer and can be dangerous if mishandled, especially when mixed with fuel. </p>
+                        
+                        <div class="fertilizer-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Best For:</span>
+                                <span class="detail-value">Maize, Barley, Potatoes, Vegetables</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Average Price</span>
+                                <span class="detail-value">₹35,000–₹50,000 per metric ton</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application:</span>
+                                <span class="detail-value">Top dressing or dissolved in water</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Benefits:</span>
+                                <span class="detail-value">Quick nitrogen release, making it more efficient for faster crop growth.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fertilizer 3 -->
+                <div class="fertilizer-card">
+                    <div class="fertilizer-img">
+                        <img loading="lazy" src="images/Bowl.jpg" alt="DAP Fertilizer">
+                    </div>
+                    <div class="fertilizer-content">
+                        <h3>Diammonium Phosphate</h3>
+                        <span class="fertilizer-type">Phosphorus Fertilizer</span>
+                        <p>A widely used phosphorus fertilizer 
+                            containing nitrogen that promotes root development and floweringDiammonium phosphate Diammonium 
+                            phosphate (DAP) is a water-soluble fertilizer that contains nitrogen and phosphorus. It's the most widely 
+                            used phosphorus fertilizer in the world. .</p>
+                        
+                        <div class="fertilizer-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Best For:</span>
+                                <span class="detail-value">Fruit crops, flowering plants</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Average Price</span>
+                                <span class="detail-value">₹8,000–₹15,000 per metric ton</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application:</span>
+                                <span class="detail-value">Basal application at planting</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Benefits:</span>
+                                <span class="detail-value">Strong root development, improves flowering Provides phosphorus and nitrogen to plants, stimulates root growth, and improves fruit formation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fertilizer 4 -->
+                <div class="fertilizer-card">
+                    <div class="fertilizer-img">
+                        <img loading="lazy" src="images/Mop.jpg" alt="Potash Fertilizer">
+                    </div>
+                    <div class="fertilizer-content">
+                        <h3>Muriate of Potash (MOP)</h3>
+                        <span class="fertilizer-type">Potassium Fertilizer</span>
+                        <p>A potassium-rich fertilizer essential for fruit development, disease resistance, and water regulationEnhances root strength and improves plant resistance to drought and diseases.
+                            Increases crop yield and enhances fruit quality.
+                         </p>
+                        
+                        <div class="fertilizer-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Best For:</span>
+                                <span class="detail-value">Sugarcane, Potatoes, Bananas, Cotton, Oilseeds</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Avrage Price:</span>
+                                <span class="detail-value">₹34,000–₹42,000 per metric ton</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application:</span>
+                                <span class="detail-value">Side dressing during growth</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Benefits:</span>
+                                <span class="detail-value">Improves fruit quality, enhances drought resistance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fertilizer 5 -->
+                <div class="fertilizer-card">
+                    <div class="fertilizer-img">
+                        <img loading="lazy" src="images/Sopppp.webp" alt="NPK Fertilizer">
+                    </div>
+                    <div class="fertilizer-content">
+                        <h3>Sulfate of Potash (SOP)</h3>
+                        <span class="fertilizer-type">Potassium-Based Fertilizer</span>
+                        <p>A complete fertilizer containing nitrogen, phosphorus, and potassium in balanced proportions Suitable for chloride-sensitive crops as it has lower salt content than MOP.
+
+                            Improves flowering and fruit setting, enhances crop resistance to stress..</p>
+                        
+                        <div class="fertilizer-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Best For:</span>
+                                <span class="detail-value">Most field and garden crops Tea, Tobacco, Grapes, Tomatoes, Citrus Fruits</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Average Price:</span>
+                                <span class="detail-value">₹50,000–₹70,000 per metric ton</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application:</span>
+                                <span class="detail-value">Basal and top dressing</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Benefits:</span>
+                                <span class="detail-value">Complete nutrition, convenient application Provides sulfur, which is crucial for protein synthesis in plants.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fertilizer 6 -->
+                <div class="fertilizer-card">
+                    <div class="fertilizer-img">
+                        <img loading="lazy" src="images/npk_fertilizers.jpg" alt="Biofertilizer">
+                    </div>
+                    <div class="fertilizer-content">
+                        <h3>NPK Fertilizers</h3>
+                        <span class="fertilizer-type">NPK</span>
+                        <p>Contains living microorganisms that enhance nutrie
+                            nt availability through natural processes
+                            NPK fertilizers are fertilizers that contain the elements nitrogen (N), phosphorus (P), and potassium (K). Why these elements? Well, each element has been found to improve the health and appearance of plants..</p>
+                        
+                        <div class="fertilizer-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Best For:</span>
+                                <span class="detail-value">Corn, Rice, Soybean, Vegetables</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Average Price:</span>
+                                <span class="detail-value">100-1500 per 20Kg</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application:</span>
+                                <span class="detail-value">Seed treatment or soil application</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Benefits:</span>
+                                <span class="detail-value">Eco-friendly, improves soil health</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Agri-Verse</h3>
+                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+                <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Feritlizer.html">Fertilizers</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Farming Guides</a></li>
+                    <li><a href="#">Soil Health</a></li>
+                    <li><a href="#">Crop Calendar</a></li>
+                    <li><a href="#">Fertilizer Calculator</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
+                <form>
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by Agri-Verse Team</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        function checkLoginStatus() {
+            // Check if token exists in localStorage (you would typically verify this with your backend)
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+            const authButtons = document.getElementById('auth-buttons');
+
+            if (token && userEmail) {
+                // User is logged in - show email and logout button
+                authButtons.innerHTML = `
+                    <div class="user-info">
+                        <span class="user-email">${userEmail}</span>
+                        <button class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                `;
+            } else {
+                // User is not logged in - show login/signup buttons
+                authButtons.innerHTML = `
+                    <a href="login.html" class="btn">Login</a>
+                `;
+            }
+        }
+
+        // Logout function
+        function logout() {
+            // Clear the stored token and user info
+            localStorage.removeItem('token');
+            localStorage.removeItem('userEmail');
+            
+            // Redirect to home page or login page
+            window.location.href = 'index.html';
+        }
+
+        // Check login status when page loads
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+<button id="backToTop" style="position:fixed;bottom:30px;right:30px;background:#4CAF50;color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:1.3rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 10px rgba(0,0,0,0.2)" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>window.onscroll=function(){document.getElementById("backToTop").style.display=window.scrollY>300?"block":"none";};</script>
+
+<script>
+var hamburger = document.getElementById('hamburger');
+var navUl = document.querySelector('nav ul');
+if(hamburger && navUl) {
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navUl.classList.toggle('open');
+    });
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

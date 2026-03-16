@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/mandi.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandi Price | Agri-Verse - Live Gujarat Mandi Bhav</title>
+    <meta name="description" content="Check today's live mandi prices for groundnut, cotton, jeera, tomato, onion and more crops across Gujarat cities.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="theme-color" content="#1b4332">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--primary:#4CAF50;--primary-dark:#388E3C;--bg:#f0f4f0;--card-bg:#fff;--nav-bg:#fff;--text:#1b2e1b;--gray:#666;--border:#d8ebd8;--shadow:0 4px 20px rgba(0,0,0,0.08);}
+        [data-theme="dark"]{--bg:#0f1923;--card-bg:#1a2535;--nav-bg:#1a2535;--text:#e8f5e9;--gray:#b0bec5;--border:#2d3e50;--shadow:0 4px 20px rgba(0,0,0,0.4);}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;}
+        nav{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 4%;background:var(--nav-bg);box-shadow:0 2px 15px rgba(0,0,0,0.1);position:sticky;top:0;z-index:1000;}
+        .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+        .nav-logo img{height:40px;width:40px;border-radius:50%;object-fit:cover;border:2px solid var(--primary);}
+        .nav-logo span{font-size:1.4rem;font-weight:700;color:var(--primary);}
+        .nav-links{display:flex;list-style:none;gap:4px;align-items:center;}
+        .nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:0.88rem;padding:6px 10px;border-radius:6px;transition:all 0.2s;}
+        .nav-links a:hover,.nav-links a.active{color:var(--primary);background:rgba(76,175,80,0.08);}
+        .nav-icon-btn{background:rgba(76,175,80,0.1);border:none;color:var(--primary);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+        .nav-icon-btn:hover{background:var(--primary);color:white;}
+        .hamburger{display:none;font-size:1.5rem;cursor:pointer;color:var(--primary);background:none;border:none;}
+        @media(max-width:900px){.hamburger{display:block;}.nav-links{display:none;flex-direction:column;position:absolute;top:62px;left:0;right:0;background:var(--nav-bg);padding:15px 20px 20px;box-shadow:0 8px 25px rgba(0,0,0,0.15);z-index:9999;}.nav-links.open{display:flex;}}
+        .mandi-hero{background:linear-gradient(135deg,#0f2d1a,#1b4332,#2d6a4f);padding:3rem 5% 2rem;text-align:center;color:white;position:relative;overflow:hidden;}
+        .mandi-hero::after{content:'📊';position:absolute;right:5%;top:50%;transform:translateY(-50%);font-size:8rem;opacity:0.06;}
+        .mandi-hero h1{font-size:2.2rem;font-weight:700;margin-bottom:0.4rem;}
+        .mandi-hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;margin-bottom:1rem;}
+        .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:5px 14px;border-radius:30px;font-size:0.8rem;color:rgba(255,255,255,0.85);margin-bottom:1rem;}
+        .live-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:blink 1.2s infinite;}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+        .source-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1rem;}
+        .source-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:7px 16px;border-radius:25px;font-size:0.82rem;font-weight:600;text-decoration:none;transition:all 0.3s;}
+        .source-btn:hover{background:rgba(255,255,255,0.3);}
+        .controls{background:var(--card-bg);padding:1rem 4%;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;top:62px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+        .search-box{flex:1;min-width:200px;position:relative;}
+        .search-box input{width:100%;padding:9px 14px 9px 38px;border:2px solid var(--border);border-radius:25px;font-size:0.9rem;background:var(--bg);color:var(--text);outline:none;transition:border 0.3s;font-family:'Poppins',sans-serif;}
+        .search-box input:focus{border-color:var(--primary);}
+        .search-box i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--gray);}
+        .filter-select{padding:9px 14px;border:2px solid var(--border);border-radius:25px;font-size:0.88rem;background:var(--bg);color:var(--text);outline:none;cursor:pointer;font-family:'Poppins',sans-serif;}
+        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:1.5rem 4%;max-width:1300px;margin:0 auto;}
+        @media(max-width:600px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+        .stat-card{background:var(--card-bg);border-radius:14px;padding:1.1rem 1.3rem;border:1px solid var(--border);box-shadow:var(--shadow);}
+        .stat-card .s-val{font-size:1.7rem;font-weight:700;color:var(--primary);}
+        .stat-card .s-lbl{font-size:0.78rem;color:var(--gray);margin-top:2px;}
+        .table-wrap{padding:0 4% 3rem;max-width:1300px;margin:0 auto;}
+        .section-head{display:flex;align-items:center;justify-content:space-between;margin:1.2rem 0 1rem;flex-wrap:wrap;gap:8px;}
+        .section-head h2{font-size:1.2rem;font-weight:700;color:var(--primary-dark);display:flex;align-items:center;gap:8px;}
+        [data-theme="dark"] .section-head h2{color:#81c784;}
+        .table-container{background:var(--card-bg);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto;}
+        table{width:100%;border-collapse:collapse;min-width:560px;}
+        thead{background:linear-gradient(135deg,#1b4332,#2d6a4f);}
+        thead th{padding:12px 14px;text-align:left;font-size:0.83rem;font-weight:600;color:rgba(255,255,255,0.9);}
+        tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+        tbody tr:last-child{border-bottom:none;}
+        tbody tr:hover{background:rgba(76,175,80,0.05);}
+        tbody td{padding:11px 14px;font-size:0.87rem;color:var(--text);vertical-align:middle;}
+        .crop-name{font-weight:600;}
+        .crop-gu{color:var(--gray);font-size:0.78rem;font-weight:400;display:block;margin-top:1px;}
+        .badge-cat{background:rgba(76,175,80,0.12);color:var(--primary-dark);padding:3px 9px;border-radius:20px;font-size:0.73rem;font-weight:600;white-space:nowrap;}
+        [data-theme="dark"] .badge-cat{background:rgba(76,175,80,0.2);color:#81c784;}
+        .price-modal{font-weight:700;font-size:0.95rem;color:var(--primary-dark);}
+        [data-theme="dark"] .price-modal{color:#81c784;}
+        .trend-up{color:#16a34a;font-size:0.78rem;font-weight:600;}
+        .trend-down{color:#dc2626;font-size:0.78rem;font-weight:600;}
+        .trend-same{color:var(--gray);font-size:0.78rem;}
+        .no-data{text-align:center;padding:3rem;color:var(--gray);}
+        .disclaimer{background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);border-radius:12px;padding:11px 16px;margin:0 4% 1.5rem;max-width:1300px;font-size:0.8rem;color:var(--gray);display:flex;gap:10px;align-items:flex-start;}
+        .disclaimer i{color:#f59e0b;margin-top:2px;flex-shrink:0;}
+        .loader-wrap{text-align:center;padding:3rem;}
+        .spinner-lg{width:44px;height:44px;border:4px solid rgba(76,175,80,0.2);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        #backToTop{position:fixed;bottom:25px;right:25px;background:var(--primary);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:1.2rem;cursor:pointer;display:none;z-index:999;box-shadow:0 3px 12px rgba(0,0,0,0.2);transition:all 0.3s;}
+        #backToTop:hover{background:#388E3C;transform:translateY(-3px);}
+        footer{background:linear-gradient(135deg,#0f1923,#1b4332);color:white;padding:2rem 5%;text-align:center;font-size:0.88rem;}
+        footer a{color:#81c784;text-decoration:none;}
+    </style>
+</head>
+<body>
+
+    <header style="background:#1a2535;border-bottom:1px solid #2d3e50;position:sticky;top:0;z-index:1000;">
+        <nav style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
+            <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+                <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover;border-radius:6px;">
+                <span style="font-size:1.3rem;font-weight:700;color:#4CAF50;white-space:nowrap;">Agri-Verse</span>
+            </a>
+            <ul style="display:flex;list-style:none;align-items:center;gap:2px;flex-wrap:nowrap;">
+                <li><a href="index.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">🏠 Home</a></li>
+                <li><a href="Seeds.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">🌱 Seeds</a></li>
+                <li><a href="Feritlizer.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">🧪 Fertilizers</a></li>
+                <li><a href="mandi.html" style="text-decoration:none;color:#4CAF50;font-weight:600;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;background:rgba(76,175,80,0.15);">📊 Mandi</a></li>
+                <li><a href="weather.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">🌤️ Weather</a></li>
+                <li><a href="news.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">📰 News</a></li>
+                <li><a href="tools.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">🚜 Implements</a></li>
+                <li><a href="farmingtypes.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;">🌾 Farming</a></li>
+            </ul>
+            <a href="login.html" style="display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px solid #4CAF50;color:#4CAF50;padding:6px 16px;border-radius:25px;font-size:0.84rem;font-weight:600;text-decoration:none;white-space:nowrap;flex-shrink:0;">👤 Login</a>
+        </nav>
+    </header>
+
+<div class="mandi-hero">
+    <div class="live-badge"><div class="live-dot"></div> Source: Agmarknet · CommodityOnline · KisanDeals</div>
+    <h1>📊 Gujarat Mandi Bhav</h1>
+    <p>Groundnut, Cotton, Jeeru, Tameta, Dungri ane 30+ crops na current reference rates (₹/Quintal)</p>
+    <div class="source-btns">
+        <a href="https://agmarknet.gov.in" target="_blank" class="source-btn"><i class="fas fa-landmark"></i> Agmarknet (Govt.)</a>
+        <a href="https://www.commodityonline.com/mandiprices" target="_blank" class="source-btn"><i class="fas fa-chart-line"></i> CommodityOnline</a>
+        <a href="https://gujaratbajarbhav.com" target="_blank" class="source-btn"><i class="fas fa-rupee-sign"></i> Gujarat Bajar Bhav</a>
+        <a href="https://enam.gov.in/web/dashboard/trade-data" target="_blank" class="source-btn"><i class="fas fa-store"></i> e-NAM Portal</a>
+    </div>
+</div>
+
+<div class="controls">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInp" placeholder="Crop search karo... (Groundnut, Jeeru, Tameta...)" oninput="filterTable()">
+    </div>
+    <select class="filter-select" id="catFilter" onchange="filterTable()">
+        <option value="">All Categories</option>
+        <option>Oilseeds</option>
+        <option>Vegetables</option>
+        <option>Spices</option>
+        <option>Cereals</option>
+        <option>Pulses</option>
+        <option>Fruits</option>
+    </select>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card"><div class="s-val" id="totalCount">35</div><div class="s-lbl">Crops Listed</div></div>
+    <div class="stat-card"><div class="s-val">16+</div><div class="s-lbl">Gujarat Mandis</div></div>
+    <div class="stat-card"><div class="s-val" id="todayDate">—</div><div class="s-lbl">Price Date</div></div>
+    <div class="stat-card"><div class="s-val">📡</div><div class="s-lbl">Agmarknet Source</div></div>
+</div>
+
+<div class="disclaimer">
+    <i class="fas fa-info-circle"></i>
+    <span><strong>Mahtvapurni Suchna:</strong> Aa bhav <strong>reference rates</strong> che — Agmarknet, CommodityOnline, KisanDeals par thi lidal che. Rojna bhav badalay che. Sachi live information mate upar na <strong>Source Links</strong> visit karo ya tamari local APMC mandi ma confirm karo.</span>
+</div>
+
+<div class="table-wrap">
+    <div class="section-head">
+        <h2><i class="fas fa-table"></i> Gujarat Mandi Rates (₹/Quintal)</h2>
+        <span id="rowCount" style="font-size:0.82rem;color:var(--gray);"></span>
+    </div>
+    <div id="loaderWrap" class="loader-wrap">
+        <div class="spinner-lg"></div>
+        <p style="color:var(--gray);">Loading prices...</p>
+    </div>
+    <div class="table-container" id="tableContainer" style="display:none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Crop (Pako)</th>
+                    <th>Category</th>
+                    <th>Min ₹/Qtl</th>
+                    <th>Max ₹/Qtl</th>
+                    <th>Modal ₹/Qtl</th>
+                    <th>₹/kg</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody id="mandiBody"></tbody>
+        </table>
+        <div class="no-data" id="noData" style="display:none;">🌾 Koi result malyu nahi. Biju crop search karo.</div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Agri-Verse | <a href="index.html">Home</a> | <a href="index.html#contact">Contact</a></p>
+    <p style="margin-top:6px;font-size:0.78rem;opacity:0.7;">Prices are reference only. Verify with APMC. Developed by Kavin Dobariya</p>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Dark Mode
+(function(){
+    const s=localStorage.getItem('agri-theme')||'light';
+    document.documentElement.setAttribute('data-theme',s);
+    document.addEventListener('DOMContentLoaded',function(){
+        const b=document.getElementById('darkToggle');
+        if(b) b.textContent=s==='dark'?'☀️':'🌙';
+    });
+})();
+function toggleDark(){
+    const d=document.documentElement.getAttribute('data-theme')==='dark';
+    document.documentElement.setAttribute('data-theme',d?'light':'dark');
+    document.getElementById('darkToggle').textContent=d?'🌙':'☀️';
+    localStorage.setItem('agri-theme',d?'light':'dark');
+}
+
+// ===== REAL GUJARAT MANDI DATA =====
+// Source: Agmarknet / CommodityOnline / KisanDeals (2025-2026)
+const mandiData = [
+    // OILSEEDS
+    {crop:'Groundnut (Mungfali)',gu:'મગફળી',emoji:'🥜',cat:'Oilseeds',min:5255,max:8750,modal:6654,trend:1,cities:'Junagadh · Rajkot · Amreli · Gondal · Morbi'},
+    {crop:'Groundnut G20',gu:'મગફળી G20',emoji:'🥜',cat:'Oilseeds',min:6100,max:6570,modal:6305,trend:0,cities:'Junagadh · Jasdan · Dhari'},
+    {crop:'Cotton (Kapas)',gu:'કપાસ',emoji:'☁️',cat:'Oilseeds',min:5605,max:9325,modal:7317,trend:1,cities:'Surendranagar · Rajkot · Morbi · Ahmedabad'},
+    {crop:'Castor Seed (Eranda)',gu:'એરંડા',emoji:'🌿',cat:'Oilseeds',min:5200,max:6500,modal:5800,trend:-1,cities:'Mehsana · Palanpur · Deesa · Unjha'},
+    {crop:'Sesame (Tal)',gu:'તલ',emoji:'🤍',cat:'Oilseeds',min:11000,max:16000,modal:13500,trend:1,cities:'Junagadh · Rajkot · Gondal · Amreli'},
+    {crop:'Mustard (Rai)',gu:'રાઈ',emoji:'🟡',cat:'Oilseeds',min:4800,max:5800,modal:5300,trend:0,cities:'Surendranagar · Mehsana · Viramgam'},
+
+    // SPICES
+    {crop:'Cumin Seed (Jeeru)',gu:'જીરૂ',emoji:'🌿',cat:'Spices',min:17975,max:26175,modal:20000,trend:1,cities:'Unjha · Rajkot · Junagadh · Radhanpur · Harij'},
+    {crop:'Cumin - Unjha APMC',gu:'જીરૂ (ઊંઝા)',emoji:'🌿',cat:'Spices',min:18500,max:26175,modal:21750,trend:1,cities:'Unjha APMC (highest rate in Gujarat)'},
+    {crop:'Coriander (Dhana)',gu:'ધાણા',emoji:'🌿',cat:'Spices',min:5550,max:9800,modal:7675,trend:0,cities:'Mehsana · Palanpur · Deesa · Unjha'},
+    {crop:'Fennel (Variyali)',gu:'વરિયાળી',emoji:'🌿',cat:'Spices',min:10000,max:18000,modal:13000,trend:-1,cities:'Palanpur · Unjha · Deesa · Sami'},
+    {crop:'Garlic (Lasan)',gu:'લસણ',emoji:'🧄',cat:'Spices',min:4000,max:9000,modal:5500,trend:1,cities:'Anand · Rajkot · Gondal · Junagadh'},
+    {crop:'Turmeric (Haldar)',gu:'હળદર',emoji:'🟡',cat:'Spices',min:8000,max:14000,modal:10000,trend:0,cities:'Surat · Bharuch · Navsari'},
+
+    // VEGETABLES
+    {crop:'Tomato (Tameta)',gu:'ટામેટા',emoji:'🍅',cat:'Vegetables',min:1700,max:4200,modal:2997,trend:0,cities:'Gondal · Anand · Surat · Ahmedabad · Morbi'},
+    {crop:'Onion (Dungri)',gu:'ડુંગળી',emoji:'🧅',cat:'Vegetables',min:625,max:2200,modal:1186,trend:-1,cities:'Rajkot · Bhavnagar · Ahmedabad · Surat · Morbi'},
+    {crop:'Potato (Bateta)',gu:'બટાટા',emoji:'🥔',cat:'Vegetables',min:600,max:1600,modal:1000,trend:0,cities:'Ahmedabad · Nadiad · Anand · Kapadvanj'},
+    {crop:'Brinjal (Ringan)',gu:'રીંગણ',emoji:'🍆',cat:'Vegetables',min:400,max:1200,modal:700,trend:1,cities:'Surat · Vadodara · Bharuch · Navsari'},
+    {crop:'Okra (Bhindi)',gu:'ભીંડા',emoji:'🌿',cat:'Vegetables',min:600,max:2000,modal:1100,trend:0,cities:'Vadodara · Anand · Surat · Padra'},
+    {crop:'Cabbage (Kobi)',gu:'કોબી',emoji:'🥬',cat:'Vegetables',min:300,max:900,modal:550,trend:-1,cities:'Ahmedabad · Surat · Nadiad'},
+    {crop:'Cauliflower (Fulkobi)',gu:'ફૂલકોબી',emoji:'🥦',cat:'Vegetables',min:400,max:1200,modal:700,trend:0,cities:'Surat · Navsari · Bharuch · Bilimora'},
+    {crop:'Bitter Gourd (Karela)',gu:'કારેલા',emoji:'🌿',cat:'Vegetables',min:700,max:2000,modal:1200,trend:1,cities:'Bharuch · Ankleshwar · Vadodara'},
+    {crop:'Green Chilli (Marcha)',gu:'લીલા મરચા',emoji:'🌶️',cat:'Vegetables',min:1500,max:5000,modal:2500,trend:1,cities:'Surat · Vadodara · Anand · Navsari'},
+
+    // CEREALS
+    {crop:'Wheat (Ghau)',gu:'ઘઉં',emoji:'🌾',cat:'Cereals',min:2100,max:2600,modal:2300,trend:0,cities:'Rajkot · Ahmedabad · Mehsana · Viramgam (MSP ₹2275)'},
+    {crop:'Bajra (Pearl Millet)',gu:'બાજરો',emoji:'🌾',cat:'Cereals',min:1800,max:2400,modal:2100,trend:1,cities:'Surendranagar · Bhavnagar · Jamnagar (MSP ₹2625)'},
+    {crop:'Jowar (Sorghum)',gu:'જુવાર',emoji:'🌾',cat:'Cereals',min:1900,max:2500,modal:2200,trend:0,cities:'Jamnagar · Junagadh · Rajkot (MSP ₹3371)'},
+    {crop:'Maize (Makkai)',gu:'મકાઈ',emoji:'🌽',cat:'Cereals',min:1600,max:2200,modal:1900,trend:-1,cities:'Anand · Nadiad · Bharuch · Dahod'},
+    {crop:'Paddy / Rice (Dangar)',gu:'ડાંગર',emoji:'🍚',cat:'Cereals',min:2000,max:3800,modal:2800,trend:0,cities:'Bharuch · Navsari · Surat · Valsad'},
+
+    // PULSES
+    {crop:'Chana (Chickpea)',gu:'ચણા',emoji:'🟡',cat:'Pulses',min:4800,max:6200,modal:5500,trend:1,cities:'Rajkot · Ahmedabad · Mehsana (MSP ₹5440)'},
+    {crop:'Moong (Green Gram)',gu:'મગ',emoji:'💚',cat:'Pulses',min:7000,max:9000,modal:7800,trend:1,cities:'Morbi · Rajkot · Jamnagar · Halvad'},
+    {crop:'Urad (Black Gram)',gu:'અડદ',emoji:'⚫',cat:'Pulses',min:6500,max:8500,modal:7200,trend:0,cities:'Surat · Vadodara · Bharuch · Anand'},
+    {crop:'Tur (Pigeon Pea)',gu:'તુવેર',emoji:'🟤',cat:'Pulses',min:6800,max:9000,modal:7800,trend:1,cities:'Vadodara · Bharuch · Anand (MSP ₹7550)'},
+
+    // FRUITS
+    {crop:'Banana (Kela)',gu:'કેળા',emoji:'🍌',cat:'Fruits',min:800,max:2000,modal:1300,trend:0,cities:'Anand · Surat · Bharuch · Navsari'},
+    {crop:'Mango (Keri)',gu:'કેરી',emoji:'🥭',cat:'Fruits',min:2000,max:9000,modal:4500,trend:1,cities:'Junagadh · Surat · Valsad (Season: Mar-Jun)'},
+    {crop:'Sapota (Chiku)',gu:'ચીકુ',emoji:'🍂',cat:'Fruits',min:1200,max:3000,modal:1800,trend:0,cities:'Anand · Surat · Navsari · Bharuch'},
+    {crop:'Pomegranate (Dadam)',gu:'દાડમ',emoji:'❤️',cat:'Fruits',min:4000,max:10000,modal:6500,trend:0,cities:'Bhavnagar · Junagadh · Rajkot · Jamnagar'},
+    {crop:'Lemon (Limbu)',gu:'લીંબુ',emoji:'🍋',cat:'Fruits',min:1500,max:5000,modal:2800,trend:-1,cities:'Vadodara · Anand · Surat · Navsari'},
+];
+
+let filtered=[...mandiData];
+
+function trendHTML(t){
+    if(t===1) return '<span class="trend-up">▲ Rising</span>';
+    if(t===-1) return '<span class="trend-down">▼ Falling</span>';
+    return '<span class="trend-same">— Stable</span>';
+}
+
+function renderTable(data){
+    const tbody=document.getElementById('mandiBody');
+    const noData=document.getElementById('noData');
+    tbody.innerHTML='';
+    if(!data.length){noData.style.display='block';document.getElementById('rowCount').textContent='0 results';return;}
+    noData.style.display='none';
+    document.getElementById('rowCount').textContent=data.length+' crops';
+    data.forEach(r=>{
+        const kg=(r.modal/100).toFixed(1);
+        tbody.innerHTML+=`
+        <tr>
+            <td>
+                <span class="crop-name">${r.emoji} ${r.crop}</span>
+                <span class="crop-gu">${r.gu} · ${r.cities}</span>
+            </td>
+            <td><span class="badge-cat">${r.cat}</span></td>
+            <td>₹${r.min.toLocaleString('en-IN')}</td>
+            <td>₹${r.max.toLocaleString('en-IN')}</td>
+            <td class="price-modal">₹${r.modal.toLocaleString('en-IN')}</td>
+            <td>₹${kg}</td>
+            <td>${trendHTML(r.trend)}</td>
+        </tr>`;
+    });
+}
+
+function filterTable(){
+    const q=document.getElementById('searchInp').value.toLowerCase();
+    const cat=document.getElementById('catFilter').value;
+    filtered=mandiData.filter(r=>{
+        const mq=!q||r.crop.toLowerCase().includes(q)||r.gu.includes(q)||r.cities.toLowerCase().includes(q);
+        const mc=!cat||r.cat===cat;
+        return mq&&mc;
+    });
+    renderTable(filtered);
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+    const t=new Date();
+    document.getElementById('todayDate').textContent=t.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+    document.getElementById('totalCount').textContent=mandiData.length;
+    setTimeout(()=>{
+        document.getElementById('loaderWrap').style.display='none';
+        document.getElementById('tableContainer').style.display='block';
+        renderTable(mandiData);
+    },800);
+});
+
+window.addEventListener('scroll',function(){
+    document.getElementById('backToTop').style.display=window.scrollY>300?'block':'none';
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

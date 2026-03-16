@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/weather-rain.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Verse | Farmer Tools</title>
+    <meta name="description" content="Rain Tracker, Crop Calendar, AI Crop Doctor and Mandi Map for Gujarat farmers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#2d6a4f;--green-light:#52b788;--green-pale:#d8f3dc;--accent:#f9c74f;--bg:#f0f7f4;--white:#fff;--gray:#6b7280;--dark:#1a1a2e;--shadow:0 4px 24px rgba(45,106,79,0.10);--radius:18px;}
+        [data-theme="dark"] {
+            --card-bg: #1a2535;
+            --bg: #0f1923;
+            --text: #e8f5e9;
+            --dark: #e8f5e9;
+            --gray: #b0bec5;
+            --border: #2d3e50;
+            --light: #1e2d3d;
+            --primary-dark: #81c784;
+        }
+        [data-theme="dark"] body {
+            background-color: #0f1923 !important;
+            color: #e8f5e9 !important;
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg);color: var(--text);}
+        header{background:#fff;box-shadow:0 2px 16px rgba(0,0,0,0.07);position:sticky;top:0;z-index:100;}
+        nav{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 5%;max-width:1400px;margin:0 auto;}
+        .logo{font-size:1.5rem;font-weight:700;color:var(--green);display:flex;align-items:center;text-decoration:none;gap:10px;}
+        .logo img{height:42px;width:42px;object-fit:cover;border-radius:50%;}
+        nav ul{display:flex;list-style:none;align-items:center;gap:1.5rem;}
+        nav ul li a{text-decoration:none;color:#444;font-weight:500;font-size:0.9rem;transition:color 0.3s;}
+        nav ul li a:hover{color:var(--green);}
+        .nav-btn{background:var(--green);color:#fff!important;padding:7px 18px;border-radius:25px;font-weight:600!important;}
+        .hamburger{display:none;font-size:1.5rem;cursor:pointer;color:var(--green);background:none;border:none;}
+        @media(max-width:768px){.hamburger{display:block;}nav ul{display:none;flex-direction:column;position:absolute;top:62px;left:0;right:0;background:#fff;padding:15px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:9999;}nav ul.active{display:flex;}}
+        .tools-hero{background:linear-gradient(135deg,#1b4332 0%,#2d6a4f 50%,#52b788 100%);padding:2.5rem 5% 0;text-align:center;}
+        .tools-hero h1{color:#fff;font-size:1.8rem;font-weight:700;margin-bottom:0.4rem;}
+        .tools-hero p{color:rgba(255,255,255,0.8);font-size:0.95rem;margin-bottom:1.8rem;}
+        .tab-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+        .tab-btn{padding:12px 24px;border-radius:14px 14px 0 0;border:none;background:rgba(255,255,255,0.15);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.3s;backdrop-filter:blur(8px);display:flex;align-items:center;gap:8px;}
+        .tab-btn:hover{background:rgba(255,255,255,0.25);}
+        .tab-btn.active{background:#fff;color:var(--green);}
+        .tab-section{display:none;padding:2rem 5% 3rem;max-width:1200px;margin:0 auto;}
+        .tab-section.active{display:block;}
+        .section-head{margin-bottom:1.8rem;}
+        .section-head h2{font-size:1.6rem;color:var(--green);font-weight:700;}
+        .section-head p{color:var(--gray);font-size:0.9rem;margin-top:4px;}
+        /* Rain */
+        .district-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:1.5rem;scrollbar-width:thin;}
+        .dist-btn{white-space:nowrap;padding:8px 18px;border-radius:25px;border:2px solid #ddd;background:#fff;cursor:pointer;font-size:0.85rem;font-weight:600;color:#555;transition:all 0.25s;flex-shrink:0;}
+        .dist-btn.active{border-color:var(--green);background:var(--green);color:#fff;}
+        .dist-btn:hover:not(.active){border-color:var(--green-light);color:var(--green);}
+        .rain-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;margin-bottom:1.5rem;}
+        .rain-card-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+        .chart-bars{display:flex;align-items:flex-end;gap:5px;height:200px;overflow-x:auto;padding:0 4px 4px;}
+        .bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:32px;cursor:pointer;}
+        .bar-inner{width:22px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#29b6f6,#0288d1);transition:height 0.7s cubic-bezier(.22,.61,.36,1);min-height:3px;}
+        .bar-inner.zero{background:#e0e0e0;}
+        .bar-date{font-size:0.6rem;color:#aaa;writing-mode:vertical-rl;transform:rotate(180deg);}
+        .bar-val{font-size:0.65rem;color:#0288d1;font-weight:700;min-height:12px;}
+        .rain-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+        .rs-box{background:linear-gradient(135deg,var(--green-pale),#b7e4c7);border-radius:14px;padding:1rem;text-align:center;}
+        .rs-box h3{font-size:1.5rem;font-weight:700;color:var(--green);}
+        .rs-box p{font-size:0.75rem;color:#555;margin-top:3px;}
+        .no-rain-msg{text-align:center;padding:3rem;color:#aaa;}
+        .no-rain-msg i{font-size:3rem;color:#ddd;display:block;margin-bottom:1rem;}
+        /* Calendar */
+        .season-row{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;}
+        .season-btn{padding:10px 22px;border-radius:25px;border:2px solid #ddd;background:#fff;cursor:pointer;font-weight:600;font-size:0.88rem;transition:all 0.25s;}
+        .season-btn.active{background:var(--green);color:#fff;border-color:var(--green);}
+        .crop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;}
+        .crop-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;border-left:4px solid var(--green-light);transition:transform 0.25s,box-shadow 0.25s;}
+        .crop-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(45,106,79,0.15);}
+        .crop-card h3{font-size:0.95rem;font-weight:700;color:var(--green);margin-bottom:0.7rem;}
+        .crop-tags{display:flex;flex-wrap:wrap;gap:5px;}
+        .tag{padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;}
+        .tag-g{background:#e8f5e9;color:#2d6a4f;}
+        .tag-b{background:#e1f5fe;color:#0277bd;}
+        .tag-o{background:#fff3e0;color:#e65100;}
+        .tag-p{background:#fce4ec;color:#880e4f;}
+        /* AI */
+        .ai-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+        @media(max-width:768px){.ai-layout{grid-template-columns:1fr;}}
+        .upload-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;}
+        .upload-zone{border:2px dashed #a5d6a7;border-radius:14px;padding:2rem;text-align:center;background:#f1f8e9;cursor:pointer;transition:all 0.3s;margin-bottom:1rem;}
+        .upload-zone:hover{border-color:var(--green);background:var(--green-pale);}
+        .upload-zone i{font-size:2.5rem;color:var(--green-light);margin-bottom:0.5rem;display:block;}
+        .upload-zone input{display:none;}
+        #imgPreview{text-align:center;margin-bottom:1rem;display:none;}
+        #imgPreview img{max-height:160px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+        .symptom-area{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:12px;font-size:0.88rem;resize:vertical;min-height:90px;outline:none;font-family:'Poppins',sans-serif;transition:border 0.3s;}
+        .symptom-area:focus{border-color:var(--green-light);}
+        .diagnose-btn{width:100%;background:var(--green);color:#fff;border:none;padding:13px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;margin-top:12px;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .diagnose-btn:hover{background:#1b4332;transform:translateY(-2px);}
+        .ai-result-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;display:none;}
+        .ai-result-card h3{color:var(--green);font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+        .ai-content{color:#333;line-height:1.9;font-size:0.88rem;}
+        .ai-loading{text-align:center;padding:2rem;color:var(--gray);}
+        .spin{animation:spin 1s linear infinite;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        /* Map */
+        .map-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:1.5rem;}
+        @media(max-width:768px){.map-layout{grid-template-columns:1fr;}}
+        .map-svg-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;}
+        .map-svg-card svg{width:100%;border-radius:10px;}
+        .city-list-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;max-height:440px;overflow-y:auto;}
+        .city-list-card h3{font-size:0.9rem;font-weight:700;color:var(--green);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--green-pale);}
+        .city-row{display:flex;justify-content:space-between;align-items:center;padding:9px 8px;border-radius:10px;cursor:pointer;transition:background 0.2s;}
+        .city-row:hover{background:var(--green-pale);}
+        .city-name-txt{font-weight:600;font-size:0.85rem;color:#333;}
+        .city-crop-txt{font-size:0.75rem;color:var(--gray);margin-top:1px;}
+        .city-price-txt{font-weight:700;font-size:0.85rem;color:var(--green);}
+        .city-detail-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;margin-top:1.5rem;display:none;}
+        .city-detail-card h3{color:var(--green);margin-bottom:1rem;font-size:1rem;}
+        .price-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+        .price-table th{background:var(--green);color:#fff;padding:9px 14px;text-align:left;}
+        .price-table tr:nth-child(even) td{background:#f9fef9;}
+        .price-table td{padding:9px 14px;border-bottom:1px solid #f0f0f0;}
+        footer{background:var(--dark);color:#fff;padding:1.5rem 5%;margin-top:2rem;text-align:center;}
+        footer p{opacity:0.6;font-size:0.82rem;}
+        #backToTop{position:fixed;bottom:28px;right:28px;background:var(--green);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:1.2rem;cursor:pointer;display:none;z-index:999;box-shadow:0 4px 14px rgba(45,106,79,0.4);}
+        @media(max-width:600px){.rain-stats{grid-template-columns:1fr 1fr;}.tools-hero h1{font-size:1.4rem;}.tab-btn{padding:10px 14px;font-size:0.8rem;}}
+    
+        @media(max-width:900px){
+            #pgHamburger { display:flex !important; }
+            #pageNav { display:none; flex-direction:column; position:absolute; top:60px; left:0; right:0; background:#1a2535; padding:15px 20px; box-shadow:0 8px 25px rgba(0,0,0,0.3); z-index:9999; }
+            #pageNav.open { display:flex !important; }
+        }
+
+        </style>
+</head>
+<body>
+    <header style="background:var(--nav-bg-page,#1a2535);border-bottom:1px solid var(--nav-border,#2d3e50);position:sticky;top:0;z-index:1000;transition:background 0.3s;">
+    <nav style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
+        <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover;border-radius:6px;">
+            <span style="font-size:1.3rem;font-weight:700;color:#4CAF50;white-space:nowrap;">Agri-Verse</span>
+        </a>
+        <ul id="pageNav" style="display:flex;list-style:none;align-items:center;gap:2px;flex-wrap:nowrap;">
+            <li><a href="index.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🏠 Home</a></li>
+            <li><a href="Seeds.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌱 Seeds</a></li>
+            <li><a href="Feritlizer.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🧪 Fertilizers</a></li>
+            <li><a href="mandi.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📊 Mandi</a></li>
+            <li><a href="weather.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌤️ Weather</a></li>
+            <li><a href="news.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📰 News</a></li>
+            <li><a href="tools.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🚜 Implements</a></li>
+            <li><a href="farmingtypes.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌾 Farming</a></li>
+            <li><a href="weather-rain.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌧️ Rain</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <button id="darkToggle" onclick="toggleDark()" title="Dark Mode" style="background:rgba(76,175,80,0.15);border:none;color:#4CAF50;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">🌙</button>
+            <button class="hamburger" id="pgHamburger" onclick="document.getElementById('pageNav').classList.toggle('open')" style="display:none;font-size:1.5rem;cursor:pointer;color:#4CAF50;background:none;border:none;">☰</button>
+        </div>
+    </nav>
+</header>
+
+<div class="tools-hero">
+    <h1>🌾 Farmer Tools</h1>
+    <p>Rain data · Crop calendar · AI disease detection · Mandi map</p>
+    <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('rain',this)"><span>🌧️</span> Rain Tracker</button>
+        <button class="tab-btn" onclick="switchTab('calendar',this)"><span>📅</span> Crop Calendar</button>
+        <button class="tab-btn" onclick="switchTab('doctor',this)"><span>🤖</span> AI Crop Doctor</button>
+        <button class="tab-btn" onclick="switchTab('map',this)"><span>🗺️</span> Mandi Map</button>
+    </div>
+</div>
+
+<!-- RAIN -->
+<div class="tab-section active" id="tab-rain">
+    <div class="section-head"><h2>🌧️ Gujarat Rain Tracker</h2><p>Live 30-day rainfall — Open-Meteo API</p></div>
+    <div class="district-scroll" id="districtScroll"></div>
+    <div class="rain-card">
+        <div class="rain-card-title"><i class="fas fa-chart-bar" style="color:#29b6f6;"></i><span id="rainChartTitle">Select a district to view rainfall</span></div>
+        <div class="chart-bars" id="rainBars"><div class="no-rain-msg"><i class="fas fa-cloud-rain"></i><p>Select a district above</p></div></div>
+    </div>
+    <div class="rain-stats" id="rainStats" style="display:none;">
+        <div class="rs-box"><h3 id="stat-total">--</h3><p>☁️ Total Rainfall</p></div>
+        <div class="rs-box"><h3 id="stat-max">--</h3><p>⚡ Peak Day</p></div>
+        <div class="rs-box"><h3 id="stat-days">--</h3><p>🌧️ Rainy Days</p></div>
+    </div>
+</div>
+
+<!-- CALENDAR -->
+<div class="tab-section" id="tab-calendar">
+    <div class="section-head"><h2>📅 Gujarat Crop Calendar</h2><p>Season-wise sowing & harvest guide</p></div>
+    <div class="season-row">
+        <button class="season-btn active" onclick="showSeason('kharif',this)">🌱 Kharif (Jun–Oct)</button>
+        <button class="season-btn" onclick="showSeason('rabi',this)">🌾 Rabi (Oct–Mar)</button>
+        <button class="season-btn" onclick="showSeason('zaid',this)">☀️ Zaid (Mar–Jun)</button>
+    </div>
+    <div class="crop-grid" id="calGrid"></div>
+</div>
+
+<!-- AI DOCTOR -->
+<div class="tab-section" id="tab-doctor">
+    <div class="section-head"><h2>🤖 AI Crop Doctor</h2><p>Photo upload or describe symptoms — AI diagnoses and suggests treatment</p></div>
+    <div class="ai-layout">
+        <div class="upload-card">
+            <div class="upload-zone" onclick="document.getElementById('cropImg').click()">
+                <i class="fas fa-camera-retro"></i>
+                <p><strong>Upload crop photo</strong></p>
+                <p style="font-size:0.8rem;color:#aaa;">JPG, PNG supported</p>
+                <input type="file" id="cropImg" accept="image/*" onchange="previewImage(this)">
+            </div>
+            <div id="imgPreview"><img id="previewImg" alt="preview"></div>
+            <p style="text-align:center;color:#aaa;font-size:0.82rem;margin:8px 0;">— અથવા symptoms describe કરો —</p>
+            <textarea class="symptom-area" id="symptomText" placeholder="e.g. Tomato leaves turning yellow with brown spots, wilting..."></textarea>
+            <button class="diagnose-btn" onclick="diagnose()"><i class="fas fa-search"></i> Diagnose Disease</button>
+        </div>
+        <div class="ai-result-card" id="aiResult">
+            <h3><i class="fas fa-stethoscope"></i> AI Diagnosis</h3>
+            <div class="ai-content" id="aiResultContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- MANDI MAP -->
+<div class="tab-section" id="tab-map">
+    <div class="section-head"><h2>🗺️ Gujarat Mandi Map</h2><p>Click any city to see today's top crop prices</p></div>
+    <div class="map-layout">
+        <div class="map-svg-card">
+            <svg viewBox="0 0 400 420" id="mandiSvg">
+                <rect width="400" height="420" fill="#e8f5e9" rx="14"/>
+                <text x="200" y="28" text-anchor="middle" font-size="13" fill="#2d6a4f" font-weight="700" font-family="Poppins,sans-serif">Gujarat Districts</text>
+                <g id="cityDots"></g>
+            </svg>
+        </div>
+        <div class="city-list-card">
+            <h3>📍 All Cities</h3>
+            <div id="cityList"></div>
+        </div>
+    </div>
+    <div class="city-detail-card" id="cityDetail">
+        <h3 id="cityDetailTitle"></h3>
+        <table class="price-table">
+            <thead><tr><th>Crop</th><th style="text-align:right;">Modal (₹/q)</th><th style="text-align:right;">Per kg</th></tr></thead>
+            <tbody id="cityDetailBody"></tbody>
+        </table>
+        <p style="margin-top:8px;font-size:0.78rem;color:#aaa;">* Indicative. <a href="news.html" style="color:var(--green);">Full market prices →</a></p>
+    </div>
+</div>
+
+<footer><p>© 2026 Agri-Verse | Developed by Kavin Dobariya</p></footer>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(tab,btn){
+    document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+tab).classList.add('active');
+    if(btn)btn.classList.add('active');
+}
+
+// RAIN
+const DISTRICTS=[
+    {name:'Ahmedabad',lat:23.03,lon:72.58},{name:'Rajkot',lat:22.30,lon:70.78},
+    {name:'Junagadh',lat:21.52,lon:70.46},{name:'Surat',lat:21.17,lon:72.83},
+    {name:'Vadodara',lat:22.31,lon:73.19},{name:'Bhavnagar',lat:21.77,lon:72.15},
+    {name:'Anand',lat:22.56,lon:72.95},{name:'Mehsana',lat:23.59,lon:72.37},
+    {name:'Gandhinagar',lat:23.22,lon:72.65},{name:'Kutch',lat:23.73,lon:69.86},
+    {name:'Amreli',lat:21.60,lon:71.22},{name:'Porbandar',lat:21.64,lon:69.60},
+    {name:'Bharuch',lat:21.71,lon:72.99},{name:'Navsari',lat:20.95,lon:72.92},
+    {name:'Morbi',lat:22.82,lon:70.84},{name:'Surendranagar',lat:22.73,lon:71.64},
+];
+const scroll=document.getElementById('districtScroll');
+DISTRICTS.forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='dist-btn';btn.textContent='📍 '+d.name;
+    btn.onclick=()=>{document.querySelectorAll('.dist-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadRain(d);};
+    scroll.appendChild(btn);
+});
+
+async function loadRain(district){
+    document.getElementById('rainChartTitle').textContent='⏳ Loading '+district.name+'...';
+    document.getElementById('rainBars').innerHTML='<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:#29b6f6;"></i><p style="margin-top:10px;color:#aaa;">Fetching live data...</p></div>';
+    document.getElementById('rainStats').style.display='none';
+    try{
+        const end=new Date().toISOString().slice(0,10);
+        const start=new Date(Date.now()-30*24*60*60*1000).toISOString().slice(0,10);
+        const url=`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`;
+        const res=await fetch(url);const data=await res.json();
+        renderRain(district.name,data.daily);
+    }catch(e){document.getElementById('rainBars').innerHTML='<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>';}
+}
+
+function renderRain(name,daily){
+    const dates=daily.time,rain=daily.precipitation_sum;
+    const maxR=Math.max(...rain.filter(r=>r>0),1);
+    document.getElementById('rainChartTitle').textContent='🌧️ '+name+' — Last 30 Days';
+    let html='';
+    dates.forEach((d,i)=>{
+        const mm=rain[i]||0,h=Math.round((mm/maxR)*180);
+        const dt=new Date(d),lbl=dt.getDate()+'/'+(dt.getMonth()+1);
+        html+=`<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm">
+            <div class="bar-val">${mm>0.5?mm.toFixed(0):''}</div>
+            <div class="bar-inner ${mm<=0.5?'zero':''}" style="height:${Math.max(h,3)}px;"></div>
+            <div class="bar-date">${lbl}</div></div>`;
+    });
+    document.getElementById('rainBars').innerHTML=html;
+    const total=rain.reduce((a,b)=>a+(b||0),0),maxDay=Math.max(...rain),rainyDays=rain.filter(r=>r>0.5).length;
+    document.getElementById('stat-total').textContent=total.toFixed(1)+' mm';
+    document.getElementById('stat-max').textContent=maxDay.toFixed(1)+' mm';
+    document.getElementById('stat-days').textContent=rainyDays+' days';
+    document.getElementById('rainStats').style.display='grid';
+}
+
+// CALENDAR
+const CROPS={
+    kharif:[
+        {name:'🥜 Groundnut (Magfali)',sow:'Jun–Jul',harvest:'Oct–Nov',water:'Medium',soil:'Sandy loam',days:'120-130'},
+        {name:'🌿 Cotton (Kapas)',sow:'May–Jun',harvest:'Nov–Jan',water:'Medium',soil:'Black cotton',days:'150-180'},
+        {name:'🌽 Maize (Makkai)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Medium',soil:'Loamy',days:'90-100'},
+        {name:'🫘 Moong (Green gram)',sow:'Jun–Jul',harvest:'Aug–Sep',water:'Low',soil:'Well drained',days:'60-70'},
+        {name:'🌾 Bajra (Pearl millet)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Sandy',days:'75-90'},
+        {name:'🍅 Tomato',sow:'Jun–Jul',harvest:'Sep–Nov',water:'High',soil:'Loamy',days:'90-120'},
+        {name:'🧅 Onion',sow:'Jun–Jul',harvest:'Oct–Nov',water:'Medium',soil:'Well drained',days:'120-140'},
+        {name:'🌻 Til (Sesame)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Sandy loam',days:'80-90'},
+        {name:'🫘 Toor (Pigeon pea)',sow:'Jun–Jul',harvest:'Dec–Jan',water:'Low',soil:'Any',days:'150-180'},
+        {name:'🌾 Jowar (Sorghum)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Any',days:'90-100'},
+    ],
+    rabi:[
+        {name:'🌾 Wheat (Ghau)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Loamy',days:'110-120'},
+        {name:'🧄 Garlic (Lasan)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Well drained',days:'130-150'},
+        {name:'🧅 Onion (Dungali)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Loamy',days:'120-140'},
+        {name:'🥔 Potato (Bataka)',sow:'Oct–Nov',harvest:'Jan–Feb',water:'Medium',soil:'Sandy loam',days:'75-90'},
+        {name:'🫘 Chana (Chickpea)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Well drained',days:'90-120'},
+        {name:'🌿 Mustard (Sarson)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Loamy',days:'90-110'},
+        {name:'🥕 Carrot (Gajar)',sow:'Oct–Nov',harvest:'Jan–Feb',water:'Medium',soil:'Sandy loam',days:'80-90'},
+        {name:'🌾 Ragi (Nachni)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Red loamy',days:'100-120'},
+    ],
+    zaid:[
+        {name:'🍉 Watermelon',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Sandy',days:'80-90'},
+        {name:'🥒 Cucumber (Kakadi)',sow:'Feb–Mar',harvest:'Apr–May',water:'Medium',soil:'Loamy',days:'50-60'},
+        {name:'🎃 Bitter Gourd (Karela)',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Well drained',days:'55-65'},
+        {name:'🫘 Moong (Green gram)',sow:'Mar–Apr',harvest:'May–Jun',water:'Low',soil:'Any',days:'55-65'},
+        {name:'🌽 Maize (Makkai)',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Loamy',days:'85-95'},
+        {name:'🍅 Tomato',sow:'Jan–Feb',harvest:'Apr–May',water:'High',soil:'Loamy',days:'90-110'},
+    ]
+};
+function showSeason(season,btn){
+    document.querySelectorAll('.season-btn').forEach(b=>b.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+    document.getElementById('calGrid').innerHTML=CROPS[season].map(c=>`
+        <div class="crop-card"><h3>${c.name}</h3><div class="crop-tags">
+            <span class="tag tag-g">🌱 ${c.sow}</span>
+            <span class="tag tag-g">🌾 ${c.harvest}</span>
+            <span class="tag tag-o">⏱️ ${c.days}d</span>
+            <span class="tag tag-b">💧 ${c.water}</span>
+            <span class="tag tag-p">🪨 ${c.soil}</span>
+        </div></div>`).join('');
+}
+showSeason('kharif');
+
+// AI DOCTOR
+let cropImageBase64=null;
+function previewImage(input){
+    if(!input.files[0])return;
+    const reader=new FileReader();
+    reader.onload=e=>{document.getElementById('previewImg').src=e.target.result;document.getElementById('imgPreview').style.display='block';cropImageBase64=e.target.result.split(',')[1];};
+    reader.readAsDataURL(input.files[0]);
+}
+async function diagnose(){
+    const symptom=document.getElementById('symptomText').value.trim();
+    if(!symptom&&!cropImageBase64){alert('Photo upload કરો અથવા symptoms describe કરો!');return;}
+    const resultDiv=document.getElementById('aiResult'),content=document.getElementById('aiResultContent');
+    resultDiv.style.display='block';
+    content.innerHTML='<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:var(--green);"></i><p style="margin-top:10px;color:#aaa;">AI analyzing...</p></div>';
+    try{
+        const messages=[];
+        if(cropImageBase64){messages.push({role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:cropImageBase64}},{type:'text',text:`Agricultural scientist for Gujarat. Analyze crop image. Provide: 1) Disease name, 2) Symptoms, 3) Cause, 4) Treatment (India medicines), 5) Prevention. Simple for Gujarat farmer. ${symptom?'Notes: '+symptom:''}`}]});}
+        else{messages.push({role:'user',content:`Agricultural scientist for Gujarat. Farmer says: "${symptom}". Diagnose and provide: 1) Disease name, 2) Symptoms, 3) Cause, 4) Treatment (India medicines), 5) Prevention.`});}
+        const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages})});
+        const data=await res.json();
+        const text=data.content?.[0]?.text||'Could not analyze.';
+        content.innerHTML=text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    }catch(e){content.innerHTML='<p style="color:#e53935;">Error. Please try again.</p>';}
+}
+
+// MANDI MAP
+const CITIES=[
+    {name:'Ahmedabad',x:220,y:175,topCrop:'Tomato',price:'₹1,450',prices:[{crop:'Tomato',modal:1450},{crop:'Onion',modal:870},{crop:'Potato',modal:985},{crop:'Wheat',modal:2215},{crop:'Groundnut',modal:5860}]},
+    {name:'Rajkot',x:128,y:218,topCrop:'Groundnut',price:'₹5,850',prices:[{crop:'Groundnut',modal:5850},{crop:'Cotton',modal:6750},{crop:'Bajra',modal:2100},{crop:'Tomato',modal:1400},{crop:'Onion',modal:800}]},
+    {name:'Junagadh',x:98,y:278,topCrop:'Groundnut',price:'₹5,940',prices:[{crop:'Groundnut',modal:5940},{crop:'Dry Chilli',modal:12000},{crop:'Lemon',modal:2420},{crop:'Mango (Kesar)',modal:3800},{crop:'Cotton',modal:6800}]},
+    {name:'Surat',x:198,y:328,topCrop:'Banana',price:'₹1,145',prices:[{crop:'Banana',modal:1145},{crop:'Tomato',modal:1300},{crop:'Onion',modal:820},{crop:'Chikoo',modal:1950},{crop:'Cotton',modal:6700}]},
+    {name:'Vadodara',x:228,y:248,topCrop:'Cotton',price:'₹6,760',prices:[{crop:'Cotton',modal:6760},{crop:'Tomato',modal:1320},{crop:'Wheat',modal:2240},{crop:'Potato',modal:995},{crop:'Grapes',modal:3300}]},
+    {name:'Bhavnagar',x:158,y:288,topCrop:'Cotton',price:'₹6,800',prices:[{crop:'Cotton',modal:6800},{crop:'Groundnut',modal:5890},{crop:'Sesame',modal:12320},{crop:'Bajra',modal:2050},{crop:'Castor',modal:6170}]},
+    {name:'Anand',x:208,y:218,topCrop:'Potato',price:'₹1,015',prices:[{crop:'Potato',modal:1015},{crop:'Tomato',modal:1340},{crop:'Wheat',modal:2240},{crop:'Moong Dal',modal:7820},{crop:'Soybean',modal:4640}]},
+    {name:'Mehsana',x:193,y:143,topCrop:'Bajra',price:'₹2,080',prices:[{crop:'Bajra',modal:2080},{crop:'Wheat',modal:2215},{crop:'Garlic',modal:3120},{crop:'Potato',modal:1010},{crop:'Mustard',modal:5420}]},
+    {name:'Gandhinagar',x:213,y:163,topCrop:'Wheat',price:'₹2,215',prices:[{crop:'Wheat',modal:2215},{crop:'Tomato',modal:1420},{crop:'Onion',modal:860},{crop:'Groundnut',modal:5860},{crop:'Cotton',modal:6715}]},
+    {name:'Kutch',x:58,y:118,topCrop:'Cotton',price:'₹6,700',prices:[{crop:'Cotton',modal:6700},{crop:'Groundnut',modal:5820},{crop:'Castor',modal:6155},{crop:'Sesame',modal:12300},{crop:'Bajra',modal:2045}]},
+    {name:'Amreli',x:138,y:258,topCrop:'Groundnut',price:'₹5,890',prices:[{crop:'Groundnut',modal:5890},{crop:'Cotton',modal:6800},{crop:'Castor',modal:6170},{crop:'Sesame',modal:12320},{crop:'Sunflower',modal:5630}]},
+    {name:'Porbandar',x:68,y:268,topCrop:'Groundnut',price:'₹5,940',prices:[{crop:'Groundnut',modal:5940},{crop:'Cotton',modal:6700},{crop:'Banana',modal:1148},{crop:'Mango (Kesar)',modal:3750},{crop:'Lemon',modal:2420}]},
+    {name:'Bharuch',x:208,y:293,topCrop:'Cotton',price:'₹6,725',prices:[{crop:'Cotton',modal:6725},{crop:'Tomato',modal:1310},{crop:'Onion',modal:830},{crop:'Maize',modal:2005},{crop:'Toor Dal',modal:8770}]},
+    {name:'Navsari',x:193,y:348,topCrop:'Chikoo',price:'₹1,920',prices:[{crop:'Chikoo',modal:1920},{crop:'Banana',modal:1140},{crop:'Tomato',modal:1290},{crop:'Rice',modal:2260},{crop:'Coconut',modal:1715}]},
+    {name:'Morbi',x:143,y:173,topCrop:'Cotton',price:'₹6,725',prices:[{crop:'Cotton',modal:6725},{crop:'Groundnut',modal:5890},{crop:'Tomato',modal:1320},{crop:'Bajra',modal:2065},{crop:'Castor',modal:6155}]},
+    {name:'Surendranagar',x:163,y:208,topCrop:'Cotton',price:'₹6,800',prices:[{crop:'Cotton',modal:6800},{crop:'Groundnut',modal:5850},{crop:'Castor',modal:6140},{crop:'Sesame',modal:12320},{crop:'Bajra',modal:2080}]},
+];
+const svgNS='http://www.w3.org/2000/svg';
+const dotsG=document.getElementById('cityDots');
+CITIES.forEach((c,i)=>{
+    const circle=document.createElementNS(svgNS,'circle');
+    circle.setAttribute('cx',c.x);circle.setAttribute('cy',c.y);circle.setAttribute('r','7');
+    circle.setAttribute('fill','#52b788');circle.setAttribute('stroke','#2d6a4f');circle.setAttribute('stroke-width','1.5');
+    circle.style.cursor='pointer';circle.setAttribute('id','dot_'+i);
+    circle.addEventListener('mouseenter',()=>{if(!circle.classList.contains('sel'))circle.setAttribute('r','9');});
+    circle.addEventListener('mouseleave',()=>{if(!circle.classList.contains('sel'))circle.setAttribute('r','7');});
+    circle.addEventListener('click',()=>showCity(c,i));
+    dotsG.appendChild(circle);
+    const txt=document.createElementNS(svgNS,'text');
+    txt.setAttribute('x',c.x);txt.setAttribute('y',c.y-11);
+    txt.setAttribute('text-anchor','middle');txt.setAttribute('font-size','8');
+    txt.setAttribute('fill','#1b4332');txt.setAttribute('font-weight','600');
+    txt.textContent=c.name;dotsG.appendChild(txt);
+});
+const cityList=document.getElementById('cityList');
+CITIES.forEach((c,i)=>{
+    const row=document.createElement('div');row.className='city-row';
+    row.innerHTML=`<div><div class="city-name-txt">📍 ${c.name}</div><div class="city-crop-txt">${c.topCrop}</div></div><div class="city-price-txt">${c.price}/q</div>`;
+    row.addEventListener('click',()=>showCity(c,i));
+    cityList.appendChild(row);
+});
+function showCity(c,i){
+    document.querySelectorAll('[id^=dot_]').forEach(d=>{d.setAttribute('fill','#52b788');d.setAttribute('r','7');d.classList.remove('sel');});
+    const dot=document.getElementById('dot_'+i);
+    if(dot){dot.setAttribute('fill','#f9c74f');dot.setAttribute('r','11');dot.classList.add('sel');}
+    document.getElementById('cityDetailTitle').textContent='📍 '+c.name+' — Top Prices Today';
+    document.getElementById('cityDetailBody').innerHTML=c.prices.map(p=>`<tr><td style="font-weight:600;color:var(--green);">${p.crop}</td><td style="text-align:right;font-weight:700;">₹${p.modal.toLocaleString()}</td><td style="text-align:right;color:var(--gray);">₹${(p.modal/100).toFixed(1)}/kg</td></tr>`).join('');
+    document.getElementById('cityDetail').style.display='block';
+    document.getElementById('cityDetail').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// AUTH
+const isLoggedIn=localStorage.getItem('isLoggedIn')==='true';
+const user=JSON.parse(localStorage.getItem('user')||'{}');
+const authEl=document.getElementById('auth-buttons');
+if(authEl){authEl.innerHTML=isLoggedIn?`<span style="background:#e8f5e9;color:#2e7d32;padding:6px 14px;border-radius:20px;font-weight:600;font-size:0.88rem;">👤 ${(user.name||'User').split(' ')[0]}</span>`:`<a href="login.html" class="nav-btn">Login</a>`;}
+document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('active'));
+window.onscroll=()=>{document.getElementById('backToTop').style.display=window.scrollY>300?'block':'none';};
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

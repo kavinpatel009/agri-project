@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/">
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Verse | Daily Mandi Prices, Weather, Agri News & Seeds Guide</title>
+    <!-- Open Graph for Social Media Sharing -->
+    <meta property="og:title" content="Agri-Verse | Daily Mandi Prices, Weather, Agri News & Seeds Guide">
+    <meta name="description" content="Agri-Verse is India's modern farming platform providing market updates, weather forecasts, agriculture news, and expert guidance on seeds and fertilizers to support smarter farming.">
+    <meta property="og:description" content="Agri-Verse is India's modern farming platform providing market updates, weather forecasts, agriculture news, and expert guidance on seeds and fertilizers to support smarter farming.">
+    <meta property="og:image" content="images/logoss.jpg">
+    <meta property="og:url" content="https://agriverse-in.vercel.app">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Agri-Verse">
+    <meta name="keywords" content="mandi price, mandi bhav, Gujarat mandi, agri news, agriculture news, kisan, farming, weather, seeds, fertilizer, groundnut price, cotton price, tomato price, onion price, Ahmedabad mandi, Rajkot mandi, Junagadh mandi, krushi, kheti, bhav">
+    <meta name="robots" content="index, follow">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Agri-Verse",
+      "url": "https://agriverse-in.vercel.app",
+      "description": "Gujarat mandi prices for Tomato, Onion, Cotton, Groundnut and 50+ crops across 16 cities. Live weather, daily agri news, seeds guide and fertilizer info for Indian farmers.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://agriverse-in.vercel.app/news.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --light: #F5F5F5;
+            --dark: #212121;
+            --gray: #757575;
+            --bg: #f9f9f9;
+            --card-bg: #ffffff;
+            --nav-bg: #ffffff;
+            --text: #212121;
+            --border: #e0e0e0;
+            --shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f1923;
+            --card-bg: #1a2535;
+            --nav-bg: #1a2535;
+            --text: #e8f5e9;
+            --dark: #e8f5e9;
+            --gray: #b0bec5;
+            --light: #1e2d3d;
+            --border: #2d3e50;
+            --shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        header {
+            background-color: #1a2535;
+            border-bottom: 1px solid #2d3e50;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        [data-theme="dark"] header {
+            background-color: #0f1923;
+            border-bottom: 1px solid #2d3e50;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #cde8cd;
+            font-weight: 500;
+            font-size: 0.83rem;
+            padding: 5px 9px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        nav ul li a:hover {
+            color: #4CAF50;
+            background: rgba(76,175,80,0.15);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 3%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #4CAF50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            border-radius: 6px;
+        }
+
+        .more-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #cde8cd;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .more-btn:hover { background: rgba(76,175,80,0.25); color: #4CAF50; }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 0;
+            flex-wrap: nowrap;
+            overflow: visible;
+        }
+        
+        nav ul li {
+            margin-left: 0;
+            flex-shrink: 0;
+        }
+        
+        #auth-button {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            font-size: 0.83rem;
+            padding: 5px 9px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        [data-theme="dark"] nav ul li a { color: #cde8cd; }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+            background: rgba(76,175,80,0.08);
+        }
+
+        /* Nav utility buttons */
+        .nav-utils {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 8px;
+        }
+
+        .nav-icon-btn {
+            background: rgba(255,255,255,0.08);
+            border: none;
+            color: #cde8cd;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .nav-icon-btn:hover {
+            background: rgba(76,175,80,0.3);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Language Dropdown */
+        .lang-dropdown {
+            position: relative;
+        }
+
+        .lang-menu {
+            display: none;
+            position: absolute;
+            top: 44px;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 8px;
+            min-width: 140px;
+            z-index: 9999;
+        }
+
+        .lang-menu.open { display: block; }
+
+        .lang-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .lang-menu a:hover { background: rgba(76,175,80,0.1); color: var(--primary); }
+
+        /* Profile Dropdown */
+        .profile-dropdown { position: relative; }
+        .profile-btn {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(76,175,80,0.4);
+            color: #cde8cd;
+            padding: 5px 12px 5px 6px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.84rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+        }
+        .profile-btn:hover { background: rgba(76,175,80,0.2); color: #4CAF50; }
+        .profile-avatar {
+            width: 28px; height: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: 700;
+        }
+        .profile-menu {
+            display: none;
+            position: absolute; top: 46px; right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            padding: 8px;
+            min-width: 220px;
+            z-index: 9999;
+        }
+        .profile-menu.open { display: block; }
+        .profile-header {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px 12px;
+        }
+        .profile-avatar-lg {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
+        }
+        .profile-divider { height: 1px; background: var(--border); margin: 4px 0; }
+        .profile-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.87rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .profile-item:hover { background: rgba(76,175,80,0.08); color: var(--primary); }
+        .profile-logout { color: #e53e3e !important; }
+        .profile-logout:hover { background: rgba(229,62,62,0.08) !important; color: #e53e3e !important; }
+
+        /* More dropdown */
+        .more-dropdown { position: relative; }
+        .more-btn {
+            background: rgba(76,175,80,0.1);
+            border: 1px solid rgba(76,175,80,0.3);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .more-btn:hover { background: var(--primary); color: white; }
+        .more-menu {
+            display: none;
+            position: absolute;
+            top: 42px;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+            padding: 8px;
+            min-width: 180px;
+            z-index: 9999;
+        }
+        .more-menu.open { display: block; }
+        .more-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .more-menu a:hover { background: rgba(76,175,80,0.1); color: var(--primary); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.65rem 1.4rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76,175,80,0.45);
+            background: linear-gradient(135deg, #56c15a, var(--primary));
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.7);
+            color: white;
+            box-shadow: none;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: white;
+            color: white;
+        }
+        
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .section-title h2 { color: #81c784; }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            bottom: -10px;
+            left: 25%;
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(15,25,35,0.85) 0%, rgba(27,67,50,0.8) 50%, rgba(0,0,0,0.75) 100%), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            min-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 80px;
+            background: linear-gradient(to top, var(--bg), transparent);
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(76,175,80,0.25);
+            border: 1px solid rgba(76,175,80,0.5);
+            color: #81c784;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        
+        .hero p {
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.85);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeUp 1.2s ease forwards;
+        }
+
+        /* Hero Stats Bar */
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeUp 1.4s ease forwards;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #81c784;
+        }
+
+        .hero-stat .lbl {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        [data-theme="dark"] .about-text h3 { color: #81c784; }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .about-image:hover img { transform: scale(1.03); }
+        
+        /* Services Slider */
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        .services-grid {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .service-card {
+            width: 33.333%;
+            min-width: 33.333%;
+            flex-shrink: 0;
+            padding: 0 0.75rem;
+            box-sizing: border-box;
+        }
+        @media (max-width: 992px) {
+            .service-card { width: 50%; min-width: 50%; }
+        }
+        @media (max-width: 600px) {
+            .service-card { width: 100%; min-width: 100%; }
+        }
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+        .slider-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(76,175,80,0.3);
+        }
+        .slider-btn:hover { background: #388E3C; transform: scale(1.1); }
+        .slider-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .slider-dot.active { background: #4CAF50; }
+        
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+        
+        .service-content {
+            padding: 1.5rem;
+        }
+        
+        .service-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        [data-theme="dark"] .service-content h3 { color: #81c784; }
+        
+        .service-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .stats {
+            background: linear-gradient(rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.9)), url('https://images.unsplash.com/photo-1535696588143-945e1379f1b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .testimonials {
+            background-color: var(--light);
+        }
+        [data-theme="dark"] .testimonials {
+            background-color: #111e2d;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .testimonial-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover { transform: translateY(-5px); }
+        
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--primary);
+            opacity: 0.1;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 10px;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .author-info h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.2rem;
+        }
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .contact {
+            background-color: var(--card-bg);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        [data-theme="dark"] .contact-info h3 { color: #81c784; }
+        
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+        }
+        
+        .contact-text h4 {
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+        
+        .contact-text p, .contact-text a {
+            color: var(--gray);
+            text-decoration: none;
+        }
+        
+        .contact-text a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background: var(--light);
+            color: var(--primary);
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(76,175,80,0.3);
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(76,175,80,0.12);
+        }
+        
+        .contact-form textarea {
+            height: 140px;
+            resize: vertical;
+        }
+
+        .error-text { color: #e53e3e; font-size: 0.8rem; margin-top: 4px; display: block; }
+        
+        footer {
+            background: linear-gradient(135deg, #0f1923, #1b4332);
+            color: white;
+            padding: 3.5rem 5% 2rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        #newsletterForm {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        #newsletterEmail {
+            padding: 9px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        #newsletterEmail::placeholder { color: rgba(255,255,255,0.5); }
+        #newsletterEmail:focus { border-color: var(--primary); background: rgba(255,255,255,0.15); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 0;
+            }
+            
+            #auth-buttons {
+                display: none !important;
+            }
+            
+            nav ul {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero {
+                height: auto;
+                padding: 5rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+         
+            /* Mobile Hamburger Menu */
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; padding: 4px 8px; }
+        @media (max-width: 900px) {
+            .hamburger { display: block; }
+            nav ul#mainNav { display: none; flex-direction: column; position: absolute; top: 65px; left: 0; right: 0; background: var(--nav-bg); padding: 15px 20px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); z-index: 9999; gap: 4px; }
+            nav ul#mainNav.active { display: flex; }
+            nav ul#mainNav li { margin: 0; width: 100%; }
+            nav ul#mainNav li a { display: block; padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; }
+            .nav-utils { gap: 6px; }
+        }
+        /* Back to Top */
+        #backToTop { position: fixed; bottom: 90px; right: 25px; background: var(--primary); color: #fff; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.3rem; cursor: pointer; display: none; z-index: 998; box-shadow: 0 3px 10px rgba(0,0,0,0.2); transition: all 0.3s; }
+        #backToTop:hover { background: #388E3C; transform: translateY(-3px); }
+        /* Loading Spinner */
+        .btn-loading { opacity: 0.7; pointer-events: none; }
+        .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.5); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Home Search Bar */
+        .hero-search {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        .hero-search input {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            width: 320px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .hero-search button {
+            padding: 12px 28px;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .hero-search button:hover { background: #388E3C; transform: translateY(-2px); }
+
+        /* Page Loader */
+        #page-loader {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: #1b4332; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 15px;
+            transition: opacity 0.5s ease;
+        }
+        #page-loader.hide { opacity: 0; pointer-events: none; }
+        .loader-logo { font-size: 3rem; animation: grow 1s ease-in-out infinite alternate; }
+        @keyframes grow { from{transform:scale(0.8)} to{transform:scale(1.1)} }
+        .loader-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
+        .loader-bar-fill { height: 100%; background: #52b788; border-radius: 4px; animation: load 1.5s ease-in-out forwards; }
+        @keyframes load { from{width:0} to{width:100%} }
+        .loader-text { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+
+        /* Justify paragraphs */
+        .service-content p, .testimonial-content p, 
+        .about-text p, .contact-text p, .detail-content p {
+            text-align: justify;
+        }
+        /* Footer paragraph - left align */
+        .footer-col p {
+            text-align: left;
+        }
+
+        /* Mobile Nav Fix */
+        @media (max-width: 768px) {
+            header nav {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                flex-wrap: nowrap !important;
+                padding: 10px 15px !important;
+            }
+            header nav .logo {
+                margin-bottom: 0 !important;
+            }
+            header nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0; right: 0;
+                background: #fff;
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+                z-index: 9999;
+                width: 100%;
+            }
+            header nav ul.active { display: flex !important; }
+            header .hamburger { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="page-loader">
+    <div class="loader-logo">🌿</div>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    <div class="loader-text">Loading Agri-Verse...</div>
+</div>
+<header>
+        <nav style="display:flex; align-items:center; justify-content:space-between; padding:0.5rem 3%; max-width:1400px; margin:0 auto;">
+            
+            <!-- LEFT: Logo -->
+            <a href="index.html" style="text-decoration:none; flex-shrink:0;">
+                <div class="logo">
+                    <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover; border-radius:6px;">
+                    <span style="font-size:1.35rem; font-weight:700; color:#4CAF50; white-space:nowrap;">Agri-Verse</span>
+                </div>
+            </a>
+
+            <!-- CENTER-LEFT: Nav Links -->
+            <ul id="mainNav" style="margin-left:2rem;">
+                <li><a href="Feritlizer.html">🧪 Fertilizers</a></li>
+                <li><a href="Seeds.html">🌱 Seeds</a></li>
+                <li><a href="mandi.html">📊 Mandi Price</a></li>
+                <li><a href="weather.html">🌤️ Weather</a></li>
+                <li><a href="news.html">📰 Agri-News</a></li>
+                <li class="more-dropdown">
+                    <button class="more-btn" onclick="toggleMore()">More ▾</button>
+                    <div class="more-menu" id="moreMenu">
+                        <a href="tools.html">🚜 Implements</a>
+                        <a href="farmingtypes.html">🌾 Farming Types</a>
+                        <a href="weather-rain.html">🌧️ Rain & Tools</a>
+                        <a href="#about">ℹ️ About</a>
+                        <a href="#contact">📩 Contact</a>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- RIGHT: Profile/Login + Lang + Dark -->
+            <div style="display:flex; align-items:center; gap:10px; flex-shrink:0; margin-left:auto;">
+                
+                <!-- Profile/Login Button -->
+                <div id="auth-button"></div>
+
+                <!-- Language -->
+                <div class="lang-dropdown">
+                    <button class="nav-icon-btn" onclick="toggleLangMenu()" title="Language">🌐</button>
+                    <div class="lang-menu" id="langMenu">
+                        <a href="#" onclick="setLang('en')">🇬🇧 English</a>
+                        <a href="#" onclick="setLang('gu')">🇮🇳 ગુજરાતી</a>
+                        <a href="#" onclick="setLang('hi')">🇮🇳 हिंदी</a>
+                    </div>
+                </div>
+
+                <!-- Dark Mode -->
+                <button class="nav-icon-btn" id="darkToggle" onclick="toggleDark()" title="Dark Mode">🌙</button>
+
+                <!-- Hamburger (mobile) -->
+                <button class="hamburger" id="hamburger">☰</button>
+            </div>
+
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="hero-badge" id="heroBadge">🌿 India's #1 Farming Platform</div>
+            <h1 id="heroTitle">Revolutionizing Agriculture<br>with Smart Technology</h1>
+            <p id="heroDesc">Empowering farmers with innovative solutions to increase yield, reduce waste, and optimize resources for sustainable farming.</p>
+            <div class="hero-btns">
+                <a href="signup.html" class="btn"><i class="fas fa-seedling"></i> <span id="heroBtn1">Get Started</span></a>
+                <a href="mandi.html" class="btn btn-outline"><i class="fas fa-chart-line"></i> <span id="heroBtn2">Live Mandi Prices</span></a>
+            </div>
+            <div class="hero-search">
+                <input type="text" id="heroSearch" placeholder="🔍 Search Seeds, Fertilizers, Tools...">
+                <button onclick="heroSearchFn()" id="heroSearchBtn">Search</button>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="num">500+</div><div class="lbl" id="stat1Lbl">Farmers</div></div>
+                <div class="hero-stat"><div class="num">20%</div><div class="lbl" id="stat2Lbl">Yield Increase</div></div>
+                <div class="hero-stat"><div class="num">50+</div><div class="lbl" id="stat3Lbl">Crops Tracked</div></div>
+                <div class="hero-stat"><div class="num">16</div><div class="lbl" id="stat4Lbl">Mandi Cities</div></div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-title">
+                <h2>About Agri-Verse</h2>
+                <p>We are committed to transforming traditional farming practices through cutting-edge technology and data-driven solutions.</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>Our mission is to empower farmers and agriculture enthusiasts with accurate, up-to-date, and comprehensive information about farming. From high-quality seeds and fertilizers to modern implements and the latest agricultural news, we provide everything needed to enhance productivity and sustainability. We aim to bridge the knowledge gap 
+                        and support the growth of a thriving agricultural community.</p>
+                        <br>
+                      <a href="#services" class="btn">Learn More</a>
+                </div>
+                <div class="about-image">
+                    <img src="images/Agri Min che.jpg" alt="Farmers using AgriVerse technology">
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive solutions tailored to meet the diverse needs of modern agriculture.</p>
+            </div>
+            <div class="slider-wrapper">
+                <div class="services-grid" id="servicesSlider">
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Fertilizers">
+                        </div>
+                        <div class="service-content">
+                            <h3>🧪 Fertilizers Information</h3>
+                            <p>Agri-Verse provides complete fertilizer information to help farmers choose the right nutrients for their soil. Improve crop yield, enhance soil health, and reduce fertilizer costs with our expert guidance.</p>
+                            <a href="Feritlizer.html" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/Seeds.png" alt="Seeds">
+                        </div>
+                        <div class="service-content">
+                            <h3>🌱 Seeds Information</h3>
+                            <p>Agri-Verse provides detailed seed information to help farmers choose the right seeds based on soil type, climate, and crop requirements. Maximize your yield with precision-guided seed selection.</p>
+                            <a href="Seeds.html" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/weather-service.jpg" alt="Weather" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
+                        </div>
+                        <div class="service-content">
+                            <h3>🌤️ Weather Forecast</h3>
+                            <p>Get real-time weather updates for your farm location. Check temperature, humidity, rainfall, and wind conditions. Make smarter decisions with accurate 5-day forecasts and protect your crops from adverse weather.</p>
+                            <a href="weather.html" class="btn">Check Weather</a>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img">
+                            <img src="images/farm-mechanization-1.jpg" alt="Implements" onerror="this.src='https://images.unsplash.com/photo-1592982537447-6f2a6a0a5b1a?w=600&q=80';this.onerror=null;">
+                        </div>
+                        <div class="service-content">
+                            <h3>🚜 Agricultural Implements</h3>
+                            <p>Find the right machinery for your farm to enhance efficiency, reduce labor costs, and improve productivity. Comprehensive information on agricultural implements and tools.</p>
+                            <a href="tools.html" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-img" style="background:linear-gradient(135deg,#1b4332,#52b788);display:flex;align-items:center;justify-content:center;font-size:4rem;">
+                            📊
+                        </div>
+                        <div class="service-content">
+                            <h3>📊 Mandi Price Tracker</h3>
+                            <p>Check live mandi bhav for 50+ crops across 16 Gujarat cities. Get daily updates on groundnut, cotton, tomato, onion, and more to sell at the best price.</p>
+                            <a href="mandi.html" class="btn">Check Prices</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slider Controls -->
+                <div class="slider-controls">
+                    <button class="slider-btn" id="slidePrev" onclick="slideServices(-1)">&#8249;</button>
+                    <div class="slider-dots" id="sliderDots"></div>
+                    <button class="slider-btn" id="slideNext" onclick="slideServices(1)">&#8250;</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Farmers Empowered</p>
+                </div>
+                <div class="stat-item">
+                    <h3>20%</h3>
+                    <p>Average Yield Increase</p>
+                </div>
+                <div class="stat-item">
+                    <h3>30%</h3>
+                    <p>Water Savings</p>
+                </div>
+                <div class="stat-item">
+                    <h3>3</h3>
+                    <p>States Served</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="section-title">
+                <h2>What Farmers Say</h2>
+                <p>Hear from the agricultural community about their experiences with AgriVerse solutions.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Agri-Verse has completely changed the way I farm! Now I get accurate information about seeds and fertilizers. My production has increased and costs have reduced. A very useful platform for farmers.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="images/rajj.jpg" alt="Raj Patel" onerror="this.src='https://ui-avatars.com/api/?name=Raj+Patel&background=4CAF50&color=fff&size=50';this.onerror=null;">
+                        </div>
+                        <div class="author-info">
+                            <h4>Raj Patel</h4>
+                            <p>Cotton Farmer, Gujarat</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>The weather forecast and fertilizer information on Agri-Verse is very helpful. Getting the right information at the right time saved my crops from damage. Excellent website!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="images/jay.jpg" alt="Ketan Vaghasiya" onerror="this.src='https://ui-avatars.com/api/?name=Ketan+Vaghasiya&background=4CAF50&color=fff&size=50';this.onerror=null;">
+                        </div>
+                        <div class="author-info">
+                            <h4>Ketan Vaghasiya</h4>
+                            <p>Vegetable Farmer, Gujarat</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>As a small-scale farmer, this website helps me a lot. Seeds, Fertilizer, Weather - all information in one place. A great initiative for the farming community!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="images/vinay.jpg" alt="Alpesh Dholariya" onerror="this.src='https://ui-avatars.com/api/?name=Alpesh+Dholariya&background=4CAF50&color=fff&size=50';this.onerror=null;">
+                        </div>
+                        <div class="author-info">
+                            <h4>Alpesh Dholariya</h4>
+                            <p>Maize Farmer, Junagadh</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team to learn how Agri-Verse can help your farming operation.</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Our Address</h4>
+                                <p><a href="https://www.google.com/maps?q=8C7P+74,+Amargadh,+Gujarat+362260" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">8C7P+74, Amargadh, Gujarat 362260</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Call Us</h4>
+                                <p><a href="tel:+919558478082">+91 9558478082</a></p>
+                                 
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email Us</h4>
+                                <p><a href="mailto:kavinjpatel104@gmail.com">kavinjpatel104@gmail.com</a></p>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61585488087757" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/agriverse009/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@AgriVerse-f7l" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name*</label>
+                            <input type="text" id="name" name="name" required>
+                            <small class="error-text" id="name-error"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address*</label>
+                            <input type="email" id="email" name="email" required>
+                            <small class="error-text" id="email-error"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                            <small class="error-text" id="phone-error"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message*</label>
+                            <textarea id="message" name="message" required></textarea>
+                            <small class="error-text" id="message-error"></small>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                        <div id="form-message"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Agri-Verse</h3>
+                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+                <p>&copy; 2026 AgriVerse. All rights reserved.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="weather.html">🌤️ Check Weather</a></li>
+                    <li><a href="Seeds.html">🌱 Seeds Guide</a></li>
+                    <li><a href="Feritlizer.html">🧪 Fertilizers</a></li>
+                    <li><a href="tools.html">🚜 Implements</a></li>
+                    <li><a href="farmingtypes.html">🌾 Farming Types</a></li>
+                    <li><a href="weather-rain.html">🌧️ Rain Tracker</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
+                <form id="newsletterForm">
+                    <input type="email" id="newsletterEmail" placeholder="Your Email" required>
+                    <button type="submit" class="btn" id="subscribeBtn">Subscribe</button>
+                </form>
+                <p id="newsletterMsg" style="color:#4CAF50;margin-top:8px;display:none;">✅ Subscribed!</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Developed by Kavin Dobariya</p>
+            <a href="https://wa.me/919558478082" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 22px;border-radius:25px;text-decoration:none;font-weight:600;margin-top:12px;font-size:0.95rem;">
+                <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> WhatsApp Contact
+            </a>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+
+<!-- Back to Top -->
+<button id="backToTop" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ===== AI CHATBOT WIDGET ===== -->
+<div id="chatWidget" style="position:fixed;bottom:90px;right:25px;z-index:9999;">
+    <!-- Chat Button -->
+    <button id="chatToggle" onclick="toggleChat()" title="AI Farm Assistant" style="width:58px;height:58px;background:linear-gradient(135deg,#1b4332,#4CAF50);border:none;border-radius:50%;color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 6px 20px rgba(76,175,80,0.5);transition:all 0.3s;display:flex;align-items:center;justify-content:center;">🤖</button>
+    <!-- Chat Box -->
+    <div id="chatBox" style="display:none;position:absolute;bottom:70px;right:0;width:320px;background:var(--card-bg);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.25);overflow:hidden;border:1px solid var(--border);animation:fadeUp 0.3s ease;">
+        <div style="background:linear-gradient(135deg,#1b4332,#4CAF50);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.4rem;">🌿</span>
+                <div>
+                    <div style="color:#fff;font-weight:700;font-size:0.95rem;" id="chatTitle">Agri Assistant</div>
+                    <div style="color:rgba(255,255,255,0.75);font-size:0.75rem;" id="chatSubtitle">Ask me anything about farming!</div>
+                </div>
+            </div>
+            <button onclick="toggleChat()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;">✕</button>
+        </div>
+        <div id="chatMessages" style="height:280px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg);">
+            <div class="chat-msg bot" style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9);color:#1b4332;padding:10px 14px;border-radius:16px 16px 16px 4px;font-size:0.88rem;max-width:85%;line-height:1.5;">
+                👋 Kem cho! Hu Agri Assistant chu. Seeds, Fertilizers, Weather, Mandi Price — koi pan savalo pucho! 🌾
+            </div>
+        </div>
+        <div style="padding:10px;background:var(--card-bg);border-top:1px solid var(--border);display:flex;gap:8px;">
+            <input id="chatInput" type="text" placeholder="Type your question..." style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:25px;font-size:0.88rem;outline:none;background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;" onkeypress="if(event.key==='Enter') sendChat()">
+            <button onclick="sendChat()" style="background:linear-gradient(135deg,#1b4332,#4CAF50);border:none;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">➤</button>
+        </div>
+        <!-- Quick Questions -->
+        <div style="padding:8px 10px 12px;background:var(--card-bg);display:flex;flex-wrap:wrap;gap:6px;" id="quickChips">
+            <button onclick="quickAsk('Best seeds for Gujarat?')" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--primary);padding:5px 10px;border-radius:20px;font-size:0.75rem;cursor:pointer;">🌱 Best Seeds</button>
+            <button onclick="quickAsk('Urea fertilizer info')" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--primary);padding:5px 10px;border-radius:20px;font-size:0.75rem;cursor:pointer;">🧪 Fertilizer</button>
+            <button onclick="quickAsk('Mandi price today')" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--primary);padding:5px 10px;border-radius:20px;font-size:0.75rem;cursor:pointer;">📊 Mandi Price</button>
+            <button onclick="quickAsk('Weather forecast')" style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--primary);padding:5px 10px;border-radius:20px;font-size:0.75rem;cursor:pointer;">🌤 Weather</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== DARK MODE =====
+function toggleDark() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('darkToggle').textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('agri-theme', isDark ? 'light' : 'dark');
+}
+// Apply saved theme on load
+(function() {
+    const saved = localStorage.getItem('agri-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('darkToggle');
+        if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+    });
+})();
+
+// ===== LANGUAGE SWITCH =====
+const translations = {
+    en: {
+        heroBadge: "🌿 India's #1 Farming Platform",
+        heroTitle: "Revolutionizing Agriculture<br>with Smart Technology",
+        heroDesc: "Empowering farmers with innovative solutions to increase yield, reduce waste, and optimize resources for sustainable farming.",
+        heroBtn1: "Get Started", heroBtn2: "Live Mandi Prices",
+        stat1Lbl: "Farmers", stat2Lbl: "Yield Increase", stat3Lbl: "Crops Tracked", stat4Lbl: "Mandi Cities",
+        heroSearch: "🔍 Search Seeds, Fertilizers, Tools...",
+        heroSearchBtn: "Search",
+        chatTitle: "Agri Assistant", chatSubtitle: "Ask me anything about farming!"
+    },
+    gu: {
+        heroBadge: "🌿 ભારતનું નં.૧ ખેતી પ્લેટફોર્મ",
+        heroTitle: "સ્માર્ટ ટેકનોલોજી સાથે<br>ખેતીમાં ક્રાંતિ",
+        heroDesc: "ખેડૂતોને નવીન ઉકેલો સાથે સશક્ત બનાવો — પાક વધારો, ખર્ચ ઘટાડો, ટકાઉ ખેતી કરો.",
+        heroBtn1: "શરૂ કરો", heroBtn2: "લાઇવ મંડી ભાવ",
+        stat1Lbl: "ખેડૂતો", stat2Lbl: "પાક વૃદ્ધિ", stat3Lbl: "પાક ટ્રેક", stat4Lbl: "મંડી શહેર",
+        heroSearch: "🔍 બી, ખાતર, ઓજાર શોધો...",
+        heroSearchBtn: "શોધો",
+        chatTitle: "ખેતી સહાયક", chatSubtitle: "ખેતી વિશે ગમે તે પૂછો!"
+    },
+    hi: {
+        heroBadge: "🌿 भारत का नंबर 1 कृषि प्लेटफॉर्म",
+        heroTitle: "स्मार्ट तकनीक के साथ<br>कृषि में क्रांति",
+        heroDesc: "किसानों को नवाचारी समाधानों से सशक्त बनाएं — फसल बढ़ाएं, बर्बादी कम करें, टिकाऊ खेती करें।",
+        heroBtn1: "शुरू करें", heroBtn2: "लाइव मंडी भाव",
+        stat1Lbl: "किसान", stat2Lbl: "उपज वृद्धि", stat3Lbl: "फसलें ट्रैक", stat4Lbl: "मंडी शहर",
+        heroSearch: "🔍 बीज, खाद, औज़ार खोजें...",
+        heroSearchBtn: "खोजें",
+        chatTitle: "कृषि सहायक", chatSubtitle: "खेती के बारे में कुछ भी पूछें!"
+    }
+};
+
+let currentLang = localStorage.getItem('agri-lang') || 'en';
+
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('agri-lang', lang);
+    const t = translations[lang];
+    document.getElementById('heroBadge').innerHTML = t.heroBadge;
+    document.getElementById('heroTitle').innerHTML = t.heroTitle;
+    document.getElementById('heroDesc').innerHTML = t.heroDesc;
+    document.getElementById('heroBtn1').textContent = t.heroBtn1;
+    document.getElementById('heroBtn2').textContent = t.heroBtn2;
+    document.getElementById('stat1Lbl').textContent = t.stat1Lbl;
+    document.getElementById('stat2Lbl').textContent = t.stat2Lbl;
+    document.getElementById('stat3Lbl').textContent = t.stat3Lbl;
+    document.getElementById('stat4Lbl').textContent = t.stat4Lbl;
+    document.getElementById('heroSearch').placeholder = t.heroSearch;
+    document.getElementById('heroSearchBtn').textContent = t.heroSearchBtn;
+    if (document.getElementById('chatTitle')) {
+        document.getElementById('chatTitle').textContent = t.chatTitle;
+        document.getElementById('chatSubtitle').textContent = t.chatSubtitle;
+    }
+    toggleLangMenu();
+}
+
+function toggleLangMenu() {
+    document.getElementById('langMenu').classList.toggle('open');
+    document.getElementById('moreMenu')?.classList.remove('open');
+}
+
+function toggleMore() {
+    document.getElementById('moreMenu').classList.toggle('open');
+    document.getElementById('langMenu')?.classList.remove('open');
+}
+
+function toggleProfile() {
+    document.getElementById('profileMenu')?.classList.toggle('open');
+    document.getElementById('langMenu')?.classList.remove('open');
+    document.getElementById('moreMenu')?.classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.lang-dropdown')) {
+        const m = document.getElementById('langMenu');
+        if (m) m.classList.remove('open');
+    }
+    if (!e.target.closest('.more-dropdown')) {
+        const m = document.getElementById('moreMenu');
+        if (m) m.classList.remove('open');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (currentLang !== 'en') setLang(currentLang);
+});
+
+// ===== HAMBURGER MENU =====
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("hamburger").addEventListener("click", function(){
+        document.getElementById("mainNav").classList.toggle("active");
+    });
+    // Close nav when link clicked on mobile
+    document.querySelectorAll('#mainNav a').forEach(function(a) {
+        a.addEventListener('click', function() {
+            document.getElementById('mainNav').classList.remove('active');
+        });
+    });
+});
+
+// ===== BACK TO TOP =====
+window.addEventListener('scroll', function(){
+    document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none";
+});
+
+// ===== HERO SEARCH (improved with Gujarati keywords) =====
+function heroSearchFn() {
+    var q = document.getElementById('heroSearch').value.toLowerCase().trim();
+    if (!q) return;
+    if (/seed|rice|wheat|tomato|bean|onion|bij|bī|gehu|chaval/.test(q)) { window.location.href='Seeds.html'; return; }
+    if (/fertil|urea|npk|dap|compost|khaatar|khatar/.test(q)) { window.location.href='Feritlizer.html'; return; }
+    if (/tool|implement|plow|hoe|spade|rake|harrow|ojaar|yantra/.test(q)) { window.location.href='tools.html'; return; }
+    if (/weather|rain|forecast|temp|havaman|varsa/.test(q)) { window.location.href='weather.html'; return; }
+    if (/news|update|latest|samachar/.test(q)) { window.location.href='news.html'; return; }
+    if (/mandi|bhav|price|rato|khorak/.test(q)) { window.location.href='mandi.html'; return; }
+    if (/farm|organic|irrigation|soil|kheti|zemin/.test(q)) { window.location.href='farmingtypes.html'; return; }
+    window.location.href = 'news.html';
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('heroSearch');
+    if (inp) inp.addEventListener('keypress', function(e){ if(e.key==='Enter') heroSearchFn(); });
+});
+
+// ===== NEWSLETTER =====
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('newsletterForm');
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var email = document.getElementById('newsletterEmail').value;
+            var btn = document.getElementById('subscribeBtn');
+            var msg = document.getElementById('newsletterMsg');
+            btn.innerHTML = '<span class="spinner"></span> Subscribing...';
+            btn.disabled = true;
+            try {
+                var response = await fetch('https://agri-project-ol6n.onrender.com/api/newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+                if (response.ok) {
+                    msg.style.display = 'block';
+                    document.getElementById('newsletterEmail').value = '';
+                    btn.innerHTML = '✅ Subscribed!';
+                } else { btn.innerHTML = 'Subscribe'; btn.disabled = false; }
+            } catch(err) { btn.innerHTML = 'Subscribe'; btn.disabled = false; }
+        });
+    }
+});
+
+// ===== PAGE LOADER =====
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var loader = document.getElementById('page-loader');
+        if (loader) {
+            loader.classList.add('hide');
+            setTimeout(function() { loader.style.display='none'; }, 500);
+        }
+    }, 800);
+});
+
+// ===== SERVICE WORKER =====
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function() { console.log('PWA Ready!'); })
+            .catch(function(err) { console.warn('SW skipped:', err); });
+    });
+}
+
+// ===== SERVICES SLIDER =====
+(function() {
+    const slider = document.getElementById('servicesSlider');
+    if (!slider) return;
+    const cards = slider.querySelectorAll('.service-card');
+    const total = cards.length;
+    let current = 0, autoTimer;
+    function getVisible() {
+        if (window.innerWidth <= 600) return 1;
+        if (window.innerWidth <= 992) return 2;
+        return 3;
+    }
+    function getMaxIndex() { return Math.max(0, total - getVisible()); }
+    function buildDots() {
+        const dotsEl = document.getElementById('sliderDots');
+        if (!dotsEl) return;
+        dotsEl.innerHTML = '';
+        for (let i = 0; i <= getMaxIndex(); i++) {
+            const d = document.createElement('span');
+            d.className = 'slider-dot' + (i === current ? ' active' : '');
+            d.onclick = () => { goTo(i); resetAuto(); };
+            dotsEl.appendChild(d);
+        }
+    }
+    function goTo(idx) {
+        current = Math.max(0, Math.min(idx, getMaxIndex()));
+        slider.style.transform = `translateX(-${(100/getVisible())*current}%)`;
+        document.querySelectorAll('.slider-dot').forEach((d,i) => d.classList.toggle('active', i===current));
+    }
+    window.slideServices = function(dir) { goTo(current+dir); resetAuto(); };
+    function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => goTo(current >= getMaxIndex() ? 0 : current+1), 3500);
+    }
+    buildDots(); goTo(0); resetAuto();
+    window.addEventListener('resize', () => { current=0; buildDots(); goTo(0); });
+})();
+
+// ===== AI CHATBOT =====
+function toggleChat() {
+    const box = document.getElementById('chatBox');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    if (box.style.display === 'block') document.getElementById('chatInput').focus();
+}
+
+async function sendChat() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    addChatMsg(msg, 'user');
+    addChatMsg('...', 'bot', true);
+    try {
+        const resp = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 300,
+                system: `You are Agri Assistant for Agri-Verse, an Indian farming platform (agriverse-in.vercel.app). 
+Answer ONLY about farming topics: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools.
+Keep answers SHORT (2-4 lines). Speak in the same language the user uses (English/Gujarati/Hindi).
+If user asks about mandi price say: "mandihtml page joao" or "Check our Mandi page".
+If off-topic, say: "Hu sirf kheti vishe madadrup chu!"`,
+                messages: [{ role: 'user', content: msg }]
+            })
+        });
+        const data = await resp.json();
+        removeBotTyping();
+        const reply = data.content?.[0]?.text || 'Mane samajyu nahi, please pharthi pucho!';
+        addChatMsg(reply, 'bot');
+    } catch(e) {
+        removeBotTyping();
+        addChatMsg('Antar error! Please thodi vaar pachhi try karo. 🙏', 'bot');
+    }
+}
+
+function quickAsk(q) {
+    document.getElementById('chatInput').value = q;
+    sendChat();
+}
+
+function addChatMsg(text, from, isTyping=false) {
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + from;
+    if (isTyping) div.id = 'typingMsg';
+    div.style.cssText = from === 'user'
+        ? 'background:linear-gradient(135deg,#1b4332,#4CAF50);color:#fff;padding:10px 14px;border-radius:16px 16px 4px 16px;font-size:0.88rem;max-width:85%;align-self:flex-end;margin-left:auto;line-height:1.5;'
+        : 'background:linear-gradient(135deg,#e8f5e9,#f1f8e9);color:#1b4332;padding:10px 14px;border-radius:16px 16px 16px 4px;font-size:0.88rem;max-width:85%;line-height:1.5;';
+    div.innerHTML = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeBotTyping() {
+    const t = document.getElementById('typingMsg');
+    if (t) t.remove();
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
