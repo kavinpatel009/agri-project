@@ -57,6 +57,7 @@
                 </a>
                 <ul id="sharedNavLinks">${liItems}</ul>
                 <div class="shared-nav-right">
+                    <div id="sharedAuthBtn"></div>
                     <button id="darkToggle" onclick="toggleDark()" title="Dark/Light Mode">🌙</button>
                     <button id="sharedHamburger" onclick="toggleMobileNav()">☰</button>
                 </div>
@@ -280,6 +281,99 @@
             background: none;
             border: none;
         }
+
+        /* ===== AUTH BUTTON ===== */
+        .nav-login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: white !important;
+            padding: 7px 16px;
+            border-radius: 25px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 3px 10px rgba(76,175,80,0.3);
+        }
+        .nav-login-btn:hover {
+            background: #388E3C;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(76,175,80,0.4);
+        }
+        .nav-profile-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(76,175,80,0.12);
+            border: 1.5px solid rgba(76,175,80,0.3);
+            color: var(--primary) !important;
+            padding: 6px 14px 6px 7px;
+            border-radius: 25px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
+        .nav-profile-btn:hover { background: rgba(76,175,80,0.2); }
+        .nav-avatar {
+            width: 26px; height: 26px;
+            background: linear-gradient(135deg, #1b4332, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.78rem; font-weight: 700;
+        }
+        /* Profile dropdown */
+        .nav-profile-wrap { position: relative; }
+        .nav-profile-menu {
+            display: none;
+            position: absolute;
+            top: 44px; right: 0;
+            background: var(--nav-bg);
+            border: 1px solid var(--nav-border);
+            border-radius: 14px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+            padding: 8px;
+            min-width: 200px;
+            z-index: 9999;
+        }
+        .nav-profile-menu.open { display: block; }
+        .nav-profile-header {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px 12px;
+            border-bottom: 1px solid var(--nav-border);
+            margin-bottom: 6px;
+        }
+        .nav-avatar-lg {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg,#1b4332,#4CAF50);
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; font-weight: 700; flex-shrink: 0;
+        }
+        .nav-profile-name { font-weight:700; font-size:0.9rem; color:var(--nav-text); }
+        .nav-profile-email { font-size:0.75rem; color:#888; margin-top:1px; }
+        .nav-menu-item {
+            display: flex; align-items: center; gap: 9px;
+            padding: 9px 12px; border-radius: 9px;
+            text-decoration: none; color: var(--nav-text);
+            font-size: 0.86rem; font-weight: 500;
+            transition: background 0.2s; cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            border: none; background: none; width: 100%; text-align: left;
+        }
+        .nav-menu-item:hover { background: rgba(76,175,80,0.08); color: var(--primary); }
+        .nav-menu-item.logout { color: #e53e3e !important; }
+        .nav-menu-item.logout:hover { background: rgba(229,62,62,0.08) !important; }
+        .nav-menu-divider { height:1px; background:var(--nav-border); margin:5px 0; }
+
         @media (max-width: 900px) {
             #sharedHamburger { display: flex; align-items: center; justify-content: center; }
             #sharedNavLinks {
@@ -297,6 +391,7 @@
             #sharedNavLinks.open { display: flex; }
             #sharedNavLinks li { width: 100%; }
             .shared-nav-link { display: block; padding: 10px 14px; font-size: 0.95rem; }
+            .nav-profile-menu { right: -10px; }
         }
         `;
         const style = document.createElement('style');
@@ -343,6 +438,65 @@
 
         // Apply current theme to button
         applyTheme(localStorage.getItem('agri-theme') || 'light');
+
+        // ===== AUTH BUTTON =====
+        const authEl = document.getElementById('sharedAuthBtn');
+        if (!authEl) return;
+
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        if (isLoggedIn) {
+            const name = user.name || 'User';
+            const firstName = name.split(' ')[0];
+            const initial = firstName.charAt(0).toUpperCase();
+            const email = user.email || '';
+
+            authEl.innerHTML = `
+                <div class="nav-profile-wrap" id="navProfileWrap">
+                    <button class="nav-profile-btn" onclick="toggleNavProfile()">
+                        <div class="nav-avatar">${initial}</div>
+                        <span>${firstName}</span>
+                        <span style="font-size:0.7rem;opacity:0.7;">▾</span>
+                    </button>
+                    <div class="nav-profile-menu" id="navProfileMenu">
+                        <div class="nav-profile-header">
+                            <div class="nav-avatar-lg">${initial}</div>
+                            <div>
+                                <div class="nav-profile-name">${name}</div>
+                                <div class="nav-profile-email">${email}</div>
+                            </div>
+                        </div>
+                        <a href="index.html" class="nav-menu-item">🏠 Home</a>
+                        <a href="index.html#contact" class="nav-menu-item">📩 Contact</a>
+                        <a href="#about" class="nav-menu-item">ℹ️ About</a>
+                        <div class="nav-menu-divider"></div>
+                        <button class="nav-menu-item logout" onclick="navLogout()">🚪 Logout</button>
+                    </div>
+                </div>`;
+        } else {
+            authEl.innerHTML = `
+                <a href="login.html" class="nav-login-btn">
+                    👤 Login
+                </a>`;
+        }
+
+        // Close profile menu on outside click
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#navProfileWrap')) {
+                const m = document.getElementById('navProfileMenu');
+                if (m) m.classList.remove('open');
+            }
+        });
     });
 
-})();
+    window.toggleNavProfile = function() {
+        const m = document.getElementById('navProfileMenu');
+        if (m) m.classList.toggle('open');
+    };
+
+    window.navLogout = function() {
+        ['token','user','isLoggedIn'].forEach(k => localStorage.removeItem(k));
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+    };
