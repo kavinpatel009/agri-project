@@ -148,8 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </div>
                             </div>
                             <div class="profile-divider"></div>
-                            <a href="#" class="profile-item">👤 My Profile</a>
-                            <a href="#" class="profile-item">⚙️ Settings</a>
+                            <a href="#" class="profile-item" onclick="openSettingsPanel(event)">⚙️ Settings</a>
                             <a href="#about" class="profile-item">ℹ️ About Us</a>
                             <a href="#contact" class="profile-item">📩 Contact</a>
                             <div class="profile-divider"></div>
@@ -164,10 +163,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
             } else {
+                // Logged out: Login button + Settings icon
                 authButton.innerHTML = `
-                    <a href="login.html" style="display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px solid var(--primary);color:var(--primary);padding:6px 16px;border-radius:25px;font-size:0.84rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='var(--primary)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--primary)'">
-                        👤 Login
-                    </a>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <a href="login.html" style="display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px solid var(--primary);color:var(--primary);padding:6px 16px;border-radius:25px;font-size:0.84rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='var(--primary)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--primary)'">
+                            👤 Login
+                        </a>
+                        <button onclick="openSettingsPanel(event)" style="background:rgba(76,175,80,0.1);border:none;color:var(--primary);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;" title="Settings" onmouseover="this.style.background='var(--primary)';this.style.color='white'" onmouseout="this.style.background='rgba(76,175,80,0.1)';this.style.color='var(--primary)'">⚙️</button>
+                    </div>
                 `;
             }
         },
