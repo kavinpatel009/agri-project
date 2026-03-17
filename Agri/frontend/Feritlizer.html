@@ -81,27 +81,6 @@
             color: var(--secondary);
         }
         
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-        
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-        
         .btn {
             display: inline-block;
             background-color: var(--primary);
@@ -292,20 +271,7 @@
                 position: relative;
             }
             .logo { margin-bottom: 0; }
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 65px;
-                left: 0; right: 0;
-                background: #fff;
-                padding: 15px 20px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                z-index: 999;
-                width: 100%;
-            }
-            nav ul.active, nav ul.open { display: flex; }
-            nav ul li { margin: 8px 0; }
+            nav ul.active,
             .hamburger { display: flex !important; }
 
             .fertilizer-hero h1 {
@@ -397,16 +363,13 @@
         .hamburger.active span:nth-child(2) { opacity:0; }
         .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
         @media(max-width:768px) {
-            .hamburger { display:flex; }
-            nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:#fff; box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
-            nav ul.open { display:flex; }
             nav { position:relative; }
         }
         
         @media(max-width:900px){
             #pgHamburger { display:flex !important; }
-            #pageNav { display:none; flex-direction:column; position:absolute; top:60px; left:0; right:0; background:#1a2535; padding:15px 20px; box-shadow:0 8px 25px rgba(0,0,0,0.3); z-index:9999; }
-            #pageNav.open { display:flex !important; }
+            
+            
         }
 
         </style>
@@ -414,31 +377,7 @@
 <body>
     
 
-        <header style="background:var(--nav-bg-page,#1a2535);border-bottom:1px solid var(--nav-border,#2d3e50);position:sticky;top:0;z-index:1000;transition:background 0.3s;">
-    <nav style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
-        <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover;border-radius:6px;">
-            <span style="font-size:1.3rem;font-weight:700;color:#4CAF50;white-space:nowrap;">Agri-Verse</span>
-        </a>
-        <ul id="pageNav" style="display:flex;list-style:none;align-items:center;gap:2px;flex-wrap:nowrap;">
-            <li><a href="index.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🏠 Home</a></li>
-            <li><a href="Seeds.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌱 Seeds</a></li>
-            <li><a href="Feritlizer.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🧪 Fertilizers</a></li>
-            <li><a href="mandi.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📊 Mandi</a></li>
-            <li><a href="weather.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌤️ Weather</a></li>
-            <li><a href="news.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📰 News</a></li>
-            <li><a href="tools.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🚜 Implements</a></li>
-            <li><a href="farmingtypes.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌾 Farming</a></li>
-            <li><a href="weather-rain.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌧️ Rain</a></li>
-        </ul>
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <button id="darkToggle" onclick="toggleDark()" title="Dark Mode" style="background:rgba(76,175,80,0.15);border:none;color:#4CAF50;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">🌙</button>
-            <button class="hamburger" id="pgHamburger" onclick="document.getElementById('pageNav').classList.toggle('open')" style="display:none;font-size:1.5rem;cursor:pointer;color:#4CAF50;background:none;border:none;">☰</button>
-        </div>
-    </nav>
-</header>
-    
-    <main>
+        <main>
         <section class="fertilizer-hero">
             <h1>Fertilizer Information Center</h1>
             <p>Discover the right fertilizers for your crops and learn how to use them effectively for optimal growth</p>
@@ -732,7 +671,7 @@
 
 <script>
 var hamburger = document.getElementById('hamburger');
-var navUl = document.querySelector('nav ul');
+
 if(hamburger && navUl) {
     hamburger.addEventListener('click', function() {
         hamburger.classList.toggle('active');
