@@ -523,10 +523,13 @@
         // Inject styles
         injectStyles();
 
-        // Inject new header at top of body
-        const headerDiv = document.createElement('div');
-        headerDiv.innerHTML = getNavHTML();
-        document.body.insertBefore(headerDiv.firstElementChild, document.body.firstChild);
+        // Inject new header at very top of body (prepend - works on all pages)
+        const headerEl = document.createElement('header');
+        headerEl.id = 'sharedHeader';
+        const tmp = document.createElement('div');
+        tmp.innerHTML = getNavHTML();
+        const injected = tmp.firstElementChild;
+        document.body.prepend(injected);
 
         // Apply current theme to button
         applyTheme(localStorage.getItem('agri-theme') || 'light');
