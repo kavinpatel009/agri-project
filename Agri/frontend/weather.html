@@ -132,6 +132,40 @@
 </head>
 <body>
 
+<!-- NAV - HARDCODED -->
+<header style="background:var(--nav-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000;box-shadow:0 2px 15px rgba(0,0,0,0.08);transition:background 0.3s;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
+        <!-- Logo -->
+        <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;">
+            <img src="images/logoss.jpg" height="36" width="36" style="border-radius:6px;object-fit:cover;">
+            <span style="font-size:1.25rem;font-weight:700;color:#4CAF50;white-space:nowrap;font-family:'Poppins',sans-serif;">Agri-Verse</span>
+        </a>
+        <!-- Links -->
+        <ul id="wNavLinks" style="display:flex;list-style:none;align-items:center;gap:2px;margin:0;padding:0;flex:1;justify-content:center;">
+            <li><a href="index.html" style="text-decoration:none;color:var(--text);font-weight:500;font-size:0.82rem;padding:5px 8px;border-radius:6px;transition:all 0.2s;white-space:nowrap;">🏠 Home</a></li>
+            <li><a href="Seeds.html" style="text-decoration:none;color:var(--text);font-weight:500;font-size:0.82rem;padding:5px 8px;border-radius:6px;transition:all 0.2s;white-space:nowrap;">🌱 Seeds</a></li>
+            <li><a href="Feritlizer.html" style="text-decoration:none;color:var(--text);font-weight:500;font-size:0.82rem;padding:5px 8px;border-radius:6px;transition:all 0.2s;white-space:nowrap;">🧪 Fertilizers</a></li>
+            <li><a href="mandi.html" style="text-decoration:none;color:var(--text);font-weight:500;font-size:0.82rem;padding:5px 8px;border-radius:6px;transition:all 0.2s;white-space:nowrap;">📊 Mandi</a></li>
+            <li><a href="weather.html" style="text-decoration:none;color:#4CAF50;font-weight:600;font-size:0.82rem;padding:5px 8px;border-radius:6px;background:rgba(76,175,80,0.1);white-space:nowrap;">🌤️ Weather</a></li>
+            <li><a href="news.html" style="text-decoration:none;color:var(--text);font-weight:500;font-size:0.82rem;padding:5px 8px;border-radius:6px;transition:all 0.2s;white-space:nowrap;">📰 News</a></li>
+            <li><a href="tools.html" style="text-decoration:none;color:var(--text);font-weight:500;font-size:0.82rem;padding:5px 8px;border-radius:6px;transition:all 0.2s;white-space:nowrap;">🚜 Implements</a></li>
+        </ul>
+        <!-- Right: Back + Dark + Hamburger -->
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            <button onclick="history.back()" style="background:transparent;border:1.5px solid var(--border);color:var(--text);padding:5px 12px;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.background='#4CAF50';this.style.color='white';this.style.borderColor='#4CAF50'" onmouseout="this.style.background='transparent';this.style.color='var(--text)';this.style.borderColor='var(--border)'">← Back</button>
+            <button id="darkToggle" onclick="toggleDark()" style="background:rgba(76,175,80,0.1);border:none;color:#4CAF50;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">🌙</button>
+            <button onclick="document.getElementById('wNavLinks').classList.toggle('wopen')" style="display:none;font-size:1.5rem;cursor:pointer;color:#4CAF50;background:none;border:none;" id="wHamburger">☰</button>
+        </div>
+    </div>
+</header>
+<style>
+@media(max-width:900px){
+    #wHamburger{display:block!important;}
+    #wNavLinks{display:none!important;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:var(--nav-bg);padding:15px 20px;box-shadow:0 8px 25px rgba(0,0,0,0.15);z-index:9999;}
+    #wNavLinks.wopen{display:flex!important;}
+}
+</style>
+
 <!-- PAGE HERO WITH TABS -->
 <div class="page-hero">
     <h1>🌤️ Weather & Rain</h1>
@@ -142,7 +176,7 @@
     </div>
 </div>
 
-<!-- ===== TAB 1: WEATHER FORECAST ===== -->
+<!-- TAB 1: WEATHER FORECAST -->
 <div class="tab-section active" id="tab-forecast">
     <div class="weather-wrapper">
         <div class="weather-card">
@@ -187,7 +221,7 @@
     </div>
 </div>
 
-<!-- ===== TAB 2: RAIN TRACKER ===== -->
+<!-- TAB 2: RAIN TRACKER -->
 <div class="tab-section" id="tab-rain">
     <div class="section-wrap">
         <div class="section-head">
@@ -212,10 +246,7 @@
 <footer><p>© 2026 Agri-Verse | <a href="index.html">Home</a> | <a href="index.html#contact">Contact</a> | Developed by Kavin Dobariya</p></footer>
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-<!-- Weather JS -->
 <script src="weather.js"></script>
-
-<!-- Tab switcher -->
 <script>
 function switchTab(tab, btn) {
     document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
@@ -223,10 +254,6 @@ function switchTab(tab, btn) {
     document.getElementById('tab-' + tab).classList.add('active');
     if (btn) btn.classList.add('active');
 }
-</script>
-
-<!-- Rain Tracker JS -->
-<script>
 const DISTRICTS = [
     {name:'Ahmedabad',lat:23.03,lon:72.58},{name:'Rajkot',lat:22.30,lon:70.78},
     {name:'Junagadh',lat:21.52,lon:70.46},{name:'Surat',lat:21.17,lon:72.83},
@@ -237,64 +264,47 @@ const DISTRICTS = [
     {name:'Bharuch',lat:21.71,lon:72.99},{name:'Navsari',lat:20.95,lon:72.92},
     {name:'Morbi',lat:22.82,lon:70.84},{name:'Surendranagar',lat:22.73,lon:71.64},
 ];
-
-const scroll = document.getElementById('districtScroll');
-DISTRICTS.forEach(d => {
-    const btn = document.createElement('button');
-    btn.className = 'dist-btn';
-    btn.textContent = '📍 ' + d.name;
-    btn.onclick = () => {
-        document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        loadRain(d);
-    };
-    scroll.appendChild(btn);
+document.addEventListener('DOMContentLoaded', function() {
+    const scroll = document.getElementById('districtScroll');
+    if (!scroll) return;
+    DISTRICTS.forEach(d => {
+        const btn = document.createElement('button');
+        btn.className = 'dist-btn'; btn.textContent = '📍 ' + d.name;
+        btn.onclick = () => { document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); loadRain(d); };
+        scroll.appendChild(btn);
+    });
 });
-
 async function loadRain(district) {
     document.getElementById('rainChartTitle').textContent = '⏳ Loading ' + district.name + '...';
-    document.getElementById('rainBars').innerHTML = '<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:#29b6f6;"></i><p style="margin-top:10px;color:var(--gray);">Fetching live data...</p></div>';
+    document.getElementById('rainBars').innerHTML = '<div class="no-rain-msg"><i class="fas fa-spinner" style="font-size:2rem;color:#29b6f6;animation:spin 1s linear infinite;"></i><p style="margin-top:10px;">Fetching live data...</p></div>';
     document.getElementById('rainStats').style.display = 'none';
     try {
         const end = new Date().toISOString().slice(0,10);
         const start = new Date(Date.now()-30*24*60*60*1000).toISOString().slice(0,10);
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`;
-        const res = await fetch(url);
+        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`);
         const data = await res.json();
         renderRain(district.name, data.daily);
-    } catch(e) {
-        document.getElementById('rainBars').innerHTML = '<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>';
-    }
+    } catch(e) { document.getElementById('rainBars').innerHTML = '<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>'; }
 }
-
 function renderRain(name, daily) {
     const dates = daily.time, rain = daily.precipitation_sum;
-    const maxR = Math.max(...rain.filter(r => r > 0), 1);
+    const maxR = Math.max(...rain.filter(r=>r>0), 1);
     document.getElementById('rainChartTitle').textContent = '🌧️ ' + name + ' — Last 30 Days';
     let html = '';
-    dates.forEach((d, i) => {
-        const mm = rain[i] || 0, h = Math.round((mm/maxR)*180);
+    dates.forEach((d,i) => {
+        const mm = rain[i]||0, h = Math.round((mm/maxR)*180);
         const dt = new Date(d), lbl = dt.getDate()+'/'+(dt.getMonth()+1);
-        html += `<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm">
-            <div class="bar-val">${mm>0.5?mm.toFixed(0):''}</div>
-            <div class="bar-inner ${mm<=0.5?'zero':''}" style="height:${Math.max(h,3)}px;"></div>
-            <div class="bar-date">${lbl}</div></div>`;
+        html += `<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm"><div class="bar-val">${mm>0.5?mm.toFixed(0):''}</div><div class="bar-inner ${mm<=0.5?'zero':''}" style="height:${Math.max(h,3)}px;"></div><div class="bar-date">${lbl}</div></div>`;
     });
     document.getElementById('rainBars').innerHTML = html;
-    const total = rain.reduce((a,b) => a+(b||0), 0);
-    const maxDay = Math.max(...rain);
-    const rainyDays = rain.filter(r => r > 0.5).length;
+    const total = rain.reduce((a,b)=>a+(b||0),0);
     document.getElementById('stat-total').textContent = total.toFixed(1)+' mm';
-    document.getElementById('stat-max').textContent = maxDay.toFixed(1)+' mm';
-    document.getElementById('stat-days').textContent = rainyDays+' days';
+    document.getElementById('stat-max').textContent = Math.max(...rain).toFixed(1)+' mm';
+    document.getElementById('stat-days').textContent = rain.filter(r=>r>0.5).length+' days';
     document.getElementById('rainStats').style.display = 'grid';
 }
-
-window.addEventListener('scroll', function(){
-    document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
-});
+window.addEventListener('scroll', function(){ document.getElementById('backToTop').style.display = window.scrollY>300?'block':'none'; });
 </script>
-
 <script src="nav.js"></script>
 </body>
 </html>
