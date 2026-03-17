@@ -1967,23 +1967,20 @@ async function sendChat() {
     addChatMsg(msg, 'user');
     addChatMsg('...', 'bot', true);
     try {
-        const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        const GEMINI_KEY = 'AIzaSyAAqjcfvbnsik4AYkP-uJ93hutdf0X8vsg'; // Tamaro Gemini API key mukho
+        const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools. Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi). If off-topic say: "Hu sirf kheti vishe madadrup chu!"\n\nUser: ${msg}`;
+        
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 300,
-                system: `You are Agri Assistant for Agri-Verse, an Indian farming platform (agriverse-in.vercel.app). 
-Answer ONLY about farming topics: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools.
-Keep answers SHORT (2-4 lines). Speak in the same language the user uses (English/Gujarati/Hindi).
-If user asks about mandi price say: "mandihtml page joao" or "Check our Mandi page".
-If off-topic, say: "Hu sirf kheti vishe madadrup chu!"`,
-                messages: [{ role: 'user', content: msg }]
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { maxOutputTokens: 300 }
             })
         });
         const data = await resp.json();
         removeBotTyping();
-        const reply = data.content?.[0]?.text || 'Mane samajyu nahi, please pharthi pucho!';
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Mane samajyu nahi, please pharthi pucho!';
         addChatMsg(reply, 'bot');
     } catch(e) {
         removeBotTyping();
