@@ -506,7 +506,8 @@
     });
 
     // Inject on DOM ready
-    document.addEventListener('DOMContentLoaded', function() {
+    // Inject on DOM ready - works whether DOM is ready or not
+    function initNav() {
         // Skip nav injection on index.html - it has its own nav
         const cur = window.location.pathname.split('/').pop() || 'index.html';
         if (cur === 'index.html' || cur === '') return;
@@ -527,18 +528,16 @@
         // Inject styles
         injectStyles();
 
-        // Inject new header at very top of body (prepend - works on all pages)
-        const headerEl = document.createElement('header');
-        headerEl.id = 'sharedHeader';
+        // Inject new header at very top of body
         const tmp = document.createElement('div');
         tmp.innerHTML = getNavHTML();
         const injected = tmp.firstElementChild;
         document.body.prepend(injected);
 
-        // Apply current theme to button
+        // Apply current theme
         applyTheme(localStorage.getItem('agri-theme') || 'light');
 
-        // ===== AUTH BUTTON =====
+        // Auth button
         const authEl = document.getElementById('sharedAuthBtn');
         if (!authEl) return;
 
@@ -550,7 +549,6 @@
             const firstName = name.split(' ')[0];
             const initial = firstName.charAt(0).toUpperCase();
             const email = user.email || '';
-
             authEl.innerHTML = `
                 <div class="nav-profile-wrap" id="navProfileWrap">
                     <button class="nav-profile-btn" onclick="toggleNavProfile()">
@@ -568,29 +566,40 @@
                         </div>
                         <a href="index.html" class="nav-menu-item">🏠 Home</a>
                         <a href="index.html#contact" class="nav-menu-item">📩 Contact</a>
-                        <a href="#about" class="nav-menu-item">ℹ️ About</a>
                         <div class="nav-menu-divider"></div>
                         <button class="nav-menu-item logout" onclick="navLogout()">🚪 Logout</button>
                     </div>
                 </div>`;
         } else {
             authEl.innerHTML = `
-                <a href="login.html" class="nav-login-btn">
-                    👤 Login
-                </a>`;
+                <a href="login.html" class="nav-login-btn">👤 Login</a>`;
         }
 
-        // Close profile menu on outside click
         document.addEventListener('click', function(e) {
             if (!e.target.closest('#navProfileWrap')) {
-                const m = document.getElementById('navProfileMenu');
-                if (m) m.classList.remove('open');
+                document.getElementById('navProfileMenu')?.classList.remove('open');
+            }
+            if (!e.target.closest('.shared-more-wrap')) {
+                document.getElementById('sharedMoreMenu')?.classList.remove('open');
             }
         });
-    });
+    }
+
+    // Run immediately if DOM ready, else wait
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNav);
+    } else {
+        initNav();
+    }
 
     window.toggleNavProfile = function() {
         const m = document.getElementById('navProfileMenu');
+        if (m) m.classList.toggle('open');
+    };
+
+    window.toggleSharedMore = function(e) {
+        e.stopPropagation();
+        const m = document.getElementById('sharedMoreMenu');
         if (m) m.classList.toggle('open');
     };
 
@@ -599,3 +608,5 @@
         sessionStorage.clear();
         window.location.href = 'login.html';
     };
+
+})();
