@@ -119,7 +119,45 @@ app.post("/api/newsletter", async (req, res) => {
   }
 });
 
-// Health Check
+// Chat Route (Gemini AI)
+app.post("/api/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message) return res.status(400).json({ error: "Message required" });
+
+    const GEMINI_KEY = process.env.GEMINI_API_KEY;
+    if (!GEMINI_KEY) return res.status(500).json({ error: "API key not set" });
+
+    const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. 
+Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools.
+Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi).
+If off-topic say: "Hu sirf kheti vishe madadrup chu!"
+
+User: ${message}`;
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { maxOutputTokens: 300 }
+        })
+      }
+    );
+
+    const data = await response.json();
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Mane samajyu nahi, please pharthi pucho!";
+    res.json({ reply });
+
+  } catch (error) {
+    console.error("Chat error:", error);
+    res.status(500).json({ error: "Chat service unavailable" });
+  }
+});
+
+
 app.get("/", (req, res) => res.json({ message: "✅ Agri Backend Running!" }));
 
 const PORT = process.env.PORT || 5000;
