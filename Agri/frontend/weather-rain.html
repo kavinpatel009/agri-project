@@ -197,21 +197,16 @@
 </header>
 
 <div class="tools-hero">
-    <h1>🌾 Farmer Tools</h1>
-    <p>Rain data · Crop calendar · AI disease detection · Mandi map</p>
+    <h1>🌾 Agri Tools</h1>
+    <p>Crop calendar · AI disease detection · Mandi map</p>
     <div class="tab-row">
-        <button class="tab-btn active" onclick="switchTab('rain',this)"><span>🌧️</span> Rain Tracker</button>
-        <button class="tab-btn" onclick="switchTab('calendar',this)"><span>📅</span> Crop Calendar</button>
+        <button class="tab-btn active" onclick="switchTab('calendar',this)"><span>📅</span> Crop Calendar</button>
         <button class="tab-btn" onclick="switchTab('doctor',this)"><span>🤖</span> AI Crop Doctor</button>
         <button class="tab-btn" onclick="switchTab('map',this)"><span>🗺️</span> Mandi Map</button>
     </div>
 </div>
 
-<!-- RAIN -->
-<div class="tab-section active" id="tab-rain">
-    <div class="section-head"><h2>🌧️ Gujarat Rain Tracker</h2><p>Live 30-day rainfall — Open-Meteo API</p></div>
-    <div class="district-scroll" id="districtScroll"></div>
-    <div class="rain-card">
+        <div class="rain-card">
         <div class="rain-card-title"><i class="fas fa-chart-bar" style="color:#29b6f6;"></i><span id="rainChartTitle">Select a district to view rainfall</span></div>
         <div class="chart-bars" id="rainBars"><div class="no-rain-msg"><i class="fas fa-cloud-rain"></i><p>Select a district above</p></div></div>
     </div>
@@ -223,7 +218,7 @@
 </div>
 
 <!-- CALENDAR -->
-<div class="tab-section" id="tab-calendar">
+<div class="tab-section active" id="tab-calendar">
     <div class="section-head"><h2>📅 Gujarat Crop Calendar</h2><p>Season-wise sowing & harvest guide</p></div>
     <div class="season-row">
         <button class="season-btn active" onclick="showSeason('kharif',this)">🌱 Kharif (Jun–Oct)</button>
@@ -293,104 +288,6 @@ function switchTab(tab,btn){
     if(btn)btn.classList.add('active');
 }
 
-// RAIN
-const DISTRICTS=[
-    {name:'Ahmedabad',lat:23.03,lon:72.58},{name:'Rajkot',lat:22.30,lon:70.78},
-    {name:'Junagadh',lat:21.52,lon:70.46},{name:'Surat',lat:21.17,lon:72.83},
-    {name:'Vadodara',lat:22.31,lon:73.19},{name:'Bhavnagar',lat:21.77,lon:72.15},
-    {name:'Anand',lat:22.56,lon:72.95},{name:'Mehsana',lat:23.59,lon:72.37},
-    {name:'Gandhinagar',lat:23.22,lon:72.65},{name:'Kutch',lat:23.73,lon:69.86},
-    {name:'Amreli',lat:21.60,lon:71.22},{name:'Porbandar',lat:21.64,lon:69.60},
-    {name:'Bharuch',lat:21.71,lon:72.99},{name:'Navsari',lat:20.95,lon:72.92},
-    {name:'Morbi',lat:22.82,lon:70.84},{name:'Surendranagar',lat:22.73,lon:71.64},
-];
-const scroll=document.getElementById('districtScroll');
-DISTRICTS.forEach(d=>{
-    const btn=document.createElement('button');
-    btn.className='dist-btn';btn.textContent='📍 '+d.name;
-    btn.onclick=()=>{document.querySelectorAll('.dist-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadRain(d);};
-    scroll.appendChild(btn);
-});
-
-async function loadRain(district){
-    document.getElementById('rainChartTitle').textContent='⏳ Loading '+district.name+'...';
-    document.getElementById('rainBars').innerHTML='<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:#29b6f6;"></i><p style="margin-top:10px;color:#aaa;">Fetching live data...</p></div>';
-    document.getElementById('rainStats').style.display='none';
-    try{
-        const end=new Date().toISOString().slice(0,10);
-        const start=new Date(Date.now()-30*24*60*60*1000).toISOString().slice(0,10);
-        const url=`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`;
-        const res=await fetch(url);const data=await res.json();
-        renderRain(district.name,data.daily);
-    }catch(e){document.getElementById('rainBars').innerHTML='<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>';}
-}
-
-function renderRain(name,daily){
-    const dates=daily.time,rain=daily.precipitation_sum;
-    const maxR=Math.max(...rain.filter(r=>r>0),1);
-    document.getElementById('rainChartTitle').textContent='🌧️ '+name+' — Last 30 Days';
-    let html='';
-    dates.forEach((d,i)=>{
-        const mm=rain[i]||0,h=Math.round((mm/maxR)*180);
-        const dt=new Date(d),lbl=dt.getDate()+'/'+(dt.getMonth()+1);
-        html+=`<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm">
-            <div class="bar-val">${mm>0.5?mm.toFixed(0):''}</div>
-            <div class="bar-inner ${mm<=0.5?'zero':''}" style="height:${Math.max(h,3)}px;"></div>
-            <div class="bar-date">${lbl}</div></div>`;
-    });
-    document.getElementById('rainBars').innerHTML=html;
-    const total=rain.reduce((a,b)=>a+(b||0),0),maxDay=Math.max(...rain),rainyDays=rain.filter(r=>r>0.5).length;
-    document.getElementById('stat-total').textContent=total.toFixed(1)+' mm';
-    document.getElementById('stat-max').textContent=maxDay.toFixed(1)+' mm';
-    document.getElementById('stat-days').textContent=rainyDays+' days';
-    document.getElementById('rainStats').style.display='grid';
-}
-
-// CALENDAR
-const CROPS={
-    kharif:[
-        {name:'🥜 Groundnut (Magfali)',sow:'Jun–Jul',harvest:'Oct–Nov',water:'Medium',soil:'Sandy loam',days:'120-130'},
-        {name:'🌿 Cotton (Kapas)',sow:'May–Jun',harvest:'Nov–Jan',water:'Medium',soil:'Black cotton',days:'150-180'},
-        {name:'🌽 Maize (Makkai)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Medium',soil:'Loamy',days:'90-100'},
-        {name:'🫘 Moong (Green gram)',sow:'Jun–Jul',harvest:'Aug–Sep',water:'Low',soil:'Well drained',days:'60-70'},
-        {name:'🌾 Bajra (Pearl millet)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Sandy',days:'75-90'},
-        {name:'🍅 Tomato',sow:'Jun–Jul',harvest:'Sep–Nov',water:'High',soil:'Loamy',days:'90-120'},
-        {name:'🧅 Onion',sow:'Jun–Jul',harvest:'Oct–Nov',water:'Medium',soil:'Well drained',days:'120-140'},
-        {name:'🌻 Til (Sesame)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Sandy loam',days:'80-90'},
-        {name:'🫘 Toor (Pigeon pea)',sow:'Jun–Jul',harvest:'Dec–Jan',water:'Low',soil:'Any',days:'150-180'},
-        {name:'🌾 Jowar (Sorghum)',sow:'Jun–Jul',harvest:'Sep–Oct',water:'Low',soil:'Any',days:'90-100'},
-    ],
-    rabi:[
-        {name:'🌾 Wheat (Ghau)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Loamy',days:'110-120'},
-        {name:'🧄 Garlic (Lasan)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Well drained',days:'130-150'},
-        {name:'🧅 Onion (Dungali)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Medium',soil:'Loamy',days:'120-140'},
-        {name:'🥔 Potato (Bataka)',sow:'Oct–Nov',harvest:'Jan–Feb',water:'Medium',soil:'Sandy loam',days:'75-90'},
-        {name:'🫘 Chana (Chickpea)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Well drained',days:'90-120'},
-        {name:'🌿 Mustard (Sarson)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Loamy',days:'90-110'},
-        {name:'🥕 Carrot (Gajar)',sow:'Oct–Nov',harvest:'Jan–Feb',water:'Medium',soil:'Sandy loam',days:'80-90'},
-        {name:'🌾 Ragi (Nachni)',sow:'Oct–Nov',harvest:'Feb–Mar',water:'Low',soil:'Red loamy',days:'100-120'},
-    ],
-    zaid:[
-        {name:'🍉 Watermelon',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Sandy',days:'80-90'},
-        {name:'🥒 Cucumber (Kakadi)',sow:'Feb–Mar',harvest:'Apr–May',water:'Medium',soil:'Loamy',days:'50-60'},
-        {name:'🎃 Bitter Gourd (Karela)',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Well drained',days:'55-65'},
-        {name:'🫘 Moong (Green gram)',sow:'Mar–Apr',harvest:'May–Jun',water:'Low',soil:'Any',days:'55-65'},
-        {name:'🌽 Maize (Makkai)',sow:'Feb–Mar',harvest:'May–Jun',water:'Medium',soil:'Loamy',days:'85-95'},
-        {name:'🍅 Tomato',sow:'Jan–Feb',harvest:'Apr–May',water:'High',soil:'Loamy',days:'90-110'},
-    ]
-};
-function showSeason(season,btn){
-    document.querySelectorAll('.season-btn').forEach(b=>b.classList.remove('active'));
-    if(btn)btn.classList.add('active');
-    document.getElementById('calGrid').innerHTML=CROPS[season].map(c=>`
-        <div class="crop-card"><h3>${c.name}</h3><div class="crop-tags">
-            <span class="tag tag-g">🌱 ${c.sow}</span>
-            <span class="tag tag-g">🌾 ${c.harvest}</span>
-            <span class="tag tag-o">⏱️ ${c.days}d</span>
-            <span class="tag tag-b">💧 ${c.water}</span>
-            <span class="tag tag-p">🪨 ${c.soil}</span>
-        </div></div>`).join('');
-}
 showSeason('kharif');
 
 // AI DOCTOR
