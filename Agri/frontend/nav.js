@@ -31,32 +31,50 @@
 
     function getNavHTML() {
         const cur = getCurrentPage();
-        const links = [
+        const mainLinks = [
             { href: 'index.html',        label: '🏠 Home' },
             { href: 'Seeds.html',        label: '🌱 Seeds' },
             { href: 'Feritlizer.html',   label: '🧪 Fertilizers' },
             { href: 'mandi.html',        label: '📊 Mandi' },
             { href: 'weather.html',      label: '🌤️ Weather' },
             { href: 'news.html',         label: '📰 News' },
+        ];
+        const moreLinks = [
             { href: 'tools.html',        label: '🚜 Implements' },
             { href: 'farmingtypes.html', label: '🌾 Farming' },
-            { href: 'weather-rain.html', label: '🌧️ Rain' },
+            { href: 'weather-rain.html', label: '🌧️ Rain & Tools' },
         ];
 
-        const liItems = links.map(l => {
+        const liItems = mainLinks.map(l => {
             const isActive = cur === l.href ? 'style="color:var(--primary)!important;background:rgba(76,175,80,0.1);border-radius:6px;"' : '';
             return `<li><a href="${l.href}" class="shared-nav-link" ${isActive}>${l.label}</a></li>`;
+        }).join('');
+
+        // Check if current page is in moreLinks
+        const moreActive = moreLinks.some(l => l.href === cur);
+        const moreItems = moreLinks.map(l => {
+            const isActive = cur === l.href ? 'style="color:var(--primary);background:rgba(76,175,80,0.08);"' : '';
+            return `<a href="${l.href}" class="shared-more-item" ${isActive}>${l.label}</a>`;
         }).join('');
 
         return `
         <header id="sharedHeader">
             <nav id="sharedNav">
                 <a href="index.html" class="shared-logo">
-                    <img src="images/logoss.jpg" height="38" width="38" alt="Logo">
+                    <img src="images/logoss.jpg" height="36" width="36" alt="Logo">
                     <span>Agri-Verse</span>
                 </a>
-                <ul id="sharedNavLinks">${liItems}</ul>
+                <ul id="sharedNavLinks">
+                    ${liItems}
+                    <li class="shared-more-wrap">
+                        <button class="shared-more-btn ${moreActive?'more-active':''}" onclick="toggleSharedMore(event)">More ▾</button>
+                        <div class="shared-more-menu" id="sharedMoreMenu">
+                            ${moreItems}
+                        </div>
+                    </li>
+                </ul>
                 <div class="shared-nav-right">
+                    <button class="shared-back-btn" onclick="history.back()" title="Go Back">← Back</button>
                     <div id="sharedAuthBtn"></div>
                     <button id="darkToggle" onclick="toggleDark()" title="Dark/Light Mode">🌙</button>
                     <button id="sharedHamburger" onclick="toggleMobileNav()">☰</button>
@@ -233,16 +251,19 @@
             display: flex;
             list-style: none;
             align-items: center;
-            gap: 2px;
+            gap: 0;
             margin: 0;
             padding: 0;
+            flex: 1;
+            justify-content: center;
+            overflow: visible;
         }
         .shared-nav-link {
             text-decoration: none;
             color: var(--nav-text) !important;
             font-weight: 500;
-            font-size: 0.83rem;
-            padding: 6px 9px;
+            font-size: 0.78rem;
+            padding: 5px 7px;
             border-radius: 6px;
             transition: all 0.2s;
             white-space: nowrap;
@@ -252,11 +273,76 @@
             color: var(--primary) !important;
             background: rgba(76,175,80,0.1);
         }
+        /* More dropdown */
+        .shared-more-wrap { position: relative; list-style: none; }
+        .shared-more-btn {
+            background: rgba(76,175,80,0.1);
+            border: 1px solid rgba(76,175,80,0.25);
+            color: var(--primary);
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .shared-more-btn:hover, .shared-more-btn.more-active { background: var(--primary); color: white; }
+        .shared-more-menu {
+            display: none;
+            position: absolute;
+            top: 40px; right: 0;
+            background: var(--nav-bg);
+            border: 1px solid var(--nav-border);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            padding: 6px;
+            min-width: 170px;
+            z-index: 9999;
+        }
+        .shared-more-menu.open { display: block; }
+        .shared-more-item {
+            display: block;
+            padding: 9px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--nav-text);
+            font-size: 0.86rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .shared-more-item:hover { background: rgba(76,175,80,0.08); color: var(--primary) !important; }
         .shared-nav-right {
             display: flex;
             align-items: center;
             gap: 8px;
             flex-shrink: 0;
+        }
+        .shared-back-btn {
+            background: transparent;
+            border: 1.5px solid var(--nav-border);
+            color: var(--nav-text);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .shared-back-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        @media (max-width: 600px) {
+            .shared-back-btn { display: none; }
         }
         #darkToggle {
             background: rgba(76,175,80,0.1);
@@ -403,6 +489,12 @@
     window.toggleMobileNav = function() {
         const ul = document.getElementById('sharedNavLinks');
         if (ul) ul.classList.toggle('open');
+    };
+
+    window.toggleSharedMore = function(e) {
+        e.stopPropagation();
+        const m = document.getElementById('sharedMoreMenu');
+        if (m) m.classList.toggle('open');
     };
 
     // Close mobile nav on outside click
