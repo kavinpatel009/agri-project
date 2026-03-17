@@ -69,12 +69,9 @@
         nav{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 5%;max-width:1400px;margin:0 auto;}
         .logo{font-size:1.5rem;font-weight:700;color:var(--green);display:flex;align-items:center;text-decoration:none;gap:10px;}
         .logo img{height:42px;width:42px;object-fit:cover;border-radius:50%;}
-        nav ul{display:flex;list-style:none;align-items:center;gap:1.5rem;}
-        nav ul li a{text-decoration:none;color:#444;font-weight:500;font-size:0.9rem;transition:color 0.3s;}
-        nav ul li a:hover{color:var(--green);}
         .nav-btn{background:var(--green);color:#fff!important;padding:7px 18px;border-radius:25px;font-weight:600!important;}
         .hamburger{display:none;font-size:1.5rem;cursor:pointer;color:var(--green);background:none;border:none;}
-        @media(max-width:768px){.hamburger{display:block;}nav ul{display:none;flex-direction:column;position:absolute;top:62px;left:0;right:0;background:var(--white);padding:15px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:9999;}nav ul.active{display:flex;}}
+        @media(max-width:768px){.hamburger{display:block;}}
         .tools-hero{background:linear-gradient(135deg,#1b4332 0%,#2d6a4f 50%,#52b788 100%);padding:2.5rem 5% 0;text-align:center;}
         .tools-hero h1{color:#fff;font-size:1.8rem;font-weight:700;margin-bottom:0.4rem;}
         .tools-hero p{color:rgba(255,255,255,0.8);font-size:0.95rem;margin-bottom:1.8rem;}
@@ -165,38 +162,14 @@
     
         @media(max-width:900px){
             #pgHamburger { display:flex !important; }
-            #pageNav { display:none; flex-direction:column; position:absolute; top:60px; left:0; right:0; background:#1a2535; padding:15px 20px; box-shadow:0 8px 25px rgba(0,0,0,0.3); z-index:9999; }
-            #pageNav.open { display:flex !important; }
+            
+            
         }
 
         </style>
 </head>
 <body>
-    <header style="background:var(--nav-bg-page,#1a2535);border-bottom:1px solid var(--nav-border,#2d3e50);position:sticky;top:0;z-index:1000;transition:background 0.3s;">
-    <nav style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 3%;max-width:1400px;margin:0 auto;">
-        <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <img src="images/logoss.jpg" height="38" width="38" style="object-fit:cover;border-radius:6px;">
-            <span style="font-size:1.3rem;font-weight:700;color:#4CAF50;white-space:nowrap;">Agri-Verse</span>
-        </a>
-        <ul id="pageNav" style="display:flex;list-style:none;align-items:center;gap:2px;flex-wrap:nowrap;">
-            <li><a href="index.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🏠 Home</a></li>
-            <li><a href="Seeds.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌱 Seeds</a></li>
-            <li><a href="Feritlizer.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🧪 Fertilizers</a></li>
-            <li><a href="mandi.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📊 Mandi</a></li>
-            <li><a href="weather.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌤️ Weather</a></li>
-            <li><a href="news.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">📰 News</a></li>
-            <li><a href="tools.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🚜 Implements</a></li>
-            <li><a href="farmingtypes.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌾 Farming</a></li>
-            <li><a href="weather-rain.html" style="text-decoration:none;color:#cde8cd;font-weight:500;font-size:0.83rem;padding:5px 9px;border-radius:6px;white-space:nowrap;transition:all 0.2s;">🌧️ Rain</a></li>
-        </ul>
-        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-            <button id="darkToggle" onclick="toggleDark()" title="Dark Mode" style="background:rgba(76,175,80,0.15);border:none;color:#4CAF50;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;">🌙</button>
-            <button class="hamburger" id="pgHamburger" onclick="document.getElementById('pageNav').classList.toggle('open')" style="display:none;font-size:1.5rem;cursor:pointer;color:#4CAF50;background:none;border:none;">☰</button>
-        </div>
-    </nav>
-</header>
-
-<div class="tools-hero">
+    <div class="tools-hero">
     <h1>🌾 Agri Tools</h1>
     <p>Crop calendar · AI disease detection · Mandi map</p>
     <div class="tab-row">
