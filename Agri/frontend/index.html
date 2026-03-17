@@ -249,8 +249,8 @@
         .settings-dropdown { position: relative; }
         .settings-menu {
             display: none;
-            position: absolute;
-            top: 46px; right: 0;
+            position: fixed;
+            top: 65px; right: 16px;
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 18px;
@@ -1815,7 +1815,8 @@ function toggleDarkFromSettings(checkbox) {
 }
 
 document.addEventListener('click', function(e) {
-    if (!e.target.closest('#settingsWrap')) {
+    // Close settings if click is outside BOTH settingsWrap AND auth-button
+    if (!e.target.closest('#settingsWrap') && !e.target.closest('#auth-button')) {
         document.getElementById('settingsMenu')?.classList.remove('open');
     }
     if (!e.target.closest('.lang-dropdown')) {
