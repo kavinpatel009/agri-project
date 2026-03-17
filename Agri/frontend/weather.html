@@ -248,6 +248,22 @@
 
 <script src="weather.js"></script>
 <script>
+// Dark Mode
+(function(){
+    const s = localStorage.getItem('agri-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', s);
+    const b = document.getElementById('darkToggle');
+    if(b) b.textContent = s==='dark'?'☀️':'🌙';
+})();
+function toggleDark(){
+    const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    const theme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('darkToggle').textContent = isDark?'🌙':'☀️';
+    localStorage.setItem('agri-theme', theme);
+}
+</script>
+<script>
 function switchTab(tab, btn) {
     document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
