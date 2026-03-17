@@ -245,6 +245,98 @@
 
         .lang-menu a:hover { background: rgba(76,175,80,0.1); color: var(--primary); }
 
+        /* ===== SETTINGS DROPDOWN ===== */
+        .settings-dropdown { position: relative; }
+        .settings-menu {
+            display: none;
+            position: absolute;
+            top: 46px; right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.18);
+            padding: 12px;
+            min-width: 230px;
+            z-index: 9999;
+        }
+        .settings-menu.open { display: block; }
+        .settings-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text);
+            padding: 4px 8px 10px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 8px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+        .settings-item:hover { background: rgba(76,175,80,0.06); }
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .settings-icon { font-size: 1.2rem; }
+        .settings-label { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+        .settings-sub { font-size: 0.75rem; color: var(--gray); }
+        .settings-divider { height: 1px; background: var(--border); margin: 8px 0; }
+        .settings-item-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--gray);
+            padding: 4px 8px;
+            margin-bottom: 6px;
+        }
+        .settings-lang-btns {
+            display: flex;
+            gap: 6px;
+            padding: 0 4px 6px;
+        }
+        .lang-opt {
+            flex: 1;
+            padding: 7px 4px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .lang-opt:hover, .lang-opt.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ccc; border-radius: 24px;
+            transition: 0.3s;
+        }
+        .toggle-slider:before {
+            position: absolute; content: "";
+            height: 18px; width: 18px;
+            left: 3px; bottom: 3px;
+            background: white; border-radius: 50%;
+            transition: 0.3s;
+        }
+        input:checked + .toggle-slider { background: var(--primary); }
+        input:checked + .toggle-slider:before { transform: translateX(20px); }
+
         /* Profile Dropdown */
         .profile-dropdown { position: relative; }
         .profile-btn {
@@ -1213,24 +1305,38 @@
                 </li>
             </ul>
 
-            <!-- RIGHT: Profile/Login + Lang + Dark -->
+            <!-- RIGHT: Profile/Login + Settings + Hamburger -->
             <div style="display:flex; align-items:center; gap:10px; flex-shrink:0; margin-left:auto;">
                 
                 <!-- Profile/Login Button -->
                 <div id="auth-button"></div>
 
-                <!-- Language -->
-                <div class="lang-dropdown">
-                    <button class="nav-icon-btn" onclick="toggleLangMenu()" title="Language">🌐</button>
-                    <div class="lang-menu" id="langMenu">
-                        <a href="#" onclick="setLang('en')">🇬🇧 English</a>
-                        <a href="#" onclick="setLang('gu')">🇮🇳 ગુજરાતી</a>
-                        <a href="#" onclick="setLang('hi')">🇮🇳 हिंदी</a>
+                <!-- Settings Panel (hidden, opened from profile dropdown) -->
+                <div class="settings-dropdown" id="settingsWrap" style="position:relative;">
+                    <div class="settings-menu" id="settingsMenu">
+                        <div class="settings-title">⚙️ Settings</div>
+                        <div class="settings-item">
+                            <div class="settings-item-left">
+                                <span class="settings-icon">🌙</span>
+                                <div>
+                                    <div class="settings-label">Dark Mode</div>
+                                    <div class="settings-sub">Switch theme</div>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkFromSettings(this)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-divider"></div>
+                        <div class="settings-item-label">🌐 Language</div>
+                        <div class="settings-lang-btns">
+                            <button class="lang-opt" id="lang-en" onclick="setLang('en')">🇬🇧 English</button>
+                            <button class="lang-opt" id="lang-gu" onclick="setLang('gu')">🇮🇳 ગુજ</button>
+                            <button class="lang-opt" id="lang-hi" onclick="setLang('hi')">🇮🇳 हिं</button>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Dark Mode -->
-                <button class="nav-icon-btn" id="darkToggle" onclick="toggleDark()" title="Dark Mode">🌙</button>
 
                 <!-- Hamburger (mobile) -->
                 <button class="hamburger" id="hamburger">☰</button>
@@ -1658,29 +1764,65 @@ function setLang(lang) {
 }
 
 function toggleLangMenu() {
-    document.getElementById('langMenu').classList.toggle('open');
+    document.getElementById('langMenu')?.classList.toggle('open');
     document.getElementById('moreMenu')?.classList.remove('open');
+}
+
+function toggleSettings() {
+    document.getElementById('settingsMenu').classList.toggle('open');
+    document.getElementById('moreMenu')?.classList.remove('open');
+    // Sync toggle state
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const chk = document.getElementById('darkModeToggle');
+    if (chk) chk.checked = isDark;
+    // Sync active lang
+    const lang = localStorage.getItem('agri-lang') || 'en';
+    document.querySelectorAll('.lang-opt').forEach(b => b.classList.remove('active'));
+    const activeLang = document.getElementById('lang-' + lang);
+    if (activeLang) activeLang.classList.add('active');
+}
+
+function openSettingsPanel(e) {
+    if (e) e.preventDefault();
+    // Close profile menu
+    document.getElementById('profileMenu')?.classList.remove('open');
+    // Sync and open settings
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const chk = document.getElementById('darkModeToggle');
+    if (chk) chk.checked = isDark;
+    const lang = localStorage.getItem('agri-lang') || 'en';
+    document.querySelectorAll('.lang-opt').forEach(b => b.classList.remove('active'));
+    const activeLang = document.getElementById('lang-' + lang);
+    if (activeLang) activeLang.classList.add('active');
+    document.getElementById('settingsMenu').classList.toggle('open');
 }
 
 function toggleMore() {
     document.getElementById('moreMenu').classList.toggle('open');
-    document.getElementById('langMenu')?.classList.remove('open');
+    document.getElementById('settingsMenu')?.classList.remove('open');
 }
 
 function toggleProfile() {
     document.getElementById('profileMenu')?.classList.toggle('open');
-    document.getElementById('langMenu')?.classList.remove('open');
+    document.getElementById('settingsMenu')?.classList.remove('open');
     document.getElementById('moreMenu')?.classList.remove('open');
 }
 
+function toggleDarkFromSettings(checkbox) {
+    const theme = checkbox.checked ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('agri-theme', theme);
+}
+
 document.addEventListener('click', function(e) {
+    if (!e.target.closest('#settingsWrap')) {
+        document.getElementById('settingsMenu')?.classList.remove('open');
+    }
     if (!e.target.closest('.lang-dropdown')) {
-        const m = document.getElementById('langMenu');
-        if (m) m.classList.remove('open');
+        document.getElementById('langMenu')?.classList.remove('open');
     }
     if (!e.target.closest('.more-dropdown')) {
-        const m = document.getElementById('moreMenu');
-        if (m) m.classList.remove('open');
+        document.getElementById('moreMenu')?.classList.remove('open');
     }
 });
 
@@ -1871,6 +2013,6 @@ function removeBotTyping() {
     if (t) t.remove();
 }
 </script>
-<script src="nav.js"></script>
+<!-- nav.js not needed - index.html has its own nav -->
 </body>
 </html>
