@@ -507,6 +507,10 @@
 
     // Inject on DOM ready
     document.addEventListener('DOMContentLoaded', function() {
+        // Skip nav injection on index.html - it has its own nav
+        const cur = window.location.pathname.split('/').pop() || 'index.html';
+        if (cur === 'index.html' || cur === '') return;
+
         // Remove old headers/navs/back buttons
         document.querySelectorAll('.back-btn').forEach(el => el.remove());
 
