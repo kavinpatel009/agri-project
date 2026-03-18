@@ -967,28 +967,30 @@
         
         .social-links {
             display: flex;
-            gap: 1rem;
+            gap: 12px;
         }
         
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 42px;
-            height: 42px;
-            background: var(--light);
-            color: var(--primary);
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             transition: all 0.3s;
-            font-size: 1rem;
-            border: 1px solid var(--border);
-        }
-        
-        .social-links a:hover {
-            background: var(--primary);
+            font-size: 1.1rem;
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(76,175,80,0.3);
+            border: none;
+            text-decoration: none;
+        }
+        .social-links a.fb  { background: #1877F2; }
+        .social-links a.ig  { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+        .social-links a.yt  { background: #FF0000; }
+
+        .social-links a:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            filter: brightness(1.1);
         }
         
         .contact-form .form-group {
@@ -1635,9 +1637,9 @@
                     </div>
                     <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61585488087757" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/agriverse009/" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.youtube.com/@AgriVerse-f7l" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61585488087757" target="_blank" class="fb"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/agriverse009/" target="_blank" class="ig"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@AgriVerse-f7l" target="_blank" class="yt"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="contact-form">
