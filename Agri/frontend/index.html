@@ -75,8 +75,8 @@
         }
         
         header {
-            background-color: #1a2535;
-            border-bottom: 1px solid #2d3e50;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e8f5e9;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -84,13 +84,13 @@
         }
 
         [data-theme="dark"] header {
-            background-color: #0f1923;
+            background-color: #1a2535;
             border-bottom: 1px solid #2d3e50;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: #cde8cd;
+            color: #333;
             font-weight: 500;
             font-size: 0.83rem;
             padding: 5px 9px;
@@ -98,6 +98,7 @@
             transition: all 0.2s;
             white-space: nowrap;
         }
+        [data-theme="dark"] nav ul li a { color: #e8f5e9; }
 
         nav ul li a:hover {
             color: #4CAF50;
@@ -130,9 +131,9 @@
         }
 
         .more-btn {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #cde8cd;
+            background: rgba(76,175,80,0.08);
+            border: 1px solid rgba(76,175,80,0.25);
+            color: #4CAF50;
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.82rem;
@@ -141,6 +142,11 @@
             font-family: 'Poppins', sans-serif;
             transition: all 0.2s;
             white-space: nowrap;
+        }
+        [data-theme="dark"] .more-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #cde8cd;
         }
         .more-btn:hover { background: rgba(76,175,80,0.25); color: #4CAF50; }
         
