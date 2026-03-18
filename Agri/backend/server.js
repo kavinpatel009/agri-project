@@ -120,39 +120,32 @@ app.post("/api/newsletter", async (req, res) => {
 });
 
 // Chat Route (Gemini AI)
+const axios = require("axios");
 app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
     if (!message) return res.status(400).json({ error: "Message required" });
 
     const GEMINI_KEY = process.env.GEMINI_API_KEY;
-    if (!GEMINI_KEY) return res.status(500).json({ error: "API key not set" });
+    if (!GEMINI_KEY) {
+      console.error("GEMINI_API_KEY not set!");
+      return res.status(500).json({ error: "API key not configured" });
+    }
 
-    const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. 
-Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools.
-Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi).
-If off-topic say: "Hu sirf kheti vishe madadrup chu!"
+    const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools. Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi). If off-topic say: "Hu sirf kheti vishe madadrup chu!" User: ${message}`;
 
-User: ${message}`;
-
-    const response = await fetch(
+    const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 300 }
-        })
-      }
+      { contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 300 } },
+      { headers: { "Content-Type": "application/json" } }
     );
 
-    const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Mane samajyu nahi, please pharthi pucho!";
+    const reply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "Mane samajyu nahi, please pharthi pucho!";
+    console.log("Chat reply sent:", reply.slice(0, 100));
     res.json({ reply });
 
   } catch (error) {
-    console.error("Chat error:", error);
+    console.error("Chat error:", error.response?.data || error.message);
     res.status(500).json({ error: "Chat service unavailable" });
   }
 });
