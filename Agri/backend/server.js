@@ -135,7 +135,7 @@ app.post("/api/chat", async (req, res) => {
     const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools. Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi). If off-topic say: "Hu sirf kheti vishe madadrup chu!" User: ${message}`;
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
       { contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 300 } },
       { headers: { "Content-Type": "application/json" } }
     );
