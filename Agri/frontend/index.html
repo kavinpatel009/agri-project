@@ -6,6 +6,12 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://agri-project-ol6n.onrender.com">
+    <meta name="theme-color" content="#4CAF50">
     <title>Agri-Verse | Daily Mandi Prices, Weather, Agri News & Seeds Guide</title>
     <!-- Open Graph for Social Media Sharing -->
     <meta property="og:title" content="Agri-Verse | Daily Mandi Prices, Weather, Agri News & Seeds Guide">
@@ -1162,11 +1168,69 @@
                 flex-direction: column;
                 width: 100%;
             }
-            
             .btn {
                 width: 100%;
                 text-align: center;
             }
+        }
+
+        /* ===== MOBILE IMPROVEMENTS ===== */
+        @media (max-width: 480px) {
+            /* Hero */
+            .hero { padding: 4rem 1rem 3rem; min-height: 85vh; }
+            .hero h1 { font-size: 1.8rem !important; line-height: 1.25; }
+            .hero p { font-size: 0.92rem; }
+            .hero-badge { font-size: 0.78rem; padding: 6px 14px; }
+
+            /* Search bar */
+            .hero-search { flex-direction: column; gap: 8px; }
+            .hero-search input { width: 100%; border-radius: 25px !important; }
+            .hero-search button { width: 100%; border-radius: 25px !important; }
+
+            /* Stats */
+            .stats-bar { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
+            .stat-item { padding: 12px 8px; }
+            .stat-number { font-size: 1.6rem !important; }
+
+            /* Sections */
+            section { padding: 2.5rem 1rem; }
+            .section-title h2 { font-size: 1.6rem; }
+            .section-title p { font-size: 0.88rem; }
+
+            /* Service cards */
+            .services-grid { grid-template-columns: 1fr !important; gap: 14px; }
+            .service-card { padding: 1.2rem; }
+
+            /* About section */
+            .about-content { flex-direction: column !important; gap: 1.5rem; }
+            .about-img { width: 100% !important; max-width: 100%; }
+
+            /* Testimonials */
+            .testimonial-grid { grid-template-columns: 1fr !important; }
+
+            /* Footer */
+            .footer-grid { grid-template-columns: 1fr !important; gap: 1.5rem; }
+            .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+
+            /* Nav */
+            .logo span { font-size: 1.1rem; }
+            .logo img { height: 32px; width: 32px; }
+        }
+
+        /* Tablet */
+        @media (max-width: 768px) and (min-width: 481px) {
+            .hero h1 { font-size: 2rem; }
+            .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr) !important; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+
+        /* Touch improvements */
+        @media (hover: none) {
+            .btn, .hero-btn, .service-card, .nav-icon-btn {
+                -webkit-tap-highlight-color: transparent;
+            }
+            .btn:active { opacity: 0.85; transform: scale(0.97); }
         }
          
             /* Mobile Hamburger Menu */
@@ -1384,7 +1448,7 @@
                       <a href="#services" class="btn">Learn More</a>
                 </div>
                 <div class="about-image">
-                    <img src="images/Agri Min che.jpg" alt="Farmers using AgriVerse technology">
+                    <img src="images/Agri Min che.jpg" alt="Farmers using AgriVerse technology" loading="lazy" decoding="async">
                 </div>
             </div>
         </section>
@@ -1398,7 +1462,7 @@
                 <div class="services-grid" id="servicesSlider">
                     <div class="service-card">
                         <div class="service-img">
-                            <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Fertilizers">
+                            <img src="images/Flux_Dev_A_highquality_professional_image_displaying_various_t_3.jpeg" alt="Fertilizers" loading="lazy" decoding="async">
                         </div>
                         <div class="service-content">
                             <h3>🧪 Fertilizers Information</h3>
@@ -1408,7 +1472,7 @@
                     </div>
                     <div class="service-card">
                         <div class="service-img">
-                            <img src="images/Seeds.png" alt="Seeds">
+                            <img src="images/Seeds.png" alt="Seeds" loading="lazy" decoding="async">
                         </div>
                         <div class="service-content">
                             <h3>🌱 Seeds Information</h3>
@@ -1418,7 +1482,7 @@
                     </div>
                     <div class="service-card">
                         <div class="service-img">
-                            <img src="images/weather-service.jpg" alt="Weather" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
+                            <img src="images/weather-service.jpg" alt="Weather" loading="lazy" decoding="async" onerror="this.src='https://openweathermap.org/img/wn/02d@2x.png';this.style.padding='30px';this.style.background='linear-gradient(135deg,#1b4332,#52b788)';">
                         </div>
                         <div class="service-content">
                             <h3>🌤️ Weather Forecast</h3>
@@ -1428,7 +1492,7 @@
                     </div>
                     <div class="service-card">
                         <div class="service-img">
-                            <img src="images/farm-mechanization-1.jpg" alt="Implements" onerror="this.src='https://images.unsplash.com/photo-1592982537447-6f2a6a0a5b1a?w=600&q=80';this.onerror=null;">
+                            <img src="images/farm-mechanization-1.jpg" alt="Implements" loading="lazy" decoding="async" onerror="this.src='https://images.unsplash.com/photo-1592982537447-6f2a6a0a5b1a?w=600&q=80';this.onerror=null;">
                         </div>
                         <div class="service-content">
                             <h3>🚜 Agricultural Implements</h3>
@@ -1489,7 +1553,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-img">
-                            <img src="images/rajj.jpg" alt="Raj Patel" onerror="this.src='https://ui-avatars.com/api/?name=Raj+Patel&background=4CAF50&color=fff&size=50';this.onerror=null;">
+                            <img src="images/rajj.jpg" alt="Raj Patel" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Raj+Patel&background=4CAF50&color=fff&size=50';this.onerror=null;">
                         </div>
                         <div class="author-info">
                             <h4>Raj Patel</h4>
@@ -1504,7 +1568,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-img">
-                            <img src="images/jay.jpg" alt="Ketan Vaghasiya" onerror="this.src='https://ui-avatars.com/api/?name=Ketan+Vaghasiya&background=4CAF50&color=fff&size=50';this.onerror=null;">
+                            <img src="images/jay.jpg" alt="Ketan Vaghasiya" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Ketan+Vaghasiya&background=4CAF50&color=fff&size=50';this.onerror=null;">
                         </div>
                         <div class="author-info">
                             <h4>Ketan Vaghasiya</h4>
@@ -1519,7 +1583,7 @@
                     </div>
                     <div class="testimonial-author">
                         <div class="author-img">
-                            <img src="images/vinay.jpg" alt="Alpesh Dholariya" onerror="this.src='https://ui-avatars.com/api/?name=Alpesh+Dholariya&background=4CAF50&color=fff&size=50';this.onerror=null;">
+                            <img src="images/vinay.jpg" alt="Alpesh Dholariya" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Alpesh+Dholariya&background=4CAF50&color=fff&size=50';this.onerror=null;">
                         </div>
                         <div class="author-info">
                             <h4>Alpesh Dholariya</h4>
@@ -1651,7 +1715,7 @@
             </a>
         </div>
     </footer>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 
 <!-- Back to Top -->
 <button id="backToTop" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
