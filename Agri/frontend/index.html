@@ -1967,24 +1967,22 @@ async function sendChat() {
     addChatMsg(msg, 'user');
     addChatMsg('...', 'bot', true);
     try {
-        const resp = await fetch('https://agri-project-ol6n.onrender.com/api/chat', {
+        const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools. Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi). If off-topic say: "Hu sirf kheti vishe madadrup chu!" User: ${msg}`;
+        const resp = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAAqjcfvbnsik4AYkP-uJ93hutdf0X8vsg', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: msg })
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { maxOutputTokens: 300 }
+            })
         });
         const data = await resp.json();
         removeBotTyping();
-        if (data.reply) {
-            addChatMsg(data.reply, 'bot');
-        } else if (data.error) {
-            addChatMsg('Error: ' + data.error, 'bot');
-        } else {
-            addChatMsg('Koi response nahi malyo. Pharthi try karo!', 'bot');
-        }
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Mane samajyu nahi, pharthi pucho!';
+        addChatMsg(reply, 'bot');
     } catch(e) {
         removeBotTyping();
-        console.error('Chat error:', e);
-        addChatMsg('Server thi connect nathi thaytu. Thodi var pachhi try karo. 🙏', 'bot');
+        addChatMsg('Error aavyo, thodi var pachhi try karo. 🙏', 'bot');
     }
 }
 
