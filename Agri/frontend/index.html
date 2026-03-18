@@ -1974,11 +1974,17 @@ async function sendChat() {
         });
         const data = await resp.json();
         removeBotTyping();
-        const reply = data.reply || 'Mane samajyu nahi, please pharthi pucho!';
-        addChatMsg(reply, 'bot');
+        if (data.reply) {
+            addChatMsg(data.reply, 'bot');
+        } else if (data.error) {
+            addChatMsg('Error: ' + data.error, 'bot');
+        } else {
+            addChatMsg('Koi response nahi malyo. Pharthi try karo!', 'bot');
+        }
     } catch(e) {
         removeBotTyping();
-        addChatMsg('Antar error! Please thodi vaar pachhi try karo. 🙏', 'bot');
+        console.error('Chat error:', e);
+        addChatMsg('Server thi connect nathi thaytu. Thodi var pachhi try karo. 🙏', 'bot');
     }
 }
 
