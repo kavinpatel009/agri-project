@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Agri-Verse</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{min-height:100vh;background:linear-gradient(135deg,#0f2d1a 0%,#1b4332 50%,#2d6a4f 100%);display:flex;align-items:center;justify-content:center;padding:1rem;}
+        .login-box{background:#fff;border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(0,0,0,0.3);}
+        .logo{text-align:center;margin-bottom:2rem;}
+        .logo img{height:56px;width:56px;border-radius:12px;object-fit:cover;}
+        .logo h1{font-size:1.5rem;font-weight:700;color:#1b4332;margin-top:0.5rem;}
+        .logo p{font-size:0.82rem;color:#888;margin-top:2px;}
+        .admin-badge{display:inline-block;background:linear-gradient(135deg,#ff6b35,#f7931e);color:#fff;font-size:0.72rem;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:1px;margin-top:4px;}
+        .field{margin-bottom:1.2rem;}
+        .field label{display:block;font-size:0.82rem;font-weight:600;color:#333;margin-bottom:6px;}
+        .field-wrap{position:relative;}
+        .field-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#aaa;font-size:0.9rem;}
+        .field input{width:100%;padding:12px 14px 12px 40px;border:2px solid #e0e0e0;border-radius:12px;font-size:0.9rem;outline:none;transition:border 0.3s;font-family:'Poppins',sans-serif;}
+        .field input:focus{border-color:#2d6a4f;}
+        .toggle-pw{position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:#aaa;background:none;border:none;font-size:0.9rem;}
+        .login-btn{width:100%;background:linear-gradient(135deg,#1b4332,#2d6a4f);color:#fff;border:none;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:0.5rem;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(45,106,79,0.4);}
+        .login-btn:disabled{opacity:0.7;transform:none;cursor:not-allowed;}
+        .error-msg{background:#ffebee;color:#c62828;padding:10px 14px;border-radius:10px;font-size:0.82rem;margin-top:1rem;display:none;align-items:center;gap:8px;}
+        .back-link{text-align:center;margin-top:1.2rem;font-size:0.82rem;color:#888;}
+        .back-link a{color:#2d6a4f;font-weight:600;text-decoration:none;}
+        .security-note{display:flex;align-items:center;gap:6px;background:#f1f8e9;border-radius:10px;padding:10px 14px;margin-top:1.2rem;font-size:0.78rem;color:#2d6a4f;}
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <div class="logo">
+        <img src="images/logoss.jpg" alt="Logo">
+        <h1>Agri-Verse</h1>
+        <div class="admin-badge">🔐 ADMIN PORTAL</div>
+    </div>
+
+    <div class="field">
+        <label>Admin Email</label>
+        <div class="field-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="adminEmail" placeholder="admin@agriverse.in" autocomplete="off">
+        </div>
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <div class="field-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="adminPassword" placeholder="••••••••">
+            <button class="toggle-pw" onclick="togglePw()" type="button"><i class="fas fa-eye" id="eyeIcon"></i></button>
+        </div>
+    </div>
+
+    <button class="login-btn" id="loginBtn" onclick="adminLogin()">
+        <i class="fas fa-sign-in-alt"></i> Login as Admin
+    </button>
+
+    <div class="error-msg" id="errorMsg">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorText">Invalid credentials</span>
+    </div>
+
+    <div class="security-note">
+        <i class="fas fa-shield-alt"></i>
+        Secure admin access. Session expires in 8 hours.
+    </div>
+
+    <div class="back-link">
+        <a href="index.html">← Back to Agri-Verse</a>
+    </div>
+</div>
+
+<script>
+const API = 'https://agri-project-ol6n.onrender.com';
+
+// Already logged in? redirect
+if (localStorage.getItem('adminToken')) {
+    window.location.href = 'admin.html';
+}
+
+function togglePw() {
+    const input = document.getElementById('adminPassword');
+    const icon = document.getElementById('eyeIcon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+document.getElementById('adminPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') adminLogin();
+});
+
+async function adminLogin() {
+    const email    = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const btn      = document.getElementById('loginBtn');
+    const errDiv   = document.getElementById('errorMsg');
+    const errText  = document.getElementById('errorText');
+
+    if (!email || !password) {
+        errText.textContent = 'Email ane password jaruri che!';
+        errDiv.style.display = 'flex';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+    errDiv.style.display = 'none';
+
+    try {
+        const res = await fetch(`${API}/api/admin/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+            localStorage.setItem('adminToken', data.token);
+            localStorage.setItem('adminEmail', data.email);
+            window.location.href = 'admin.html';
+        } else {
+            errText.textContent = data.error || 'Invalid credentials';
+            errDiv.style.display = 'flex';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login as Admin';
+        }
+    } catch (e) {
+        errText.textContent = 'Server connect nahi thayu. Try again.';
+        errDiv.style.display = 'flex';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login as Admin';
+    }
+}
+</script>
+</body>
+</html>

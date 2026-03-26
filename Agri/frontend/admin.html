@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Agri-Verse</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#2d6a4f;--green-light:#52b788;--green-pale:#e8f5e9;--accent:#f9c74f;--red:#e53935;--blue:#1565c0;--bg:#f0f4f0;--white:#fff;--gray:#6b7280;--dark:#1a2535;--radius:14px;--shadow:0 4px 20px rgba(0,0,0,0.08);}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg);min-height:100vh;display:flex;}
+
+        /* ── SIDEBAR ── */
+        .sidebar{width:230px;background:linear-gradient(180deg,#0f2d1a,#1b4332);min-height:100vh;position:fixed;top:0;left:0;z-index:200;display:flex;flex-direction:column;transition:transform 0.3s;}
+        .sidebar-logo{padding:1.5rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:10px;}
+        .sidebar-logo img{height:38px;width:38px;border-radius:8px;object-fit:cover;}
+        .sidebar-logo span{color:#fff;font-size:1.1rem;font-weight:700;}
+        .admin-tag{background:rgba(249,199,79,0.2);color:var(--accent);font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:0.5px;margin-top:2px;display:inline-block;}
+        .nav-label{color:rgba(255,255,255,0.4);font-size:0.68rem;font-weight:700;letter-spacing:1px;padding:1rem 1.2rem 0.4rem;text-transform:uppercase;}
+        .nav-item{display:flex;align-items:center;gap:10px;padding:11px 1.2rem;cursor:pointer;color:rgba(255,255,255,0.7);font-size:0.87rem;font-weight:500;border-left:3px solid transparent;transition:all 0.2s;text-decoration:none;}
+        .nav-item:hover{background:rgba(255,255,255,0.08);color:#fff;}
+        .nav-item.active{background:rgba(82,183,136,0.2);color:#fff;border-left-color:var(--green-light);}
+        .nav-item i{width:18px;text-align:center;font-size:0.9rem;}
+        .sidebar-footer{margin-top:auto;padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,0.1);}
+        .admin-info{color:rgba(255,255,255,0.6);font-size:0.75rem;margin-bottom:8px;}
+        .logout-btn{width:100%;background:rgba(229,57,53,0.2);color:#ef9a9a;border:none;border-radius:8px;padding:9px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.2s;}
+        .logout-btn:hover{background:rgba(229,57,53,0.4);color:#fff;}
+
+        /* ── MAIN ── */
+        .main{margin-left:230px;flex:1;min-height:100vh;}
+        .topbar{background:var(--white);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.06);position:sticky;top:0;z-index:100;}
+        .topbar h2{font-size:1.1rem;font-weight:700;color:var(--dark);}
+        .topbar-right{display:flex;align-items:center;gap:12px;}
+        .refresh-btn{background:var(--green-pale);color:var(--green);border:none;padding:7px 14px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;display:flex;align-items:center;gap:6px;}
+        .refresh-btn:hover{background:var(--green);color:#fff;}
+        .page-content{padding:1.5rem;}
+        .tab-page{display:none;}
+        .tab-page.active{display:block;}
+
+        /* ── STAT CARDS ── */
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;}
+        .stat-card{background:var(--white);border-radius:var(--radius);padding:1.2rem;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;}
+        .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+        .si-green{background:#e8f5e9;color:var(--green);}
+        .si-blue{background:#e3f2fd;color:var(--blue);}
+        .si-orange{background:#fff3e0;color:#e65100;}
+        .si-purple{background:#f3e5f5;color:#6a1b9a;}
+        .si-red{background:#ffebee;color:var(--red);}
+        .stat-info h3{font-size:1.6rem;font-weight:700;color:var(--dark);line-height:1;}
+        .stat-info p{font-size:0.75rem;color:var(--gray);margin-top:2px;}
+        .stat-badge{font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:4px;display:inline-block;}
+        .badge-green{background:#e8f5e9;color:var(--green);}
+        .badge-red{background:#ffebee;color:var(--red);}
+
+        /* ── TABLE ── */
+        .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:1.5rem;}
+        .card-head{padding:1rem 1.2rem;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;}
+        .card-head h3{font-size:0.95rem;font-weight:700;color:var(--dark);}
+        .card-head-right{display:flex;gap:8px;align-items:center;}
+        .search-input{padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:0.82rem;outline:none;font-family:'Poppins',sans-serif;width:200px;}
+        .search-input:focus{border-color:var(--green);}
+        .table-wrap{overflow-x:auto;}
+        table{width:100%;border-collapse:collapse;font-size:0.84rem;}
+        thead th{background:#f8faf8;padding:10px 14px;text-align:left;font-weight:600;color:var(--gray);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;}
+        tbody td{padding:11px 14px;border-bottom:1px solid #f5f5f5;color:#333;vertical-align:middle;}
+        tbody tr:last-child td{border-bottom:none;}
+        tbody tr:hover{background:#fafff8;}
+        .loading-row td{text-align:center;padding:2rem;color:var(--gray);}
+        .empty-row td{text-align:center;padding:2rem;color:var(--gray);}
+
+        /* ── BADGES & BUTTONS ── */
+        .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;}
+        .tag-green{background:#e8f5e9;color:var(--green);}
+        .tag-blue{background:#e3f2fd;color:var(--blue);}
+        .tag-red{background:#ffebee;color:var(--red);}
+        .del-btn{background:none;border:none;color:#ccc;cursor:pointer;padding:4px 8px;border-radius:6px;font-size:0.9rem;transition:all 0.2s;}
+        .del-btn:hover{background:#ffebee;color:var(--red);}
+        .action-btn{background:var(--green);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;display:flex;align-items:center;gap:6px;transition:all 0.2s;}
+        .action-btn:hover{background:#1b4332;}
+
+        /* ── MANDI EDITOR ── */
+        .mandi-form{padding:1.2rem;}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+        .form-field label{display:block;font-size:0.8rem;font-weight:600;color:#555;margin-bottom:4px;}
+        .form-field input,.form-field select{width:100%;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:0.88rem;outline:none;font-family:'Poppins',sans-serif;}
+        .form-field input:focus,.form-field select:focus{border-color:var(--green);}
+        .price-rows{margin-top:0.5rem;}
+        .price-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px;}
+        .price-row input{padding:7px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:0.82rem;outline:none;font-family:'Poppins',sans-serif;}
+        .price-row input:focus{border-color:var(--green);}
+        .add-row-btn{background:var(--green-pale);color:var(--green);border:none;padding:7px 14px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;margin-top:4px;}
+        .save-mandi-btn{background:linear-gradient(135deg,#1b4332,#2d6a4f);color:#fff;border:none;padding:10px 24px;border-radius:10px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:1rem;display:flex;align-items:center;gap:8px;transition:all 0.3s;}
+        .save-mandi-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,106,79,0.3);}
+        .save-mandi-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+        .form-msg{font-size:0.82rem;margin-top:8px;padding:8px 12px;border-radius:8px;display:none;}
+        .msg-success{background:#e8f5e9;color:var(--green);}
+        .msg-error{background:#ffebee;color:var(--red);}
+
+        /* ── CONTACT CARD ── */
+        .contact-list{padding:0.5rem 0;}
+        .contact-item{padding:1rem 1.2rem;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+        .contact-item:last-child{border-bottom:none;}
+        .contact-name{font-weight:600;color:var(--dark);font-size:0.88rem;}
+        .contact-email{font-size:0.78rem;color:var(--gray);}
+        .contact-msg{font-size:0.82rem;color:#555;margin-top:4px;line-height:1.5;}
+        .contact-date{font-size:0.72rem;color:#bbb;white-space:nowrap;}
+
+        /* ── MOBILE ── */
+        .hamburger-btn{display:none;background:none;border:none;font-size:1.3rem;color:var(--green);cursor:pointer;}
+        @media(max-width:768px){
+            .sidebar{transform:translateX(-100%);}
+            .sidebar.open{transform:translateX(0);}
+            .main{margin-left:0;}
+            .hamburger-btn{display:block;}
+            .form-row{grid-template-columns:1fr;}
+            .stats-grid{grid-template-columns:1fr 1fr;}
+            .price-row{grid-template-columns:1fr 1fr 1fr auto;}
+            .price-row input:nth-child(3){display:none;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="images/logoss.jpg" alt="Logo">
+        <div>
+            <span>Agri-Verse</span><br>
+            <span class="admin-tag">ADMIN</span>
+        </div>
+    </div>
+
+    <div class="nav-label">Main</div>
+    <a class="nav-item active" onclick="showTab('dashboard',this)">
+        <i class="fas fa-chart-pie"></i> Dashboard
+    </a>
+    <a class="nav-item" onclick="showTab('users',this)">
+        <i class="fas fa-users"></i> Users
+    </a>
+    <a class="nav-item" onclick="showTab('contacts',this)">
+        <i class="fas fa-envelope"></i> Contact Messages
+    </a>
+
+    <div class="nav-label">Content</div>
+    <a class="nav-item" onclick="showTab('mandi',this)">
+        <i class="fas fa-chart-bar"></i> Mandi Prices
+    </a>
+    <a class="nav-item" onclick="showTab('subscribers',this)">
+        <i class="fas fa-bell"></i> Subscribers
+    </a>
+
+    <div class="nav-label">Site</div>
+    <a class="nav-item" href="index.html" target="_blank">
+        <i class="fas fa-external-link-alt"></i> View Site
+    </a>
+
+    <div class="sidebar-footer">
+        <div class="admin-info" id="adminEmailDisplay"></div>
+        <button class="logout-btn" onclick="adminLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+    <div class="topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button class="hamburger-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2 id="topbarTitle">📊 Dashboard</h2>
+        </div>
+        <div class="topbar-right">
+            <button class="refresh-btn" onclick="loadCurrentTab()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <!-- ── DASHBOARD ── -->
+        <div class="tab-page active" id="tab-dashboard">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card"><div class="stat-icon si-green"><i class="fas fa-spinner fa-spin"></i></div><div class="stat-info"><h3>--</h3><p>Loading...</p></div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                <div class="card">
+                    <div class="card-head"><h3>👥 Recent Users</h3></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Name</th><th>Email</th><th>Joined</th></tr></thead>
+                            <tbody id="recentUsersBody"><tr class="loading-row"><td colspan="3"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-head"><h3>📩 Recent Contacts</h3></div>
+                    <div class="contact-list" id="recentContacts">
+                        <div style="padding:2rem;text-align:center;color:var(--gray);"><i class="fas fa-spinner fa-spin"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── USERS ── -->
+        <div class="tab-page" id="tab-users">
+            <div class="card">
+                <div class="card-head">
+                    <h3>👥 All Users</h3>
+                    <div class="card-head-right">
+                        <input class="search-input" type="text" placeholder="Search users..." oninput="filterUsers(this.value)">
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Joined</th><th>Action</th></tr></thead>
+                        <tbody id="usersBody"><tr class="loading-row"><td colspan="5"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── CONTACTS ── -->
+        <div class="tab-page" id="tab-contacts">
+            <div class="card">
+                <div class="card-head">
+                    <h3>📩 Contact Messages</h3>
+                    <span id="contactCount" class="tag tag-blue"></span>
+                </div>
+                <div class="contact-list" id="contactsList">
+                    <div style="padding:2rem;text-align:center;color:var(--gray);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── MANDI ── -->
+        <div class="tab-page" id="tab-mandi">
+            <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:1.5rem;">
+                <div class="card">
+                    <div class="card-head"><h3>🌾 Existing Prices</h3></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>City</th><th>Top Crop</th><th>Price</th><th>Updated</th><th></th></tr></thead>
+                            <tbody id="mandiBody"><tr class="loading-row"><td colspan="5"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-head"><h3>➕ Add / Update City</h3></div>
+                    <div class="mandi-form">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>City Name</label>
+                                <input type="text" id="mandiCity" placeholder="e.g. Rajkot">
+                            </div>
+                            <div class="form-field">
+                                <label>Region</label>
+                                <input type="text" id="mandiRegion" value="Gujarat">
+                            </div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;margin-bottom:6px;">
+                            <span style="font-size:0.75rem;font-weight:600;color:var(--gray);">Crop</span>
+                            <span style="font-size:0.75rem;font-weight:600;color:var(--gray);">Modal ₹</span>
+                            <span style="font-size:0.75rem;font-weight:600;color:var(--gray);">Min ₹</span>
+                            <span style="font-size:0.75rem;font-weight:600;color:var(--gray);">Max ₹</span>
+                            <span></span>
+                        </div>
+                        <div class="price-rows" id="priceRows">
+                            <!-- rows injected by JS -->
+                        </div>
+                        <button class="add-row-btn" onclick="addPriceRow()">+ Add Crop</button>
+                        <div>
+                            <button class="save-mandi-btn" id="saveMandiBtn" onclick="saveMandi()">
+                                <i class="fas fa-save"></i> Save Prices
+                            </button>
+                        </div>
+                        <div class="form-msg" id="mandiMsg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── SUBSCRIBERS ── -->
+        <div class="tab-page" id="tab-subscribers">
+            <div class="card">
+                <div class="card-head">
+                    <h3>🔔 Newsletter Subscribers</h3>
+                    <span id="subCount" class="tag tag-green"></span>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>#</th><th>Email</th><th>Subscribed On</th></tr></thead>
+                        <tbody id="subsBody"><tr class="loading-row"><td colspan="3"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end page-content -->
+</main>
+
+<script>
+const API = 'https://agri-project-ol6n.onrender.com';
+let TOKEN = localStorage.getItem('adminToken');
+let allUsers = [], currentTab = 'dashboard';
+
+// ── AUTH CHECK ──
+if (!TOKEN) { window.location.href = 'admin-login.html'; }
+document.getElementById('adminEmailDisplay').textContent = '👤 ' + (localStorage.getItem('adminEmail') || 'Admin');
+
+function adminLogout() {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminEmail');
+    window.location.href = 'admin-login.html';
+}
+
+function authHeaders() {
+    return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+}
+
+function fmtDate(d) {
+    return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+// ── TAB SWITCH ──
+const tabTitles = { dashboard:'📊 Dashboard', users:'👥 Users', contacts:'📩 Contact Messages', mandi:'🌾 Mandi Prices', subscribers:'🔔 Subscribers' };
+function showTab(tab, el) {
+    document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    if (el) el.classList.add('active');
+    document.getElementById('topbarTitle').textContent = tabTitles[tab] || tab;
+    currentTab = tab;
+    loadTab(tab);
+    if (window.innerWidth < 768) document.getElementById('sidebar').classList.remove('open');
+}
+
+function loadCurrentTab() { loadTab(currentTab); }
+
+function loadTab(tab) {
+    if (tab === 'dashboard') loadDashboard();
+    else if (tab === 'users') loadUsers();
+    else if (tab === 'contacts') loadContacts();
+    else if (tab === 'mandi') loadMandi();
+    else if (tab === 'subscribers') loadSubscribers();
+}
+
+// ── DASHBOARD ──
+async function loadDashboard() {
+    try {
+        const [statsRes, usersRes, contactsRes] = await Promise.all([
+            fetch(`${API}/api/admin/stats`, { headers: authHeaders() }),
+            fetch(`${API}/api/admin/users`, { headers: authHeaders() }),
+            fetch(`${API}/api/admin/contacts`, { headers: authHeaders() }),
+        ]);
+        const stats = await statsRes.json();
+        const users = await usersRes.json();
+        const contacts = await contactsRes.json();
+
+        // Stat cards
+        document.getElementById('statsGrid').innerHTML = `
+            <div class="stat-card"><div class="stat-icon si-green"><i class="fas fa-users"></i></div>
+                <div class="stat-info"><h3>${stats.users||0}</h3><p>Total Users</p>
+                <span class="stat-badge badge-green">+${stats.newUsers||0} this week</span></div></div>
+            <div class="stat-card"><div class="stat-icon si-blue"><i class="fas fa-envelope"></i></div>
+                <div class="stat-info"><h3>${stats.contacts||0}</h3><p>Contact Messages</p>
+                <span class="stat-badge badge-green">+${stats.newContacts||0} this week</span></div></div>
+            <div class="stat-card"><div class="stat-icon si-orange"><i class="fas fa-bell"></i></div>
+                <div class="stat-info"><h3>${stats.subscribers||0}</h3><p>Subscribers</p></div></div>
+            <div class="stat-card"><div class="stat-icon si-purple"><i class="fas fa-chart-bar"></i></div>
+                <div class="stat-info"><h3>${stats.mandiCities||0}</h3><p>Mandi Cities</p></div></div>
+        `;
+
+        // Recent users (5)
+        const recentUsers = Array.isArray(users) ? users.slice(0,5) : [];
+        document.getElementById('recentUsersBody').innerHTML = recentUsers.length
+            ? recentUsers.map(u => `<tr><td><strong>${u.name}</strong></td><td style="color:var(--gray);font-size:0.8rem;">${u.email}</td><td style="color:var(--gray);font-size:0.78rem;">${fmtDate(u.createdAt)}</td></tr>`).join('')
+            : '<tr class="empty-row"><td colspan="3">No users yet</td></tr>';
+
+        // Recent contacts (5)
+        const recentCon = Array.isArray(contacts) ? contacts.slice(0,5) : [];
+        document.getElementById('recentContacts').innerHTML = recentCon.length
+            ? recentCon.map(c => `
+                <div class="contact-item">
+                    <div><div class="contact-name">${c.name} <span style="font-weight:400;color:var(--gray);font-size:0.78rem;">&lt;${c.email}&gt;</span></div>
+                    <div class="contact-msg">${c.message.slice(0,80)}${c.message.length>80?'...':''}</div></div>
+                    <div class="contact-date">${fmtDate(c.createdAt)}</div>
+                </div>`).join('')
+            : '<div style="padding:1.5rem;text-align:center;color:var(--gray);">No messages yet</div>';
+
+    } catch(e) {
+        if (e.message?.includes('401') || e.message?.includes('403')) adminLogout();
+    }
+}
+
+// ── USERS ──
+async function loadUsers() {
+    document.getElementById('usersBody').innerHTML = '<tr class="loading-row"><td colspan="5"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+    try {
+        const res = await fetch(`${API}/api/admin/users`, { headers: authHeaders() });
+        allUsers = await res.json();
+        renderUsers(allUsers);
+    } catch(e) { document.getElementById('usersBody').innerHTML = '<tr class="empty-row"><td colspan="5">Error loading users</td></tr>'; }
+}
+
+function renderUsers(users) {
+    document.getElementById('usersBody').innerHTML = users.length
+        ? users.map((u, i) => `
+            <tr>
+                <td style="color:var(--gray);">${i+1}</td>
+                <td><strong>${u.name}</strong></td>
+                <td style="color:var(--gray);">${u.email}</td>
+                <td style="color:var(--gray);font-size:0.8rem;">${fmtDate(u.createdAt)}</td>
+                <td><button class="del-btn" onclick="deleteUser('${u._id}','${u.name}')" title="Delete"><i class="fas fa-trash"></i></button></td>
+            </tr>`).join('')
+        : '<tr class="empty-row"><td colspan="5">No users found</td></tr>';
+}
+
+function filterUsers(q) {
+    const filtered = allUsers.filter(u =>
+        u.name.toLowerCase().includes(q.toLowerCase()) ||
+        u.email.toLowerCase().includes(q.toLowerCase())
+    );
+    renderUsers(filtered);
+}
+
+async function deleteUser(id, name) {
+    if (!confirm(`"${name}" ne delete karva mango cho?`)) return;
+    try {
+        const res = await fetch(`${API}/api/admin/users/${id}`, { method:'DELETE', headers: authHeaders() });
+        if (res.ok) { loadUsers(); }
+        else alert('Delete failed');
+    } catch(e) { alert('Error'); }
+}
+
+// ── CONTACTS ──
+async function loadContacts() {
+    document.getElementById('contactsList').innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray);"><i class="fas fa-spinner fa-spin"></i></div>';
+    try {
+        const res = await fetch(`${API}/api/admin/contacts`, { headers: authHeaders() });
+        const contacts = await res.json();
+        document.getElementById('contactCount').textContent = contacts.length + ' messages';
+        document.getElementById('contactsList').innerHTML = contacts.length
+            ? contacts.map(c => `
+                <div class="contact-item">
+                    <div style="flex:1;">
+                        <div class="contact-name">${c.name} ${c.phone?'📱 '+c.phone:''}</div>
+                        <div class="contact-email">${c.email}</div>
+                        <div class="contact-msg">${c.message}</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+                        <div class="contact-date">${fmtDate(c.createdAt)}</div>
+                        <button class="del-btn" onclick="deleteContact('${c._id}')" title="Delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`).join('')
+            : '<div style="padding:2rem;text-align:center;color:var(--gray);">No messages yet</div>';
+    } catch(e) {}
+}
+
+async function deleteContact(id) {
+    if (!confirm('Message delete karva mango cho?')) return;
+    await fetch(`${API}/api/admin/contacts/${id}`, { method:'DELETE', headers: authHeaders() });
+    loadContacts();
+}
+
+// ── MANDI ──
+async function loadMandi() {
+    document.getElementById('mandiBody').innerHTML = '<tr class="loading-row"><td colspan="5"><i class="fas fa-spinner fa-spin"></i></td></tr>';
+    try {
+        const res = await fetch(`${API}/api/admin/mandi`, { headers: authHeaders() });
+        const prices = await res.json();
+        document.getElementById('mandiBody').innerHTML = prices.length
+            ? prices.map(p => {
+                const top = p.prices?.[0];
+                return `<tr>
+                    <td><strong>${p.city}</strong></td>
+                    <td>${top?.crop || '-'}</td>
+                    <td style="color:var(--green);font-weight:600;">${top?'₹'+top.modal.toLocaleString():'-'}</td>
+                    <td style="font-size:0.78rem;color:var(--gray);">${fmtDate(p.updatedAt)}</td>
+                    <td><button class="del-btn" onclick="deleteMandiCity('${p._id}','${p.city}')"><i class="fas fa-trash"></i></button></td>
+                </tr>`;}).join('')
+            : '<tr class="empty-row"><td colspan="5">No prices added yet. Add from the form →</td></tr>';
+    } catch(e) {}
+    // Init price rows
+    if (document.getElementById('priceRows').children.length === 0) {
+        addPriceRow(); addPriceRow(); addPriceRow();
+    }
+}
+
+function addPriceRow() {
+    const div = document.createElement('div');
+    div.className = 'price-row';
+    div.innerHTML = `
+        <input type="text" placeholder="Crop name e.g. Groundnut">
+        <input type="number" placeholder="6000">
+        <input type="number" placeholder="5500">
+        <input type="number" placeholder="6500">
+        <button style="background:none;border:none;color:#ccc;cursor:pointer;font-size:1rem;" onclick="this.parentElement.remove()">✕</button>
+    `;
+    document.getElementById('priceRows').appendChild(div);
+}
+
+async function saveMandi() {
+    const city   = document.getElementById('mandiCity').value.trim();
+    const region = document.getElementById('mandiRegion').value.trim();
+    if (!city) { showMandiMsg('City name jaruri che!', false); return; }
+
+    const rows = document.querySelectorAll('#priceRows .price-row');
+    const prices = [];
+    rows.forEach(row => {
+        const inputs = row.querySelectorAll('input');
+        const crop  = inputs[0].value.trim();
+        const modal = parseFloat(inputs[1].value);
+        if (crop && modal) {
+            prices.push({ crop, modal, min: parseFloat(inputs[2].value)||null, max: parseFloat(inputs[3].value)||null });
+        }
+    });
+    if (!prices.length) { showMandiMsg('Ochhamaa ochhu 1 crop add karo!', false); return; }
+
+    const btn = document.getElementById('saveMandiBtn');
+    btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    try {
+        const res = await fetch(`${API}/api/admin/mandi`, {
+            method: 'POST',
+            headers: authHeaders(),
+            body: JSON.stringify({ city, region, prices })
+        });
+        if (res.ok) {
+            showMandiMsg(`✅ ${city} prices saved!`, true);
+            document.getElementById('mandiCity').value = '';
+            document.getElementById('priceRows').innerHTML = '';
+            addPriceRow(); addPriceRow(); addPriceRow();
+            loadMandi();
+        } else {
+            const d = await res.json();
+            showMandiMsg('Error: ' + (d.error||'Failed'), false);
+        }
+    } catch(e) { showMandiMsg('Server error. Try again.', false); }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-save"></i> Save Prices';
+}
+
+function showMandiMsg(msg, success) {
+    const el = document.getElementById('mandiMsg');
+    el.textContent = msg;
+    el.className = 'form-msg ' + (success ? 'msg-success' : 'msg-error');
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3000);
+}
+
+async function deleteMandiCity(id, city) {
+    if (!confirm(`"${city}" prices delete karva mango cho?`)) return;
+    await fetch(`${API}/api/admin/mandi/${id}`, { method:'DELETE', headers: authHeaders() });
+    loadMandi();
+}
+
+// ── SUBSCRIBERS ──
+async function loadSubscribers() {
+    document.getElementById('subsBody').innerHTML = '<tr class="loading-row"><td colspan="3"><i class="fas fa-spinner fa-spin"></i></td></tr>';
+    try {
+        const res = await fetch(`${API}/api/admin/subscribers`, { headers: authHeaders() });
+        const subs = await res.json();
+        document.getElementById('subCount').textContent = subs.length + ' subscribers';
+        document.getElementById('subsBody').innerHTML = subs.length
+            ? subs.map((s,i) => `<tr><td style="color:var(--gray);">${i+1}</td><td>${s.email}</td><td style="color:var(--gray);font-size:0.8rem;">${fmtDate(s.createdAt)}</td></tr>`).join('')
+            : '<tr class="empty-row"><td colspan="3">No subscribers yet</td></tr>';
+    } catch(e) {}
+}
+
+// ── INIT ──
+loadDashboard();
+</script>
+</body>
+</html>

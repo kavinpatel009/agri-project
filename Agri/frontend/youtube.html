@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Videos | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse Videos - Watch farming tutorials and agriculture tips.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --light: #F5F5F5;
+            --dark: #212121;
+            --gray: #757575;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header (Agri-Verse Style) */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Hero Section for Blog */
+        .blog-hero {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(56, 142, 60, 0.9)), 
+                        url('https://images.unsplash.com/photo-1586771107445-d3ca888129ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            margin-bottom: 3rem;
+        }
+
+        .blog-hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .blog-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Modern Blog Grid */
+        #blog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+            gap: 2rem;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .blog-box {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .blog-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .blog-img {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* old iframe - replaced */
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .blog-details {
+            padding: 1.8rem;
+        }
+
+        .blog-details h4 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .blog-details p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .blog-details a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .blog-details a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .blog-details a::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+
+        .blog-details a:hover::after {
+            transform: translateX(3px);
+        }
+
+        .blog-box h1 {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 4rem;
+            color: rgba(0,0,0,0.1);
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        /* Pagination */
+        #pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem 0;
+        }
+
+        #pagination a {
+            padding: 0.8rem 1.2rem;
+            background-color: white;
+            color: var(--dark);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        #pagination a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Newsletter (Agri-Verse Style) */
+        #newsletter {
+            background-color: var(--primary);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+            margin: 3rem 0 0;
+        }
+
+        #newsletter h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        #newsletter span {
+            font-weight: 600;
+        }
+
+        #newsletter .form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #newsletter input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #newsletter button {
+            padding: 0 1.5rem;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #newsletter button:hover {
+            background-color: #ffb300;
+        }
+
+        /* Footer (Agri-Verse Style) */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 5% 1.5rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .install img {
+            width: 150px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            #blog {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+            
+            .blog-hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+                @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1rem;
+                position: relative;
+            }
+            .logo { margin-bottom: 0; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0; right: 0;
+                background: #fff;
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                z-index: 999;
+                width: 100%;
+            }
+            nav ul.active, nav ul.open { display: flex; }
+            nav ul li { margin: 8px 0; }
+            .hamburger { display: flex !important; }
+            
+            .blog-hero {
+                height: 250px;
+                clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+            }
+            
+            .blog-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .blog-hero p {
+                font-size: 1rem;
+            }
+            
+            .blog-img {
+                height: 250px;
+            }
+            
+            #newsletter .form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            #newsletter input,
+            #newsletter button {
+                width: 100%;
+                border-radius: 4px;
+            }
+        }
+    
+                /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: #2d6a4f;
+            padding: 9px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 15px 0 0 15px;
+            transition: all 0.3s;
+            border: 2px solid #2d6a4f;
+        }
+        .back-btn:hover { background: #2d6a4f; color: #fff; transform: translateX(-3px); }
+    
+        /* Hamburger Menu */
+        .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; transition:all 0.3s; display:block; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
+        @media(max-width:768px) {
+            .hamburger { display:flex; }
+            nav ul { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:#fff; box-shadow:0 5px 20px rgba(0,0,0,0.1); padding:20px; gap:10px; z-index:1000; }
+            nav ul.open { display:flex; }
+            nav { position:relative; }
+        }
+        
+        /* Responsive iframes */
+        .blog-img {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .blog-img iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-btn">&#8592; Back</a>
+
+    <!-- Header (Agri-Verse Style) -->
+    <header>
+        <nav>
+            <a href="index.html" style="text-decoration:none;color:inherit;"><div class="logo">
+                <i class="fas fa-tractor"></i>
+                <span>Agri-Verse</span>
+            </div></a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Seeds.html">Seeds</a></li>
+                <li><a href="tools.html">Implements</a></li>
+                <li><a href="Feritlizer.html">Fertilizers</a></li>
+                <li><a href="news.html" class="active">Expert-Talks</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li id="auth-buttons"></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <h2>Advance Technology Farming videos</h2>
+        <p>Learn from agricultural experts with proven techniques and success stories</p>
+    </section>
+
+    <!-- Blog/Video Section -->
+    <section id="blog">
+        <div class="blog-box">
+            <div class="blog-img">
+                <iframe src="https://www.youtube.com/embed/quMNdpNatuM?si=MG3SrpYy7URANueO" 
+                        title="YouTube video player" frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+            <div class="blog-details">
+                <h4>Profitable Capsicum farming in Poly house India</h4>
+                <p>Welcome to our comprehensive guide on profitable capsicum farming, tailored for aspiring farmers and entrepreneurs in India. In this detailed video, we delve into the nuances of capsicum cultivation, exploring its potential as a profitable business venture, especially within the context of greenhouse or polyhouse farming.</p>
+                <a href="news.html">CONTINUE READING</a>
+            </div>
+             
+        </div>
+
+        <div class="blog-box">
+            <div class="blog-img">
+                <iframe src="https://www.youtube.com/embed/JeU_EYFH1Jk?si=_NGyHM4h4MCcsbif" 
+                        title="YouTube video player" frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+            <div class="blog-details">
+                <h4>Artificial intelligence comes to farming in India</h4>
+                <p>India has used traditional methods of agriculture for generations, but with 1.4 billion people now dependant on the crops farmers produce, some are turning to technology to boost productivity and profit. For example on one vineyard, sensor devices are being used to check weather and soil health.</p>
+                <a href="news.html">CONTINUE READING</a>
+            </div>
+            
+        </div>
+
+        <div class="blog-box">
+            <div class="blog-img">
+                <iframe src="https://www.youtube.com/embed/c5pekMjAapo?si=7Vl_JBpMv7iBZ1E3" 
+                        title="YouTube video player" frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+            <div class="blog-details">
+                <h4>Multilayer farming</h4>
+                <p>Ravish, a farmer from Tumkur in Karnataka used to do monoculture farming in his 5 acre farm. But a depleting water table forced him out of his farm. As one last try to save his farm, Ravish started multilayer farming in 2018. What followed turned the fortunes of the farm around completely.</p>
+                <a href="news.html">CONTINUE READING</a>
+            </div>
+             
+        </div>
+
+        <div class="blog-box">
+            <div class="blog-img">
+                <iframe src="https://www.youtube.com/embed/4PRMvK1zDHE?si=2gJfNdFpHgi0M3Uq" 
+                        title="YouTube video player" frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+            <div class="blog-details">
+                <h4>Harvesting Of Organic Vegetables From Rooftop Terrace Garden</h4>
+                <p>Learn how to grow and harvest organic vegetables right from your rooftop terrace garden with this practical guide.</p>
+                <a href="news.html">CONTINUE READING</a>
+            </div>
+             
+        </div>
+        <div class="blog-box">
+            <div class="blog-img">
+                <iframe src="https://www.youtube.com/embed/JeU_EYFH1Jk"
+                        title="YouTube video player" frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+            <div class="blog-details">
+                <h4>Advance Farmingusing AI</h4>
+                <p>Enter the mesmerizing realm of intelligent agriculture in China using the most advanced AI! Prepare to witness a breathtaking array of technological breakthroughs that have forever changed the landscape of farming. From automated fields to futuristic pig farming and computerized greenhouses, come and embark on a journey of ingenuity and sustainability as we explore China's cutting-edge farming technologies and their profound impact on the global food production system.</p>
+                <a href="news.html">CONTINUE READING</a>
+            </div>
+             
+        </div>
+        <div class="blog-box">
+            <div class="blog-img">
+                <iframe src="https://www.youtube.com/embed/NJJErPfQ-W0"
+                        title="YouTube video player" frameborder="0" 
+                        allowfullscreen></iframe>
+            </div>
+            <div class="blog-details">
+                <h4>Tomato Farming</h4>
+                <p>Tomato farming involves selecting the right variety, preparing well-drained soil rich in organic matter, and ensuring proper spacing for healthy growth. Tomatoes require full sunlight, regular watering, and support structures like stakes or cages. Fertilization with balanced nutrients and pest control are essential for high yields. Harvesting is done when the fruits reach their desired ripeness, usually 60–90 days after planting. 🍅🚜   </p>
+                <a href="news.html">CONTINUE READING</a>
+            </div>
+             
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <section id="pagination">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">→</a>x
+    </section>
+
+    <!-- Newsletter -->
+    <section id="newsletter">
+        <div class="newstext">
+            <h4>Sign Up For Expert Farming Tips</h4>
+            <p>Get updates on <span>new videos, techniques, and success stories</span> directly in your inbox.</p>
+        </div>
+        <div class="form" id="ytNewsletterForm">
+            <input type="email" id="ytEmail" placeholder="Your Email Address">
+            <button class="btn" id="ytSubBtn" onclick="ytSubscribe()">Subscribe</button>
+        </div>
+    </section>
+
+    <!-- Footer (Agri-Verse Style) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Agri-Verse</h3>
+                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+                <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Seeds.html">Seeds</a></li>
+                    <li><a href="tools.html">Implements</a></li>
+                    <li><a href="news.html">Expert-Talks</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Farming Guides</a></li>
+                    <li><a href="#">Video Tutorials</a></li>
+                    <li><a href="#">Expert Advice</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p><strong>Address:</strong> 526 Vadodara Road, Street 32, Gujarat</p>
+                <p><strong>Phone:</strong> +91 9876543210</p>
+                <p><strong>Email:</strong> info@agriverse.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by Agri-Verse Team</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check login status (same as Agri-Verse)
+        function checkLoginStatus() {
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+            const authButtons = document.getElementById('auth-buttons');
+
+            if (token && userEmail) {
+                authButtons.innerHTML = `
+                    <div class="user-info" style="display: flex; align-items: center;">
+                        <span style="margin-right: 1rem; font-size: 0.9rem;">${userEmail}</span>
+                        <button onclick="logout()" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <a href="login.html" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                        <i class="fas fa-user"></i> Login
+                    </a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+
+<script>
+var hamburger = document.getElementById('hamburger');
+var navUl = document.querySelector('nav ul');
+if(hamburger && navUl) {
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navUl.classList.toggle('open');
+    });
+}
+
+    async function ytSubscribe(){
+      var email = document.getElementById('ytEmail').value.trim();
+      var btn = document.getElementById('ytSubBtn');
+      if(!email){ alert('Email દાખલ કરો'); return; }
+      btn.disabled=true; btn.textContent='Subscribing...';
+      try{
+        var r=await fetch('https://agri-project-ol6n.onrender.com/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+        if(r.ok){btn.textContent='✅ Subscribed!';document.getElementById('ytEmail').value='';}
+        else{btn.textContent='❌ Error';btn.disabled=false;}
+      }catch(e){btn.textContent='❌ Error';btn.disabled=false;}
+    }
+</script>
+</body>
+</html>

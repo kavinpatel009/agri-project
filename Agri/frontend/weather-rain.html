@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/weather-rain.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Verse | Farmer Tools</title>
+    <meta name="description" content="Rain Tracker, Crop Calendar, AI Crop Doctor and Mandi Map for Gujarat farmers.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#2d6a4f;--green-light:#52b788;--green-pale:#d8f3dc;--accent:#f9c74f;--bg:#f0f7f4;--white:#fff;--gray:#6b7280;--dark:#1a1a2e;--shadow:0 4px 24px rgba(45,106,79,0.10);--radius:18px;}
+        [data-theme="dark"] {
+            --card-bg: #1a2535;
+            --bg: #0f1923;
+            --text: #e8f5e9;
+            --dark: #e8f5e9;
+            --gray: #b0bec5;
+            --border: #2d3e50;
+            --light: #1e2d3d;
+            --primary-dark: #81c784;
+            --white: #1a2535;
+            --green-pale: #1e2d3d;
+        }
+        [data-theme="dark"] body {
+            background-color: #0f1923 !important;
+            color: #e8f5e9 !important;
+        }
+        [data-theme="dark"] .rain-card,
+        [data-theme="dark"] .crop-card,
+        [data-theme="dark"] .upload-card,
+        [data-theme="dark"] .ai-result-card,
+        [data-theme="dark"] .map-svg-card,
+        [data-theme="dark"] .city-list-card,
+        [data-theme="dark"] .city-detail-card,
+        [data-theme="dark"] .dist-btn,
+        [data-theme="dark"] .season-btn {
+            background: #1a2535 !important;
+            border-color: #2d3e50 !important;
+            color: #e8f5e9 !important;
+        }
+        [data-theme="dark"] .dist-btn:not(.active),
+        [data-theme="dark"] .season-btn:not(.active) {
+            color: #b0bec5 !important;
+        }
+        [data-theme="dark"] .tab-btn:not(.active) {
+            background: rgba(255,255,255,0.1) !important;
+        }
+        [data-theme="dark"] .tab-btn.active {
+            background: #1a2535 !important;
+            color: var(--green) !important;
+        }
+        [data-theme="dark"] header {
+            background: #1a2535 !important;
+        }
+        [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
+        [data-theme="dark"] h4, [data-theme="dark"] p, [data-theme="dark"] span,
+        [data-theme="dark"] li, [data-theme="dark"] td, [data-theme="dark"] label {
+            color: #e8f5e9 !important;
+        }
+        [data-theme="dark"] .gray, [data-theme="dark"] [style*="color:#6b7280"],
+        [data-theme="dark"] [style*="color: #6b7280"] {
+            color: #b0bec5 !important;
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg);color: var(--text);}
+        header{background:var(--white);box-shadow:0 2px 16px rgba(0,0,0,0.07);position:sticky;top:0;z-index:100;}
+        nav{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 5%;max-width:1400px;margin:0 auto;}
+        .logo{font-size:1.5rem;font-weight:700;color:var(--green);display:flex;align-items:center;text-decoration:none;gap:10px;}
+        .logo img{height:42px;width:42px;object-fit:cover;border-radius:50%;}
+        .nav-btn{background:var(--green);color:#fff!important;padding:7px 18px;border-radius:25px;font-weight:600!important;}
+        .hamburger{display:none;font-size:1.5rem;cursor:pointer;color:var(--green);background:none;border:none;}
+        @media(max-width:768px){.hamburger{display:block;}}
+        .tools-hero{background:linear-gradient(135deg,#1b4332 0%,#2d6a4f 50%,#52b788 100%);padding:2.5rem 5% 0;text-align:center;}
+        .tools-hero h1{color:#fff;font-size:1.8rem;font-weight:700;margin-bottom:0.4rem;}
+        .tools-hero p{color:rgba(255,255,255,0.8);font-size:0.95rem;margin-bottom:1.8rem;}
+        .tab-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+        .tab-btn{padding:12px 24px;border-radius:14px 14px 0 0;border:none;background:rgba(255,255,255,0.15);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.3s;backdrop-filter:blur(8px);display:flex;align-items:center;gap:8px;}
+        .tab-btn:hover{background:rgba(255,255,255,0.25);}
+        .tab-btn.active{background:var(--white);color:var(--green);}
+        .tab-section{display:none;padding:2rem 5% 3rem;max-width:1200px;margin:0 auto;}
+        .tab-section.active{display:block;}
+        .section-head{margin-bottom:1.8rem;}
+        .section-head h2{font-size:1.6rem;color:var(--green);font-weight:700;}
+        .section-head p{color:var(--gray);font-size:0.9rem;margin-top:4px;}
+        /* Rain */
+        .district-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:1.5rem;scrollbar-width:thin;}
+        .dist-btn{white-space:nowrap;padding:8px 18px;border-radius:25px;border:2px solid #ddd;background:var(--white);cursor:pointer;font-size:0.85rem;font-weight:600;color:#555;transition:all 0.25s;flex-shrink:0;}
+        .dist-btn.active{border-color:var(--green);background:var(--green);color:#fff;}
+        .dist-btn:hover:not(.active){border-color:var(--green-light);color:var(--green);}
+        .rain-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;margin-bottom:1.5rem;}
+        .rain-card-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+        .chart-bars{display:flex;align-items:flex-end;gap:5px;height:200px;overflow-x:auto;padding:0 4px 4px;}
+        .bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:32px;cursor:pointer;}
+        .bar-inner{width:22px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#29b6f6,#0288d1);transition:height 0.7s cubic-bezier(.22,.61,.36,1);min-height:3px;}
+        .bar-inner.zero{background:#e0e0e0;}
+        .bar-date{font-size:0.6rem;color:#aaa;writing-mode:vertical-rl;transform:rotate(180deg);}
+        .bar-val{font-size:0.65rem;color:#0288d1;font-weight:700;min-height:12px;}
+        .rain-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+        .rs-box{background:linear-gradient(135deg,var(--green-pale),#b7e4c7);border-radius:14px;padding:1rem;text-align:center;}
+        .rs-box h3{font-size:1.5rem;font-weight:700;color:var(--green);}
+        .rs-box p{font-size:0.75rem;color:#555;margin-top:3px;}
+        .no-rain-msg{text-align:center;padding:3rem;color:#aaa;}
+        .no-rain-msg i{font-size:3rem;color:#ddd;display:block;margin-bottom:1rem;}
+        /* Calendar */
+        .season-row{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;}
+        .season-btn{padding:10px 22px;border-radius:25px;border:2px solid #ddd;background:var(--white);cursor:pointer;font-weight:600;font-size:0.88rem;transition:all 0.25s;}
+        .season-btn.active{background:var(--green);color:#fff;border-color:var(--green);}
+        .crop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;}
+        .crop-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;border-left:4px solid var(--green-light);transition:transform 0.25s,box-shadow 0.25s;}
+        .crop-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(45,106,79,0.15);}
+        .crop-card h3{font-size:0.95rem;font-weight:700;color:var(--green);margin-bottom:0.7rem;}
+        .crop-tags{display:flex;flex-wrap:wrap;gap:5px;}
+        .tag{padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;}
+        .tag-g{background:#e8f5e9;color:#2d6a4f;}
+        .tag-b{background:#e1f5fe;color:#0277bd;}
+        .tag-o{background:#fff3e0;color:#e65100;}
+        .tag-p{background:#fce4ec;color:#880e4f;}
+        /* AI */
+        .ai-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+        @media(max-width:768px){.ai-layout{grid-template-columns:1fr;}}
+        .upload-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;}
+        .upload-zone{border:2px dashed #a5d6a7;border-radius:14px;padding:2rem;text-align:center;background:#f1f8e9;cursor:pointer;transition:all 0.3s;margin-bottom:1rem;}
+        .upload-zone:hover{border-color:var(--green);background:var(--green-pale);}
+        .upload-zone i{font-size:2.5rem;color:var(--green-light);margin-bottom:0.5rem;display:block;}
+        .upload-zone input{display:none;}
+        #imgPreview{text-align:center;margin-bottom:1rem;display:none;}
+        #imgPreview img{max-height:160px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+        .symptom-area{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:12px;font-size:0.88rem;resize:vertical;min-height:90px;outline:none;font-family:'Poppins',sans-serif;transition:border 0.3s;}
+        .symptom-area:focus{border-color:var(--green-light);}
+        .diagnose-btn{width:100%;background:var(--green);color:#fff;border:none;padding:13px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;margin-top:12px;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .diagnose-btn:hover{background:#1b4332;transform:translateY(-2px);}
+        .ai-result-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;display:none;}
+        .ai-result-card h3{color:var(--green);font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+        .ai-content{color:#333;line-height:1.9;font-size:0.88rem;}
+        .ai-loading{text-align:center;padding:2rem;color:var(--gray);}
+        .spin{animation:spin 1s linear infinite;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        /* Map */
+        .map-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:1.5rem;}
+        @media(max-width:768px){.map-layout{grid-template-columns:1fr;}}
+        .map-svg-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;}
+        .map-svg-card svg{width:100%;border-radius:10px;}
+        .city-list-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem;max-height:440px;overflow-y:auto;}
+        .city-list-card h3{font-size:0.9rem;font-weight:700;color:var(--green);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--green-pale);}
+        .city-row{display:flex;justify-content:space-between;align-items:center;padding:9px 8px;border-radius:10px;cursor:pointer;transition:background 0.2s;}
+        .city-row:hover{background:var(--green-pale);}
+        .city-name-txt{font-weight:600;font-size:0.85rem;color:#333;}
+        .city-crop-txt{font-size:0.75rem;color:var(--gray);margin-top:1px;}
+        .city-price-txt{font-weight:700;font-size:0.85rem;color:var(--green);}
+        .city-detail-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem;margin-top:1.5rem;display:none;}
+        .city-detail-card h3{color:var(--green);margin-bottom:1rem;font-size:1rem;}
+        .price-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+        .price-table th{background:var(--green);color:#fff;padding:9px 14px;text-align:left;}
+        .price-table tr:nth-child(even) td{background:#f9fef9;}
+        .price-table td{padding:9px 14px;border-bottom:1px solid #f0f0f0;}
+        footer{background:var(--dark);color:#fff;padding:1.5rem 5%;margin-top:2rem;text-align:center;}
+        footer p{opacity:0.6;font-size:0.82rem;}
+        #backToTop{position:fixed;bottom:28px;right:28px;background:var(--green);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:1.2rem;cursor:pointer;display:none;z-index:999;box-shadow:0 4px 14px rgba(45,106,79,0.4);}
+        @media(max-width:600px){.rain-stats{grid-template-columns:1fr 1fr;}.tools-hero h1{font-size:1.4rem;}.tab-btn{padding:10px 14px;font-size:0.8rem;}}
+    
+        @media(max-width:900px){
+            #pgHamburger { display:flex !important; }
+            
+            
+        }
+
+        </style>
+</head>
+<body>
+    <div class="tools-hero">
+    <h1>🌾 Agri Tools</h1>
+    <p>Crop calendar · AI disease detection · Mandi map</p>
+    <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('calendar',this)"><span>📅</span> Crop Calendar</button>
+        <button class="tab-btn" onclick="switchTab('doctor',this)"><span>🤖</span> AI Crop Doctor</button>
+        <button class="tab-btn" onclick="switchTab('map',this)"><span>🗺️</span> Mandi Map</button>
+    </div>
+</div>
+
+<!-- CALENDAR -->
+<div class="tab-section active" id="tab-calendar">
+    <div class="section-head"><h2>📅 Gujarat Crop Calendar</h2><p>Season-wise sowing & harvest guide</p></div>
+    <div class="season-row">
+        <button class="season-btn active" onclick="showSeason('kharif',this)">🌱 Kharif (Jun–Oct)</button>
+        <button class="season-btn" onclick="showSeason('rabi',this)">🌾 Rabi (Oct–Mar)</button>
+        <button class="season-btn" onclick="showSeason('zaid',this)">☀️ Zaid (Mar–Jun)</button>
+    </div>
+    <div class="crop-grid" id="calGrid"></div>
+</div>
+
+<!-- AI DOCTOR -->
+<div class="tab-section" id="tab-doctor">
+    <div class="section-head"><h2>🤖 AI Crop Doctor</h2><p>Photo upload or describe symptoms — AI diagnoses and suggests treatment</p></div>
+    <div class="ai-layout">
+        <div class="upload-card">
+            <div class="upload-zone" onclick="document.getElementById('cropImg').click()">
+                <i class="fas fa-camera-retro"></i>
+                <p><strong>Upload crop photo</strong></p>
+                <p style="font-size:0.8rem;color:#aaa;">JPG, PNG supported</p>
+                <input type="file" id="cropImg" accept="image/*" onchange="previewImage(this)">
+            </div>
+            <div id="imgPreview"><img id="previewImg" alt="preview"></div>
+            <p style="text-align:center;color:#aaa;font-size:0.82rem;margin:8px 0;">— or describe symptoms below —</p>
+            <textarea class="symptom-area" id="symptomText" placeholder="e.g. Tomato leaves turning yellow with brown spots, wilting..."></textarea>
+            <button class="diagnose-btn" onclick="diagnose()"><i class="fas fa-search"></i> Diagnose Disease</button>
+        </div>
+        <div class="ai-result-card" id="aiResult">
+            <h3><i class="fas fa-stethoscope"></i> AI Diagnosis</h3>
+            <div class="ai-content" id="aiResultContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- MANDI MAP -->
+<div class="tab-section" id="tab-map">
+    <div class="section-head"><h2>🗺️ Gujarat Mandi Map</h2><p>Click any city to see today's top crop prices</p></div>
+    <div class="map-layout">
+        <div class="map-svg-card">
+            <svg viewBox="0 0 420 460" id="mandiSvg" style="width:100%;border-radius:10px;">
+                <defs>
+                    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#e8f5e9"/>
+                        <stop offset="100%" stop-color="#c8e6c9"/>
+                    </radialGradient>
+                </defs>
+                <rect width="420" height="460" fill="url(#bgGrad)" rx="14"/>
+                <!-- Gujarat rough outline -->
+                <path d="M 55,45 L 95,35 L 140,30 L 175,38 L 200,42 L 215,38 L 235,42 L 260,38 L 280,50 L 290,68 L 285,88 L 295,100 L 310,112 L 315,130 L 305,148 L 310,165 L 300,178 L 290,192 L 280,205 L 275,222 L 265,238 L 258,255 L 260,275 L 255,292 L 248,310 L 242,328 L 238,348 L 230,368 L 222,385 L 215,400 L 205,415 L 195,425 L 182,418 L 170,408 L 160,395 L 152,378 L 148,360 L 145,342 L 138,325 L 128,312 L 118,298 L 108,285 L 95,272 L 80,262 L 65,255 L 55,245 L 48,232 L 42,218 L 38,205 L 40,190 L 45,175 L 42,160 L 38,145 L 40,130 L 45,115 L 40,98 L 42,82 L 48,65 Z" 
+                      fill="#d4edda" stroke="#52b788" stroke-width="1.5" opacity="0.7"/>
+                <!-- Kutch peninsula -->
+                <path d="M 55,45 L 48,65 L 42,82 L 35,90 L 25,88 L 18,75 L 22,58 L 35,48 L 48,42 Z"
+                      fill="#c8e6c9" stroke="#52b788" stroke-width="1"/>
+                <text x="210" y="22" text-anchor="middle" font-size="13" fill="#1b4332" font-weight="700" font-family="Poppins,sans-serif">Gujarat Districts — All 33</text>
+                <g id="cityDots"></g>
+            </svg>
+        </div>
+        <div class="city-list-card">
+            <h3>📍 All Cities</h3>
+            <div id="cityList"></div>
+        </div>
+    </div>
+    <div class="city-detail-card" id="cityDetail">
+        <h3 id="cityDetailTitle"></h3>
+        <table class="price-table">
+            <thead><tr><th>Crop</th><th style="text-align:right;">Modal (₹/q)</th><th style="text-align:right;">Per kg</th></tr></thead>
+            <tbody id="cityDetailBody"></tbody>
+        </table>
+        <p style="margin-top:8px;font-size:0.78rem;color:#aaa;">* Indicative. <a href="news.html" style="color:var(--green);">Full market prices →</a></p>
+    </div>
+</div>
+
+<footer><p>© 2026 Agri-Verse | Developed by Kavin Dobariya</p></footer>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(tab,btn){
+    document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+tab).classList.add('active');
+    if(btn)btn.classList.add('active');
+}
+
+// CROP CALENDAR DATA
+const CROPS = {
+    kharif: [
+        { name: '🌾 Paddy (Rice)', sow: 'Jun–Jul', harvest: 'Oct–Nov', dur: '120–150 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Water crop',c:'tag-b'},{t:'South Gujarat',c:'tag-o'}] },
+        { name: '🌻 Groundnut', sow: 'Jun–Jul', harvest: 'Oct–Nov', dur: '100–120 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Saurashtra',c:'tag-o'},{t:'Oilseed',c:'tag-b'}] },
+        { name: '🌿 Cotton', sow: 'May–Jun', harvest: 'Nov–Jan', dur: '150–180 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Cash crop',c:'tag-p'},{t:'Gujarat no 1',c:'tag-o'}] },
+        { name: '🌽 Bajra (Pearl Millet)', sow: 'Jun–Jul', harvest: 'Sep–Oct', dur: '80–100 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Dry land',c:'tag-o'},{t:'Food crop',c:'tag-b'}] },
+        { name: '🫘 Tur (Pigeon Pea)', sow: 'Jun–Jul', harvest: 'Dec–Jan', dur: '150–180 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Pulse',c:'tag-p'},{t:'North Gujarat',c:'tag-o'}] },
+        { name: '🌱 Moong', sow: 'Jun–Jul', harvest: 'Sep–Oct', dur: '60–75 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Short duration',c:'tag-b'},{t:'Pulse',c:'tag-p'}] },
+        { name: '🌵 Castor', sow: 'Jul–Aug', harvest: 'Jan–Feb', dur: '180–210 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Oilseed',c:'tag-b'},{t:'Kachchh',c:'tag-o'}] },
+        { name: '🫚 Sesame (Til)', sow: 'Jul', harvest: 'Sep–Oct', dur: '70–90 days', tags: [{t:'Kharif',c:'tag-g'},{t:'Oilseed',c:'tag-b'},{t:'Short crop',c:'tag-o'}] },
+    ],
+    rabi: [
+        { name: '🌾 Wheat', sow: 'Oct–Nov', harvest: 'Feb–Mar', dur: '110–130 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Food crop',c:'tag-g'},{t:'N. Gujarat',c:'tag-o'}] },
+        { name: '🟡 Mustard', sow: 'Oct–Nov', harvest: 'Jan–Feb', dur: '100–110 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Oilseed',c:'tag-g'},{t:'Banaskantha',c:'tag-o'}] },
+        { name: '🧅 Onion', sow: 'Oct–Nov', harvest: 'Jan–Mar', dur: '90–120 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Vegetable',c:'tag-g'},{t:'Bhavnagar',c:'tag-o'}] },
+        { name: '🥔 Potato', sow: 'Oct–Nov', harvest: 'Jan–Feb', dur: '75–100 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Vegetable',c:'tag-g'},{t:'Deesa',c:'tag-o'}] },
+        { name: '🌿 Cumin (Jeera)', sow: 'Oct–Nov', harvest: 'Jan–Feb', dur: '90–110 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Spice',c:'tag-p'},{t:'Unjha',c:'tag-o'}] },
+        { name: '🧄 Garlic', sow: 'Oct–Nov', harvest: 'Feb–Mar', dur: '120–140 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Spice',c:'tag-p'},{t:'Rajkot',c:'tag-o'}] },
+        { name: '🌱 Gram (Chickpea)', sow: 'Oct–Nov', harvest: 'Feb–Mar', dur: '90–120 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Pulse',c:'tag-p'},{t:'Dry land',c:'tag-o'}] },
+        { name: '🫘 Lentil (Masoor)', sow: 'Oct–Nov', harvest: 'Feb–Mar', dur: '90–110 days', tags: [{t:'Rabi',c:'tag-b'},{t:'Pulse',c:'tag-p'},{t:'Irrigated',c:'tag-g'}] },
+    ],
+    zaid: [
+        { name: '🥒 Cucumber', sow: 'Mar–Apr', harvest: 'May–Jun', dur: '50–60 days', tags: [{t:'Zaid',c:'tag-o'},{t:'Summer veg',c:'tag-g'},{t:'Irrigated',c:'tag-b'}] },
+        { name: '🍈 Muskmelon', sow: 'Feb–Mar', harvest: 'May–Jun', dur: '70–80 days', tags: [{t:'Zaid',c:'tag-o'},{t:'Summer fruit',c:'tag-g'},{t:'Sandy soil',c:'tag-b'}] },
+        { name: '🍉 Watermelon', sow: 'Feb–Mar', harvest: 'May–Jun', dur: '70–85 days', tags: [{t:'Zaid',c:'tag-o'},{t:'Summer fruit',c:'tag-g'},{t:'Sandy loam',c:'tag-b'}] },
+        { name: '🌽 Maize', sow: 'Mar–Apr', harvest: 'Jun–Jul', dur: '90–100 days', tags: [{t:'Zaid',c:'tag-o'},{t:'Food crop',c:'tag-g'},{t:'Irrigated',c:'tag-b'}] },
+        { name: '🌿 Moong (Summer)', sow: 'Feb–Mar', harvest: 'May–Jun', dur: '55–65 days', tags: [{t:'Zaid',c:'tag-o'},{t:'Short duration',c:'tag-b'},{t:'Pulse',c:'tag-p'}] },
+        { name: '🍋 Lemon', sow: 'Jan–Feb', harvest: 'Apr–Jun', dur: 'Perennial', tags: [{t:'Zaid',c:'tag-o'},{t:'Fruit',c:'tag-g'},{t:'Junagadh',c:'tag-p'}] },
+    ]
+};
+
+function showSeason(season, btn) {
+    document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    else {
+        const btns = document.querySelectorAll('.season-btn');
+        if (season === 'kharif') btns[0]?.classList.add('active');
+        else if (season === 'rabi') btns[1]?.classList.add('active');
+        else btns[2]?.classList.add('active');
+    }
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = (CROPS[season] || []).map(c => `
+        <div class="crop-card">
+            <h3>${c.name}</h3>
+            <div class="crop-tags">
+                <span class="tag tag-g">🌱 Sow: ${c.sow}</span>
+                <span class="tag tag-o">🌾 Harvest: ${c.harvest}</span>
+                <span class="tag tag-b">⏱ ${c.dur}</span>
+                ${c.tags.map(t=>`<span class="tag ${t.c}">${t.t}</span>`).join('')}
+            </div>
+        </div>`).join('');
+}
+
+showSeason('kharif');
+
+// AI DOCTOR
+let cropImageBase64=null;
+let cropImageMimeType='image/jpeg';
+function previewImage(input){
+    if(!input.files[0])return;
+    cropImageMimeType=input.files[0].type||'image/jpeg';
+    const reader=new FileReader();
+    reader.onload=e=>{document.getElementById('previewImg').src=e.target.result;document.getElementById('imgPreview').style.display='block';cropImageBase64=e.target.result.split(',')[1];};
+    reader.readAsDataURL(input.files[0]);
+}
+// Compress image to max 800px & quality 0.7 before sending
+function compressImage(base64, mimeType, maxWidth=600) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const compressed = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
+            resolve(compressed);
+        };
+        img.src = 'data:' + mimeType + ';base64,' + base64;
+    });
+}
+
+async function diagnose(){
+    const symptom=document.getElementById('symptomText').value.trim();
+    if(!symptom&&!cropImageBase64){alert('Photo upload કરો અથવા symptoms describe કરો!');return;}
+    const resultDiv=document.getElementById('aiResult'),content=document.getElementById('aiResultContent');
+    resultDiv.style.display='block';
+
+    // Compress image first if present
+    let imgData = cropImageBase64;
+    if(imgData) {
+        content.innerHTML='<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:var(--green);"></i><p style="margin-top:10px;color:#aaa;">📸 Compressing image...</p></div>';
+        imgData = await compressImage(imgData, cropImageMimeType);
+    }
+
+    const messages=[];
+    if(imgData){
+        messages.push({role:'user',content:[
+            {type:'image',source:{type:'base64',media_type:'image/jpeg',data:imgData}},
+            {type:'text',text:`You are an expert agricultural scientist for Gujarat, India. Analyze this crop photo carefully.
+
+**🌿 Crop Identified:** [name]
+**🦠 Disease / Problem:** [disease name]
+**⚠️ Severity:** Mild / Moderate / Severe
+
+**📋 Symptoms Observed:**
+[what you see in the image]
+
+**🔬 Cause:**
+[fungal / bacterial / viral / pest / nutrient deficiency]
+
+**💊 Treatment:**
+- Chemical: [Indian brand names sold in Gujarat: e.g. Dithane M-45, Blitox 50, Saaf, Ridomil Gold, etc.]
+- Organic: [home/natural remedy]
+- Dosage: [grams or ml per litre of water]
+
+**🛡️ Prevention:**
+[2-3 practical tips]
+
+**⏰ Action Required:** Immediate / Within 1 week / Monitor
+
+${symptom ? 'Farmer also notes: ' + symptom : ''}
+Respond in English only. Be specific with Indian medicine names available in Gujarat.`}
+        ]});
+    } else {
+        messages.push({role:'user',content:`You are an expert agricultural scientist for Gujarat, India. A farmer describes this problem: "${symptom}"
+
+**🦠 Likely Disease / Problem:** [name]
+**⚠️ Severity:** Mild / Moderate / Severe
+
+**📋 Typical Symptoms:**
+[list]
+
+**🔬 Cause:**
+[brief explanation]
+
+**💊 Treatment:**
+- Chemical: [Indian brand names sold in Gujarat markets]
+- Organic: [natural remedy]
+- Dosage: [amount per litre of water]
+
+**🛡️ Prevention:**
+[2-3 practical tips]
+
+**⏰ Action Required:** Immediate / Within 1 week / Monitor
+
+Respond in English only.`});
+    }
+
+    // Try up to 2 attempts (handles cold start)
+    let lastError = null;
+    for(let attempt = 1; attempt <= 2; attempt++){
+        if(attempt === 1){
+            content.innerHTML='<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:var(--green);"></i><p style="margin-top:10px;color:#aaa;">🤖 AI analyzing... (first request may take 30-50 sec)</p></div>';
+        } else {
+            content.innerHTML='<div class="ai-loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:var(--green);"></i><p style="margin-top:10px;color:#aaa;">⏳ Server waking up, retrying... please wait</p></div>';
+        }
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 90000); // 90 sec
+
+        try{
+            const res = await fetch('https://agri-project-ol6n.onrender.com/api/crop-doctor',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({messages}),
+                signal:controller.signal
+            });
+            clearTimeout(timeout);
+            if(!res.ok){
+                const err = await res.json().catch(()=>({}));
+                throw new Error(err.error||'Server error '+res.status);
+            }
+            const data = await res.json();
+            const text = data.content?.[0]?.text || 'Could not analyze.';
+            content.innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+            return; // success
+        } catch(e){
+            clearTimeout(timeout);
+            lastError = e;
+            if(attempt < 2) {
+                // Wait 5 sec before retry
+                await new Promise(r => setTimeout(r, 5000));
+                continue;
+            }
+        }
+    }
+
+    // Both attempts failed
+    if(lastError?.name === 'AbortError'){
+        content.innerHTML='<p style="color:#e53935;">⏱ Server did not respond after 2 attempts.<br>The backend (Render free tier) may need 1-2 min to fully wake up.<br>🔄 Please wait a moment and try again.</p>';
+    } else {
+        content.innerHTML=`<p style="color:#e53935;">❌ Error: ${lastError?.message}. Please try again.</p>`;
+    }
+}
+
+// MANDI MAP
+const CITIES=[
+    // North Gujarat
+    {name:'Mehsana',      x:198,y:105,topCrop:'Bajra',    price:'₹2,080', prices:[{crop:'Bajra',modal:2080},{crop:'Wheat',modal:2215},{crop:'Garlic',modal:3120},{crop:'Potato',modal:1010},{crop:'Mustard',modal:5420}]},
+    {name:'Banaskantha',  x:175,y:70, topCrop:'Potato',   price:'₹1,010', prices:[{crop:'Potato',modal:1010},{crop:'Bajra',modal:2080},{crop:'Cumin',modal:14800},{crop:'Fennel',modal:9200},{crop:'Mustard',modal:5420}]},
+    {name:'Patan',        x:155,y:88, topCrop:'Cumin',    price:'₹14,800',prices:[{crop:'Cumin',modal:14800},{crop:'Bajra',modal:2080},{crop:'Cotton',modal:6700},{crop:'Wheat',modal:2215},{crop:'Mustard',modal:5350}]},
+    {name:'Gandhinagar',  x:218,y:128,topCrop:'Wheat',    price:'₹2,215', prices:[{crop:'Wheat',modal:2215},{crop:'Tomato',modal:1420},{crop:'Onion',modal:860},{crop:'Groundnut',modal:5860},{crop:'Cotton',modal:6715}]},
+    {name:'Sabarkantha',  x:240,y:92, topCrop:'Maize',    price:'₹2,050', prices:[{crop:'Maize',modal:2050},{crop:'Wheat',modal:2215},{crop:'Tomato',modal:1380},{crop:'Groundnut',modal:5820},{crop:'Cotton',modal:6700}]},
+    {name:'Arvalli',      x:255,y:112,topCrop:'Cotton',   price:'₹6,720', prices:[{crop:'Cotton',modal:6720},{crop:'Maize',modal:2050},{crop:'Wheat',modal:2215},{crop:'Tomato',modal:1350},{crop:'Groundnut',modal:5820}]},
+    // Central Gujarat
+    {name:'Ahmedabad',    x:215,y:148,topCrop:'Tomato',   price:'₹1,450', prices:[{crop:'Tomato',modal:1450},{crop:'Onion',modal:870},{crop:'Potato',modal:985},{crop:'Wheat',modal:2215},{crop:'Groundnut',modal:5860}]},
+    {name:'Anand',        x:235,y:178,topCrop:'Potato',   price:'₹1,015', prices:[{crop:'Potato',modal:1015},{crop:'Tomato',modal:1340},{crop:'Wheat',modal:2240},{crop:'Moong Dal',modal:7820},{crop:'Soybean',modal:4640}]},
+    {name:'Kheda',        x:228,y:162,topCrop:'Tobacco',  price:'₹4,200', prices:[{crop:'Tobacco',modal:4200},{crop:'Potato',modal:985},{crop:'Tomato',modal:1350},{crop:'Wheat',modal:2215},{crop:'Onion',modal:855}]},
+    {name:'Vadodara',     x:245,y:205,topCrop:'Cotton',   price:'₹6,760', prices:[{crop:'Cotton',modal:6760},{crop:'Tomato',modal:1320},{crop:'Wheat',modal:2240},{crop:'Potato',modal:995},{crop:'Grapes',modal:3300}]},
+    {name:'Mahisagar',    x:258,y:175,topCrop:'Maize',    price:'₹2,020', prices:[{crop:'Maize',modal:2020},{crop:'Cotton',modal:6700},{crop:'Wheat',modal:2215},{crop:'Tomato',modal:1320},{crop:'Groundnut',modal:5800}]},
+    {name:'Panchmahals',  x:272,y:170,topCrop:'Maize',    price:'₹2,030', prices:[{crop:'Maize',modal:2030},{crop:'Cotton',modal:6700},{crop:'Wheat',modal:2200},{crop:'Groundnut',modal:5810},{crop:'Tomato',modal:1310}]},
+    {name:'Dahod',        x:290,y:158,topCrop:'Maize',    price:'₹2,010', prices:[{crop:'Maize',modal:2010},{crop:'Wheat',modal:2200},{crop:'Cotton',modal:6680},{crop:'Tomato',modal:1300},{crop:'Groundnut',modal:5790}]},
+    // Saurashtra
+    {name:'Rajkot',       x:122,y:188,topCrop:'Groundnut',price:'₹5,850', prices:[{crop:'Groundnut',modal:5850},{crop:'Cotton',modal:6750},{crop:'Bajra',modal:2100},{crop:'Tomato',modal:1400},{crop:'Onion',modal:800}]},
+    {name:'Surendranagar',x:165,y:175,topCrop:'Cotton',   price:'₹6,800', prices:[{crop:'Cotton',modal:6800},{crop:'Groundnut',modal:5850},{crop:'Castor',modal:6140},{crop:'Sesame',modal:12320},{crop:'Bajra',modal:2080}]},
+    {name:'Morbi',        x:140,y:148,topCrop:'Cotton',   price:'₹6,725', prices:[{crop:'Cotton',modal:6725},{crop:'Groundnut',modal:5890},{crop:'Tomato',modal:1320},{crop:'Bajra',modal:2065},{crop:'Castor',modal:6155}]},
+    {name:'Jamnagar',     x:88, y:188,topCrop:'Groundnut',price:'₹5,870', prices:[{crop:'Groundnut',modal:5870},{crop:'Cotton',modal:6720},{crop:'Bajra',modal:2090},{crop:'Castor',modal:6160},{crop:'Onion',modal:820}]},
+    {name:'Devbhumi Dwarka',x:62,y:205,topCrop:'Groundnut',price:'₹5,860',prices:[{crop:'Groundnut',modal:5860},{crop:'Cotton',modal:6710},{crop:'Bajra',modal:2080},{crop:'Sesame',modal:12300},{crop:'Wheat',modal:2200}]},
+    {name:'Porbandar',    x:62, y:240,topCrop:'Groundnut',price:'₹5,940', prices:[{crop:'Groundnut',modal:5940},{crop:'Cotton',modal:6700},{crop:'Banana',modal:1148},{crop:'Mango (Kesar)',modal:3750},{crop:'Lemon',modal:2420}]},
+    {name:'Junagadh',     x:95, y:258,topCrop:'Groundnut',price:'₹5,940', prices:[{crop:'Groundnut',modal:5940},{crop:'Dry Chilli',modal:12000},{crop:'Lemon',modal:2420},{crop:'Mango (Kesar)',modal:3800},{crop:'Cotton',modal:6800}]},
+    {name:'Gir Somnath',  x:108,y:278,topCrop:'Mango',   price:'₹3,850', prices:[{crop:'Mango (Kesar)',modal:3850},{crop:'Groundnut',modal:5920},{crop:'Cotton',modal:6750},{crop:'Lemon',modal:2400},{crop:'Banana',modal:1130}]},
+    {name:'Amreli',       x:135,y:235,topCrop:'Groundnut',price:'₹5,890', prices:[{crop:'Groundnut',modal:5890},{crop:'Cotton',modal:6800},{crop:'Castor',modal:6170},{crop:'Sesame',modal:12320},{crop:'Sunflower',modal:5630}]},
+    {name:'Bhavnagar',    x:158,y:252,topCrop:'Cotton',   price:'₹6,800', prices:[{crop:'Cotton',modal:6800},{crop:'Groundnut',modal:5890},{crop:'Sesame',modal:12320},{crop:'Bajra',modal:2050},{crop:'Castor',modal:6170}]},
+    {name:'Botad',        x:148,y:215,topCrop:'Cotton',   price:'₹6,780', prices:[{crop:'Cotton',modal:6780},{crop:'Groundnut',modal:5870},{crop:'Bajra',modal:2060},{crop:'Castor',modal:6150},{crop:'Sesame',modal:12280}]},
+    // South Gujarat
+    {name:'Surat',        x:205,y:308,topCrop:'Banana',   price:'₹1,145', prices:[{crop:'Banana',modal:1145},{crop:'Tomato',modal:1300},{crop:'Onion',modal:820},{crop:'Chikoo',modal:1950},{crop:'Cotton',modal:6700}]},
+    {name:'Bharuch',      x:215,y:268,topCrop:'Cotton',   price:'₹6,725', prices:[{crop:'Cotton',modal:6725},{crop:'Tomato',modal:1310},{crop:'Onion',modal:830},{crop:'Maize',modal:2005},{crop:'Toor Dal',modal:8770}]},
+    {name:'Narmada',      x:242,y:248,topCrop:'Maize',    price:'₹2,025', prices:[{crop:'Maize',modal:2025},{crop:'Cotton',modal:6700},{crop:'Toor Dal',modal:8750},{crop:'Rice',modal:2250},{crop:'Tomato',modal:1300}]},
+    {name:'Navsari',      x:200,y:335,topCrop:'Chikoo',   price:'₹1,920', prices:[{crop:'Chikoo',modal:1920},{crop:'Banana',modal:1140},{crop:'Tomato',modal:1290},{crop:'Rice',modal:2260},{crop:'Coconut',modal:1715}]},
+    {name:'Valsad',       x:205,y:362,topCrop:'Chikoo',   price:'₹1,950', prices:[{crop:'Chikoo',modal:1950},{crop:'Banana',modal:1140},{crop:'Rice',modal:2260},{crop:'Coconut',modal:1720},{crop:'Mango',modal:3200}]},
+    {name:'Tapi',         x:230,y:310,topCrop:'Rice',     price:'₹2,250', prices:[{crop:'Rice',modal:2250},{crop:'Maize',modal:2020},{crop:'Cotton',modal:6680},{crop:'Toor Dal',modal:8750},{crop:'Banana',modal:1130}]},
+    {name:'Dang',         x:252,y:295,topCrop:'Rice',     price:'₹2,240', prices:[{crop:'Rice',modal:2240},{crop:'Maize',modal:2015},{crop:'Toor Dal',modal:8740},{crop:'Banana',modal:1125},{crop:'Tomato',modal:1280}]},
+    // Kutch
+    {name:'Kutch',        x:52, y:105,topCrop:'Cotton',   price:'₹6,700', prices:[{crop:'Cotton',modal:6700},{crop:'Groundnut',modal:5820},{crop:'Castor',modal:6155},{crop:'Sesame',modal:12300},{crop:'Bajra',modal:2045}]},
+    // UT
+    {name:'Chhotaudepur', x:270,y:215,topCrop:'Maize',   price:'₹2,015', prices:[{crop:'Maize',modal:2015},{crop:'Cotton',modal:6690},{crop:'Wheat',modal:2200},{crop:'Toor Dal',modal:8740},{crop:'Tomato',modal:1295}]},
+];
+const svgNS='http://www.w3.org/2000/svg';
+const dotsG=document.getElementById('cityDots');
+CITIES.forEach((c,i)=>{
+    const circle=document.createElementNS(svgNS,'circle');
+    circle.setAttribute('cx',c.x);circle.setAttribute('cy',c.y);circle.setAttribute('r','6');
+    circle.setAttribute('fill','#52b788');circle.setAttribute('stroke','#2d6a4f');circle.setAttribute('stroke-width','1.5');
+    circle.style.cursor='pointer';circle.setAttribute('id','dot_'+i);
+    circle.addEventListener('mouseenter',()=>{if(!circle.classList.contains('sel'))circle.setAttribute('r','8');});
+    circle.addEventListener('mouseleave',()=>{if(!circle.classList.contains('sel'))circle.setAttribute('r','6');});
+    circle.addEventListener('click',()=>showCity(c,i));
+    dotsG.appendChild(circle);
+    const txt=document.createElementNS(svgNS,'text');
+    txt.setAttribute('x',c.x);txt.setAttribute('y',c.y-9);
+    txt.setAttribute('text-anchor','middle');txt.setAttribute('font-size','6.5');
+    txt.setAttribute('fill','#1b4332');txt.setAttribute('font-weight','600');
+    txt.textContent=c.name;dotsG.appendChild(txt);
+});
+const cityList=document.getElementById('cityList');
+CITIES.forEach((c,i)=>{
+    const row=document.createElement('div');row.className='city-row';
+    row.innerHTML=`<div><div class="city-name-txt">📍 ${c.name}</div><div class="city-crop-txt">${c.topCrop}</div></div><div class="city-price-txt">${c.price}/q</div>`;
+    row.addEventListener('click',()=>showCity(c,i));
+    cityList.appendChild(row);
+});
+function showCity(c,i){
+    document.querySelectorAll('[id^=dot_]').forEach(d=>{d.setAttribute('fill','#52b788');d.setAttribute('r','7');d.classList.remove('sel');});
+    const dot=document.getElementById('dot_'+i);
+    if(dot){dot.setAttribute('fill','#f9c74f');dot.setAttribute('r','11');dot.classList.add('sel');}
+    document.getElementById('cityDetailTitle').textContent='📍 '+c.name+' — Top Prices Today';
+    document.getElementById('cityDetailBody').innerHTML=c.prices.map(p=>`<tr><td style="font-weight:600;color:var(--green);">${p.crop}</td><td style="text-align:right;font-weight:700;">₹${p.modal.toLocaleString()}</td><td style="text-align:right;color:var(--gray);">₹${(p.modal/100).toFixed(1)}/kg</td></tr>`).join('');
+    document.getElementById('cityDetail').style.display='block';
+    document.getElementById('cityDetail').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// Scroll to top button
+window.onscroll=()=>{document.getElementById('backToTop').style.display=window.scrollY>300?'block':'none';};
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

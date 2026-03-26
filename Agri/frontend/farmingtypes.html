@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/farmingtypes.html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Types | Agri-Verse</title>
+    <meta name="description" content="Agri-Verse Farming Types - Learn about organic, precision, vertical and sustainable farming.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="theme-color" content="#2d6a4f">
+    <link rel="manifest" href="manifest.json">
+    <meta name="google-site-verification" content="Oqb1mGBpZ6HuSPzS7BDLvGmmgaVVpDxGKQ9fYQs3hrc" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --light: #F5F5F5;
+            --dark: #212121;
+            --gray: #757575;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --card-radius: 16px;
+        }
+        [data-theme="dark"] {
+            --card-bg: #1a2535;
+            --bg: #0f1923;
+            --text: #e8f5e9;
+            --dark: #e8f5e9;
+            --gray: #b0bec5;
+            --border: #2d3e50;
+            --light: #1e2d3d;
+            --primary-dark: #81c784;
+        }
+        [data-theme="dark"] body {
+            background-color: #0f1923 !important;
+            color: #e8f5e9 !important;
+        }
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Unique Hero Design for Farming Types */
+        .hero-farming {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.85), rgba(56, 142, 60, 0.85));
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .hero-farming::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .hero-farming::after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            left: -5%;
+            width: 110%;
+            height: 100px;
+            background: var(--bg);
+            transform: rotate(-3deg);
+            z-index: 1;
+        }
+
+        .hero-farming h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-farming p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Farming Types Container */
+        .farming-container {
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            padding: 0 1.5rem;
+        }
+
+        .farming-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Farming Type Card */
+        .farming-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .farming-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .farming-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .farming-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+
+        .farming-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .farming-card:hover .farming-image img {
+            transform: scale(1.1);
+        }
+
+        .farming-content {
+            padding: 1.8rem;
+            position: relative;
+        }
+
+        .farming-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .farming-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .farming-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .farming-features {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #e0e0e0;
+        }
+
+        .farming-features h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .farming-features h4 i {
+            margin-right: 8px;
+            color: var(--secondary);
+        }
+
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-tag {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary-dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 3rem 5% 1.5rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-farming h2 {
+                font-size: 3rem;
+            }
+            
+            .hero-farming p {
+                font-size: 1.2rem;
+            }
+        }
+
+                @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1rem;
+                position: relative;
+            }
+            .logo { margin-bottom: 0; }
+            nav ul.active,
+            .hamburger { display: flex !important; }
+            
+            .farming-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero-farming h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-farming {
+                height: 350px;
+            }
+            
+            .hero-farming h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-farming p {
+                font-size: 1.1rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation for cards */
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .farming-card {
+            animation: cardFadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .farming-card:nth-child(1) { animation-delay: 0.1s; }
+        .farming-card:nth-child(2) { animation-delay: 0.2s; }
+        .farming-card:nth-child(3) { animation-delay: 0.3s; }
+        .farming-card:nth-child(4) { animation-delay: 0.4s; }
+        .farming-card:nth-child(5) { animation-delay: 0.5s; }
+        .farming-card:nth-child(6) { animation-delay: 0.6s; }
+    
+                
+    
+        /* Hamburger Menu */
+        .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; background:none; border:none; padding:5px; }
+        .hamburger span { width:25px; height:3px; background:#2d6a4f; border-radius:3px; transition:all 0.3s; display:block; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-6px); }
+        @media(max-width:768px) {
+            nav { position:relative; }
+        }
+        
+        @media(max-width:900px){
+            #pgHamburger { display:flex !important; }
+            
+            
+        }
+
+        </style>
+</head>
+<body>
+    
+
+        <div class="hero-farming">
+        <h2>Explore Diverse Farming Methods</h2>
+        <p>Discover the various agricultural practices that shape our food systems and environment</p>
+    </div>
+        
+    <div class="farming-container">
+        <div class="farming-grid">
+            <!-- Organic Farming -->
+            <div class="farming-card">
+                <div class="farming-image">
+                    <img loading="lazy" src="images/India_Farming.jpg" alt="Organic Farming" onerror="this.src='https://images.unsplash.com/photo-1464226184884-fa280b81c7ac?w=600'">
+                </div>
+                <div class="farming-content">
+                    <h3>Organic Farming</h3>
+                    <p class="farming-description">A method that focuses on cultivating crops without synthetic pesticides or fertilizers, emphasizing soil health and ecological balance.</p>
+                    <div class="farming-features">
+                        <h4><i class="fas fa-leaf"></i> Key Features</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">No synthetic chemicals</span>
+                            <span class="feature-tag">Crop rotation</span>
+                            <span class="feature-tag">Biological pest control</span>
+                            <span class="feature-tag">Composting</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hydroponics -->
+            <div class="farming-card">
+                <div class="farming-image">
+                    <img loading="lazy" src="images/Leaf.jpg" alt="Hydroponic Farming" onerror="this.src='https://images.unsplash.com/photo-1585011650347-c59dbef5f732?w=600'">
+                </div>
+                <div class="farming-content">
+                    <h3>Hydroponics</h3>
+                    <p class="farming-description">Growing plants without soil, using mineral nutrient solutions in an aqueous solvent, often in controlled environments.</p>
+                    <div class="farming-features">
+                        <h4><i class="fas fa-tint"></i> Key Features</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Soil-less cultivation</span>
+                            <span class="feature-tag">Water efficient</span>
+                            <span class="feature-tag">Year-round production</span>
+                            <span class="feature-tag">Space saving</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permaculture -->
+            <div class="farming-card">
+                <div class="farming-image">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352" alt="Permaculture">
+                </div>
+                <div class="farming-content">
+                    <h3>Permaculture</h3>
+                    <p class="farming-description">A holistic approach creating agricultural systems that mimic natural ecosystems for sustainability and self-sufficiency.</p>
+                    <div class="farming-features">
+                        <h4><i class="fas fa-recycle"></i> Key Features</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Sustainable design</span>
+                            <span class="feature-tag">Diverse ecosystems</span>
+                            <span class="feature-tag">Closed-loop systems</span>
+                            <span class="feature-tag">Natural patterns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Precision Farming -->
+            <div class="farming-card">
+                <div class="farming-image">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef" alt="Precision Farming">
+                </div>
+                <div class="farming-content">
+                    <h3>Precision Farming</h3>
+                    <p class="farming-description">Technology-driven approach using GPS, IoT, and data analytics to optimize field-level management regarding crop farming.</p>
+                    <div class="farming-features">
+                        <h4><i class="fas fa-satellite-dish"></i> Key Features</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">GPS technology</span>
+                            <span class="feature-tag">Data analytics</span>
+                            <span class="feature-tag">Variable rate application</span>
+                            <span class="feature-tag">Yield monitoring</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agroforestry -->
+            <div class="farming-card">
+                <div class="farming-image">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1470114716159-e389f8712fda" alt="Agroforestry">
+                </div>
+                <div class="farming-content">
+                    <h3>Agroforestry</h3>
+                    <p class="farming-description">Integrating trees and shrubs into crop and animal farming systems to create environmental, economic, and social benefits.</p>
+                    <div class="farming-features">
+                        <h4><i class="fas fa-tree"></i> Key Features</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Biodiversity</span>
+                            <span class="feature-tag">Carbon sequestration</span>
+                            <span class="feature-tag">Soil conservation</span>
+                            <span class="feature-tag">Multiple products</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aquaponics -->
+            <div class="farming-card">
+                <div class="farming-image">
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2" alt="Aquaponics">
+                </div>
+                <div class="farming-content">
+                    <h3>Aquaponics</h3>
+                    <p class="farming-description">Combines aquaculture (raising fish) with hydroponics in a symbiotic environment where plants use fish waste as nutrients.</p>
+                    <div class="farming-features">
+                        <h4><i class="fas fa-fish"></i> Key Features</h4>
+                        <div class="features-list">
+                            <span class="feature-tag">Fish and plants</span>
+                            <span class="feature-tag">Closed system</span>
+                            <span class="feature-tag">Water recycling</span>
+                            <span class="feature-tag">High efficiency</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Agri-Verse</h3>
+                <p>Empowering farmers with technology for sustainable and profitable agriculture.</p>
+                <p>&copy; 2026 Agri-Verse. All rights reserved.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Seeds.html">Seeds</a></li>
+                    <li><a href="tools.html">Implements</a></li>
+                    <li><a href="Feritlizer.html">Fertilizers</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Equipment Guides</a></li>
+                    <li><a href="#">Maintenance Tips</a></li>
+                    <li><a href="#">Safety Procedures</a></li>
+                    <li><a href="#">Buying Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest updates and farming tips.</p>
+                <form>
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by Agri-Verse Team</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check login status
+        function checkLoginStatus() {
+            const token = localStorage.getItem('token');
+            const userEmail = localStorage.getItem('userEmail');
+            const authButtons = document.getElementById('auth-buttons');
+
+            if (token && userEmail) {
+                authButtons.innerHTML = `
+                    <div class="user-info" style="display: flex; align-items: center;">
+                        <span style="margin-right: 1rem; font-size: 0.9rem;">${userEmail}</span>
+                        <button onclick="logout()" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <a href="login.html" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                        <i class="fas fa-user"></i> Login
+                    </a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        // Initial check
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            
+            // Add animation class after load
+            setTimeout(() => {
+                document.querySelectorAll('.farming-card').forEach(card => {
+                    card.style.opacity = '1';
+                });
+            }, 100);
+        });
+    </script>
+
+<script>
+var hamburger = document.getElementById('hamburger');
+
+if(hamburger && navUl) {
+    hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navUl.classList.toggle('open');
+    });
+}
+</script>
+<script src="nav.js">
+    // Newsletter subscription
+    (function(){
+      var form = document.querySelector(".footer-col form");
+      if(!form) return;
+      var input = form.querySelector("input[type=email]");
+      var btn = form.querySelector("button");
+      form.addEventListener("submit", async function(e){
+        e.preventDefault();
+        var email = input ? input.value.trim() : "";
+        if(!email) return;
+        btn.disabled = true; btn.textContent = "Subscribing...";
+        try {
+          var r = await fetch("https://agri-project-ol6n.onrender.com/api/newsletter", {
+            method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email})
+          });
+          var d = await r.json();
+          if(r.ok){ btn.textContent = "✅ Subscribed!"; input.value = ""; }
+          else { btn.textContent = "❌ Error"; btn.disabled = false; }
+        } catch(err){ btn.textContent = "❌ Error"; btn.disabled = false; }
+      });
+    })();
+</script>
+</body>
+</html>
