@@ -80,4 +80,69 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// ── GET PROFILE ──────────────────────────────────────────
+router.get("/profile", async (req, res) => {
+  try {
+    const token = req.headers['authorization']?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: "No token" });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");
+    const user = await User.findById(decoded.id, '-password');
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ user });
+  } catch (e) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+});
+
+// ── UPDATE NAME ───────────────────────────────────────────
+router.put("/profile", async (req, res) => {
+  try {
+    const token = req.headers['authorization']?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: "No token" });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");
+    const { name } = req.body;
+    if (!name || name.trim().length < 2) return res.status(400).json({ message: "Valid name required" });
+    const user = await User.findByIdAndUpdate(decoded.id, { name: name.trim() }, { new: true, select: '-password' });
+    res.json({ message: "Profile updated", user });
+  } catch (e) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+});
+
+// ── CHANGE PASSWORD ───────────────────────────────────────
+router.put("/password", async (req, res) => {
+  try {
+    const token = req.headers['authorization']?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: "No token" });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) return res.status(400).json({ message: "Both passwords required" });
+    if (newPassword.length < 6) return res.status(400).json({ message: "New password min 6 characters" });
+
+    const user = await User.findById(decoded.id);
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(401).json({ message: "Current password incorrect" });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+    res.json({ message: "Password changed successfully" });
+  } catch (e) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+});
+
+// ── DELETE ACCOUNT ────────────────────────────────────────
+router.delete("/account", async (req, res) => {
+  try {
+    const token = req.headers['authorization']?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: "No token" });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");
+    await User.findByIdAndDelete(decoded.id);
+    res.json({ message: "Account deleted" });
+  } catch (e) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+});
+
 module.exports = router;
