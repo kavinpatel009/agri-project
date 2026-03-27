@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Agri-Verse</title>
+    <link rel="canonical" href="https://agriverse-in.vercel.app/user-panel.html">
+    <link rel="icon" href="favicon.ico">
+    <meta name="description" content="Manage your Agri-Verse profile, update name and password.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--green:#2d6a4f;--green-light:#52b788;--green-pale:#e8f5e9;--bg:#f0f7f4;--white:#fff;--gray:#6b7280;--dark:#1a2535;--red:#e53935;--radius:16px;--shadow:0 4px 24px rgba(45,106,79,0.10);}
+        [data-theme="dark"]{--bg:#0f1923;--white:#1a2535;--dark:#e8f5e9;--gray:#b0bec5;--green-pale:#1e2d3d;}
+        [data-theme="dark"] body{background:#0f1923!important;color:#e8f5e9!important;}
+        [data-theme="dark"] .panel-card,[data-theme="dark"] .stat-box{background:#1a2535!important;border-color:#2d3e50!important;}
+        [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] p,[data-theme="dark"] label,[data-theme="dark"] span{color:#e8f5e9!important;}
+        [data-theme="dark"] input{background:#1e2d3d!important;color:#e8f5e9!important;border-color:#2d3e50!important;}
+        [data-theme="dark"] .gray-txt{color:#b0bec5!important;}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg);min-height:100vh;}
+
+        /* HERO */
+        .profile-hero{background:linear-gradient(135deg,#0f2d1a,#1b4332,#2d6a4f);padding:3rem 5% 5rem;text-align:center;position:relative;}
+        .avatar-circle{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#52b788,#2d6a4f);border:4px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:700;color:#fff;margin:0 auto 1rem;box-shadow:0 8px 25px rgba(0,0,0,0.2);}
+        .profile-hero h1{color:#fff;font-size:1.5rem;font-weight:700;}
+        .profile-hero p{color:rgba(255,255,255,0.7);font-size:0.85rem;margin-top:4px;}
+        .joined-badge{display:inline-block;background:rgba(255,255,255,0.15);color:#fff;font-size:0.75rem;padding:4px 14px;border-radius:20px;margin-top:8px;backdrop-filter:blur(8px);}
+
+        /* STATS */
+        .stats-row{display:flex;gap:1rem;max-width:700px;margin:-2.5rem auto 0;padding:0 5%;position:relative;z-index:2;}
+        .stat-box{flex:1;background:var(--white);border-radius:var(--radius);padding:1rem;text-align:center;box-shadow:var(--shadow);}
+        .stat-box h3{font-size:1.4rem;font-weight:700;color:var(--green);}
+        .stat-box p{font-size:0.72rem;color:var(--gray);margin-top:2px;}
+
+        /* MAIN LAYOUT */
+        .main-wrap{max-width:700px;margin:2rem auto;padding:0 5% 4rem;}
+        .panel-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:1.5rem;overflow:hidden;}
+        .card-head{padding:1rem 1.3rem;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px;}
+        .card-head-icon{width:36px;height:36px;border-radius:10px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green);font-size:0.95rem;}
+        .card-head h3{font-size:0.95rem;font-weight:700;color:var(--dark);}
+        .card-body{padding:1.3rem;}
+
+        /* FORM */
+        .field{margin-bottom:1.1rem;}
+        .field label{display:block;font-size:0.8rem;font-weight:600;color:var(--gray);margin-bottom:5px;}
+        .field-wrap{position:relative;}
+        .field-wrap i.icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#aaa;font-size:0.88rem;}
+        .field input{width:100%;padding:11px 13px 11px 38px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:0.88rem;outline:none;transition:border 0.3s;font-family:'Poppins',sans-serif;background:var(--white);color:var(--dark);}
+        .field input:focus{border-color:var(--green);}
+        .field input:disabled{background:#f5f5f5;color:#aaa;cursor:not-allowed;}
+        .toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;cursor:pointer;font-size:0.88rem;}
+        .save-btn{background:linear-gradient(135deg,#1b4332,#2d6a4f);color:#fff;border:none;padding:11px 24px;border-radius:10px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;display:flex;align-items:center;gap:8px;transition:all 0.3s;margin-top:0.3rem;}
+        .save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(45,106,79,0.3);}
+        .save-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+        .msg{font-size:0.8rem;padding:8px 12px;border-radius:8px;margin-top:10px;display:none;align-items:center;gap:6px;}
+        .msg-ok{background:#e8f5e9;color:var(--green);}
+        .msg-err{background:#ffebee;color:var(--red);}
+
+        /* INFO ROW */
+        .info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f5;}
+        .info-row:last-child{border-bottom:none;}
+        .info-label{font-size:0.8rem;color:var(--gray);}
+        .info-val{font-size:0.88rem;font-weight:600;color:var(--dark);}
+
+        /* DANGER ZONE */
+        .danger-card{border:1.5px solid #ffcdd2;border-radius:var(--radius);padding:1.2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+        .danger-card p{font-size:0.82rem;color:var(--gray);margin-top:2px;}
+        .danger-btn{background:#ffebee;color:var(--red);border:none;padding:9px 18px;border-radius:10px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;white-space:nowrap;transition:all 0.2s;}
+        .danger-btn:hover{background:var(--red);color:#fff;}
+
+        /* CONFIRM MODAL */
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;}
+        .modal-box{background:#fff;border-radius:20px;padding:2rem;max-width:360px;width:90%;text-align:center;}
+        .modal-box h3{color:var(--red);margin-bottom:0.8rem;}
+        .modal-box p{color:var(--gray);font-size:0.85rem;line-height:1.6;margin-bottom:1.5rem;}
+        .modal-btns{display:flex;gap:10px;}
+        .modal-btns button{flex:1;padding:11px;border-radius:10px;font-weight:700;font-size:0.88rem;cursor:pointer;font-family:'Poppins',sans-serif;border:none;}
+        .modal-cancel{background:#f5f5f5;color:#555;}
+        .modal-confirm{background:var(--red);color:#fff;}
+
+        @media(max-width:600px){.stats-row{flex-direction:column;margin-top:-1.5rem;}.stat-box{padding:0.8rem;}}
+    </style>
+</head>
+<body>
+
+<div class="profile-hero">
+    <div class="avatar-circle" id="heroAvatar">?</div>
+    <h1 id="heroName">Loading...</h1>
+    <p id="heroEmail" class="gray-txt"></p>
+    <span class="joined-badge" id="joinedBadge">📅 Joined --</span>
+</div>
+
+<div class="stats-row">
+    <div class="stat-box">
+        <h3 id="statDays">--</h3>
+        <p>Days as Member</p>
+    </div>
+    <div class="stat-box">
+        <h3>🌾</h3>
+        <p>Agri-Verse Member</p>
+    </div>
+    <div class="stat-box">
+        <h3>✅</h3>
+        <p>Account Active</p>
+    </div>
+</div>
+
+<div class="main-wrap">
+
+    <!-- ACCOUNT INFO -->
+    <div class="panel-card">
+        <div class="card-head">
+            <div class="card-head-icon"><i class="fas fa-user"></i></div>
+            <h3>Account Information</h3>
+        </div>
+        <div class="card-body">
+            <div class="info-row"><span class="info-label">Full Name</span><span class="info-val" id="infoName">--</span></div>
+            <div class="info-row"><span class="info-label">Email Address</span><span class="info-val" id="infoEmail">--</span></div>
+            <div class="info-row"><span class="info-label">Member Since</span><span class="info-val" id="infoJoined">--</span></div>
+            <div class="info-row"><span class="info-label">Account Status</span><span class="info-val" style="color:var(--green);">✅ Active</span></div>
+        </div>
+    </div>
+
+    <!-- EDIT NAME -->
+    <div class="panel-card">
+        <div class="card-head">
+            <div class="card-head-icon"><i class="fas fa-edit"></i></div>
+            <h3>Edit Profile</h3>
+        </div>
+        <div class="card-body">
+            <div class="field">
+                <label>Full Name</label>
+                <div class="field-wrap">
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="editName" placeholder="Taro naam">
+                </div>
+            </div>
+            <div class="field">
+                <label>Email (change nai thay)</label>
+                <div class="field-wrap">
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" id="editEmail" disabled>
+                </div>
+            </div>
+            <button class="save-btn" id="saveProfileBtn" onclick="saveProfile()">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+            <div class="msg" id="profileMsg"></div>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD -->
+    <div class="panel-card">
+        <div class="card-head">
+            <div class="card-head-icon"><i class="fas fa-lock"></i></div>
+            <h3>Change Password</h3>
+        </div>
+        <div class="card-body">
+            <div class="field">
+                <label>Current Password</label>
+                <div class="field-wrap">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="currentPw" placeholder="Halu password">
+                    <button class="toggle-pw" onclick="togglePw('currentPw','eye1')" type="button"><i id="eye1" class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="field">
+                <label>New Password</label>
+                <div class="field-wrap">
+                    <i class="fas fa-key icon"></i>
+                    <input type="password" id="newPw" placeholder="Navu password (min 6 chars)">
+                    <button class="toggle-pw" onclick="togglePw('newPw','eye2')" type="button"><i id="eye2" class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="field">
+                <label>Confirm New Password</label>
+                <div class="field-wrap">
+                    <i class="fas fa-key icon"></i>
+                    <input type="password" id="confirmPw" placeholder="Pharthi navu password">
+                    <button class="toggle-pw" onclick="togglePw('confirmPw','eye3')" type="button"><i id="eye3" class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <button class="save-btn" id="savePwBtn" onclick="changePassword()">
+                <i class="fas fa-shield-alt"></i> Update Password
+            </button>
+            <div class="msg" id="pwMsg"></div>
+        </div>
+    </div>
+
+    <!-- DANGER ZONE -->
+    <div class="panel-card">
+        <div class="card-head">
+            <div class="card-head-icon" style="background:#ffebee;color:var(--red);"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 style="color:var(--red);">Danger Zone</h3>
+        </div>
+        <div class="card-body">
+            <div class="danger-card">
+                <div>
+                    <strong style="font-size:0.88rem;color:var(--dark);">Delete Account</strong>
+                    <p>Tamaro account permanently delete thashe. Aa action undo nai thai shake.</p>
+                </div>
+                <button class="danger-btn" onclick="showDeleteModal()">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <div style="font-size:2.5rem;margin-bottom:0.8rem;">⚠️</div>
+        <h3>Account Delete Karvo Che?</h3>
+        <p>Tamaro badho data permanently delete thashe. Aa action undo nai thai shake!</p>
+        <div class="modal-btns">
+            <button class="modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+            <button class="modal-confirm" onclick="deleteAccount()"><i class="fas fa-trash"></i> Delete</button>
+        </div>
+    </div>
+</div>
+
+<script src="nav.js"></script>
+<script>
+const API = 'https://agri-project-ol6n.onrender.com';
+
+// ── AUTH CHECK ──
+const token = localStorage.getItem('token');
+const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+if (!isLoggedIn || !token) {
+    window.location.href = 'login.html';
+}
+
+function fmtDate(d) {
+    return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'long', year:'numeric' });
+}
+
+function daysSince(d) {
+    return Math.floor((Date.now() - new Date(d)) / (1000 * 60 * 60 * 24));
+}
+
+function getInitial(name) {
+    return (name || 'U').charAt(0).toUpperCase();
+}
+
+// ── LOAD PROFILE ──
+async function loadProfile() {
+    try {
+        const res = await fetch(`${API}/api/auth/profile`, {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.status === 401) { logout(); return; }
+        const data = await res.json();
+        const u = data.user;
+
+        // Update localStorage
+        localStorage.setItem('user', JSON.stringify({ name: u.name, email: u.email }));
+
+        // Hero
+        document.getElementById('heroAvatar').textContent = getInitial(u.name);
+        document.getElementById('heroName').textContent = u.name;
+        document.getElementById('heroEmail').textContent = u.email;
+        document.getElementById('joinedBadge').textContent = '📅 Joined ' + fmtDate(u.createdAt);
+
+        // Stats
+        document.getElementById('statDays').textContent = daysSince(u.createdAt);
+
+        // Info card
+        document.getElementById('infoName').textContent = u.name;
+        document.getElementById('infoEmail').textContent = u.email;
+        document.getElementById('infoJoined').textContent = fmtDate(u.createdAt);
+
+        // Edit fields
+        document.getElementById('editName').value = u.name;
+        document.getElementById('editEmail').value = u.email;
+
+    } catch(e) {
+        // Fallback to localStorage
+        const u = savedUser;
+        if (u.name) {
+            document.getElementById('heroAvatar').textContent = getInitial(u.name);
+            document.getElementById('heroName').textContent = u.name;
+            document.getElementById('heroEmail').textContent = u.email || '';
+            document.getElementById('editName').value = u.name;
+            document.getElementById('editEmail').value = u.email || '';
+        }
+    }
+}
+
+// ── SAVE PROFILE ──
+async function saveProfile() {
+    const name = document.getElementById('editName').value.trim();
+    if (!name || name.length < 2) { showMsg('profileMsg', 'Valid naam nakho!', false); return; }
+
+    const btn = document.getElementById('saveProfileBtn');
+    btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    try {
+        const res = await fetch(`${API}/api/auth/profile`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({ name })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            // Update localStorage
+            const u = JSON.parse(localStorage.getItem('user') || '{}');
+            u.name = name;
+            localStorage.setItem('user', JSON.stringify(u));
+
+            document.getElementById('heroAvatar').textContent = getInitial(name);
+            document.getElementById('heroName').textContent = name;
+            document.getElementById('infoName').textContent = name;
+            showMsg('profileMsg', '✅ Profile update thayu!', true);
+        } else {
+            showMsg('profileMsg', data.message || 'Error thayo', false);
+        }
+    } catch(e) { showMsg('profileMsg', 'Server error. Try again.', false); }
+
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+}
+
+// ── CHANGE PASSWORD ──
+async function changePassword() {
+    const cur  = document.getElementById('currentPw').value;
+    const nw   = document.getElementById('newPw').value;
+    const conf = document.getElementById('confirmPw').value;
+
+    if (!cur || !nw || !conf) { showMsg('pwMsg', 'Badha fields bharvo!', false); return; }
+    if (nw.length < 6) { showMsg('pwMsg', 'Navu password min 6 characters joie!', false); return; }
+    if (nw !== conf) { showMsg('pwMsg', 'New password match nahi kartu!', false); return; }
+
+    const btn = document.getElementById('savePwBtn');
+    btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+    try {
+        const res = await fetch(`${API}/api/auth/password`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({ currentPassword: cur, newPassword: nw })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            showMsg('pwMsg', '✅ Password change thayu!', true);
+            document.getElementById('currentPw').value = '';
+            document.getElementById('newPw').value = '';
+            document.getElementById('confirmPw').value = '';
+        } else {
+            showMsg('pwMsg', data.message || 'Error thayo', false);
+        }
+    } catch(e) { showMsg('pwMsg', 'Server error. Try again.', false); }
+
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-shield-alt"></i> Update Password';
+}
+
+// ── DELETE ACCOUNT ──
+function showDeleteModal() { document.getElementById('deleteModal').style.display = 'flex'; }
+function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+
+async function deleteAccount() {
+    try {
+        const res = await fetch(`${API}/api/auth/account`, {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) { logout(); }
+        else { closeDeleteModal(); alert('Delete failed. Try again.'); }
+    } catch(e) { closeDeleteModal(); alert('Server error.'); }
+}
+
+function logout() {
+    ['token','user','isLoggedIn'].forEach(k => localStorage.removeItem(k));
+    window.location.href = 'index.html';
+}
+
+// ── HELPERS ──
+function showMsg(id, msg, ok) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'msg ' + (ok ? 'msg-ok' : 'msg-err');
+    el.style.display = 'flex';
+    setTimeout(() => el.style.display = 'none', 4000);
+}
+
+function togglePw(inputId, iconId) {
+    const inp = document.getElementById(inputId);
+    const ico = document.getElementById(iconId);
+    if (inp.type === 'password') { inp.type = 'text'; ico.className = 'fas fa-eye-slash'; }
+    else { inp.type = 'password'; ico.className = 'fas fa-eye'; }
+}
+
+// Close modal on outside click
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+});
+
+// ── INIT ──
+loadProfile();
+</script>
+</body>
+</html>
