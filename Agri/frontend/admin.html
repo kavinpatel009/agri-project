@@ -304,14 +304,81 @@
     </div><!-- end page-content -->
 </main>
 
+<!-- SESSION EXPIRE MODAL -->
+<div id="sessionModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:20px;padding:2rem;max-width:380px;width:90%;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.3);">
+        <div style="font-size:3rem;margin-bottom:1rem;" id="sessionModalIcon">⏰</div>
+        <h3 id="sessionModalTitle" style="color:#1b4332;margin-bottom:0.8rem;font-size:1.2rem;"></h3>
+        <p id="sessionModalMsg" style="color:#666;font-size:0.88rem;line-height:1.6;margin-bottom:1.5rem;"></p>
+        <button id="sessionModalBtn" style="background:linear-gradient(135deg,#1b4332,#2d6a4f);color:#fff;border:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;width:100%;"></button>
+    </div>
+</div>
+
 <script>
 const API = 'https://agri-project-ol6n.onrender.com';
 let TOKEN = localStorage.getItem('adminToken');
 let allUsers = [], currentTab = 'dashboard';
+let sessionWarningShown = false;
+
+// ── JWT DECODE (expiry check) ──
+function getTokenExpiry(token) {
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.exp * 1000; // ms
+    } catch { return null; }
+}
 
 // ── AUTH CHECK ──
 if (!TOKEN) { window.location.href = 'admin-login.html'; }
+
+// Check if already expired on load
+const expiry = getTokenExpiry(TOKEN);
+if (expiry && Date.now() > expiry) {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminEmail');
+    window.location.href = 'admin-login.html';
+}
+
 document.getElementById('adminEmailDisplay').textContent = '👤 ' + (localStorage.getItem('adminEmail') || 'Admin');
+
+// ── SESSION TIMER ──
+function checkSession() {
+    const exp = getTokenExpiry(TOKEN);
+    if (!exp) return;
+    const remaining = exp - Date.now();
+
+    if (remaining <= 0) {
+        // Expired — force logout
+        showSessionModal('expired');
+    } else if (remaining <= 5 * 60 * 1000 && !sessionWarningShown) {
+        // 5 min baki — warning
+        sessionWarningShown = true;
+        showSessionModal('warning');
+    }
+}
+
+function showSessionModal(type) {
+    const modal = document.getElementById('sessionModal');
+    const title = document.getElementById('sessionModalTitle');
+    const msg   = document.getElementById('sessionModalMsg');
+    const btn   = document.getElementById('sessionModalBtn');
+
+    if (type === 'expired') {
+        title.textContent = '⏰ Session Expire Thayi!';
+        msg.textContent   = 'Tari admin session expire thai gayi che. Security mate automatically logout thashe.';
+        btn.textContent   = 'Login Karva Jao';
+        btn.onclick = () => adminLogout();
+    } else {
+        title.textContent = '⚠️ Session Expire Thavani Che';
+        msg.textContent   = '5 minute ma session expire thashe. Kaam save kari lo!';
+        btn.textContent   = 'OK, Samjayu';
+        btn.onclick = () => modal.style.display = 'none';
+    }
+    modal.style.display = 'flex';
+}
+
+// Check every 30 seconds
+setInterval(checkSession, 30000);
 
 function adminLogout() {
     localStorage.removeItem('adminToken');
@@ -321,6 +388,16 @@ function adminLogout() {
 
 function authHeaders() {
     return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+}
+
+// ── SECURE FETCH — auto logout on 401/403 ──
+async function secureFetch(url, options = {}) {
+    const res = await fetch(url, { ...options, headers: authHeaders() });
+    if (res.status === 401 || res.status === 403) {
+        showSessionModal('expired');
+        return null;
+    }
+    return res;
 }
 
 function fmtDate(d) {
@@ -354,10 +431,11 @@ function loadTab(tab) {
 async function loadDashboard() {
     try {
         const [statsRes, usersRes, contactsRes] = await Promise.all([
-            fetch(`${API}/api/admin/stats`, { headers: authHeaders() }),
-            fetch(`${API}/api/admin/users`, { headers: authHeaders() }),
-            fetch(`${API}/api/admin/contacts`, { headers: authHeaders() }),
+            secureFetch(`${API}/api/admin/stats`),
+            secureFetch(`${API}/api/admin/users`),
+            secureFetch(`${API}/api/admin/contacts`),
         ]);
+        if (!statsRes || !usersRes || !contactsRes) return;
         const stats = await statsRes.json();
         const users = await usersRes.json();
         const contacts = await contactsRes.json();
@@ -402,7 +480,8 @@ async function loadDashboard() {
 async function loadUsers() {
     document.getElementById('usersBody').innerHTML = '<tr class="loading-row"><td colspan="5"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
     try {
-        const res = await fetch(`${API}/api/admin/users`, { headers: authHeaders() });
+        const res = await secureFetch(`${API}/api/admin/users`);
+        if (!res) return;
         allUsers = await res.json();
         renderUsers(allUsers);
     } catch(e) { document.getElementById('usersBody').innerHTML = '<tr class="empty-row"><td colspan="5">Error loading users</td></tr>'; }
@@ -432,7 +511,7 @@ function filterUsers(q) {
 async function deleteUser(id, name) {
     if (!confirm(`"${name}" ne delete karva mango cho?`)) return;
     try {
-        const res = await fetch(`${API}/api/admin/users/${id}`, { method:'DELETE', headers: authHeaders() });
+        const res = await secureFetch(`${API}/api/admin/users/${id}`, { method:'DELETE' });
         if (res.ok) { loadUsers(); }
         else alert('Delete failed');
     } catch(e) { alert('Error'); }
@@ -442,7 +521,7 @@ async function deleteUser(id, name) {
 async function loadContacts() {
     document.getElementById('contactsList').innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray);"><i class="fas fa-spinner fa-spin"></i></div>';
     try {
-        const res = await fetch(`${API}/api/admin/contacts`, { headers: authHeaders() });
+        const res = await secureFetch(`${API}/api/admin/contacts`);
         const contacts = await res.json();
         document.getElementById('contactCount').textContent = contacts.length + ' messages';
         document.getElementById('contactsList').innerHTML = contacts.length
@@ -464,7 +543,7 @@ async function loadContacts() {
 
 async function deleteContact(id) {
     if (!confirm('Message delete karva mango cho?')) return;
-    await fetch(`${API}/api/admin/contacts/${id}`, { method:'DELETE', headers: authHeaders() });
+    await secureFetch(`${API}/api/admin/contacts/${id}`, { method:'DELETE' });
     loadContacts();
 }
 
@@ -472,7 +551,7 @@ async function deleteContact(id) {
 async function loadMandi() {
     document.getElementById('mandiBody').innerHTML = '<tr class="loading-row"><td colspan="5"><i class="fas fa-spinner fa-spin"></i></td></tr>';
     try {
-        const res = await fetch(`${API}/api/admin/mandi`, { headers: authHeaders() });
+        const res = await secureFetch(`${API}/api/admin/mandi`);
         const prices = await res.json();
         document.getElementById('mandiBody').innerHTML = prices.length
             ? prices.map(p => {
@@ -526,20 +605,19 @@ async function saveMandi() {
     btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
 
     try {
-        const res = await fetch(`${API}/api/admin/mandi`, {
+        const res = await secureFetch(`${API}/api/admin/mandi`, {
             method: 'POST',
-            headers: authHeaders(),
             body: JSON.stringify({ city, region, prices })
         });
-        if (res.ok) {
+        if (res?.ok) {
             showMandiMsg(`✅ ${city} prices saved!`, true);
             document.getElementById('mandiCity').value = '';
             document.getElementById('priceRows').innerHTML = '';
             addPriceRow(); addPriceRow(); addPriceRow();
             loadMandi();
         } else {
-            const d = await res.json();
-            showMandiMsg('Error: ' + (d.error||'Failed'), false);
+            const d = await res?.json();
+            showMandiMsg('Error: ' + (d?.error||'Failed'), false);
         }
     } catch(e) { showMandiMsg('Server error. Try again.', false); }
     btn.disabled = false;
@@ -556,7 +634,7 @@ function showMandiMsg(msg, success) {
 
 async function deleteMandiCity(id, city) {
     if (!confirm(`"${city}" prices delete karva mango cho?`)) return;
-    await fetch(`${API}/api/admin/mandi/${id}`, { method:'DELETE', headers: authHeaders() });
+    await secureFetch(`${API}/api/admin/mandi/${id}`, { method:'DELETE' });
     loadMandi();
 }
 
@@ -564,7 +642,7 @@ async function deleteMandiCity(id, city) {
 async function loadSubscribers() {
     document.getElementById('subsBody').innerHTML = '<tr class="loading-row"><td colspan="3"><i class="fas fa-spinner fa-spin"></i></td></tr>';
     try {
-        const res = await fetch(`${API}/api/admin/subscribers`, { headers: authHeaders() });
+        const res = await secureFetch(`${API}/api/admin/subscribers`);
         const subs = await res.json();
         document.getElementById('subCount').textContent = subs.length + ' subscribers';
         document.getElementById('subsBody').innerHTML = subs.length
