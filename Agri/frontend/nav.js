@@ -564,6 +564,7 @@
                                 <div class="nav-profile-email">${email}</div>
                             </div>
                         </div>
+                        <a href="user-panel.html" class="nav-menu-item">👤 My Profile</a>
                         <a href="index.html" class="nav-menu-item">🏠 Home</a>
                         <a href="index.html#contact" class="nav-menu-item">📩 Contact</a>
                         <div class="nav-menu-divider"></div>
