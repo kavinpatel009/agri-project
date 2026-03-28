@@ -176,7 +176,7 @@ router.post("/forgot-password", async (req, res) => {
 
     await resend.emails.send({
       from: "Agri-Verse <onboarding@resend.dev>",
-      to: "agriverse009@gmail.com",
+      to: "kavinjpatel104@gmail.com",
       subject: `🔐 Password Reset Request — ${user.email}`,
       html: `
         <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid #e0e0e0;">
