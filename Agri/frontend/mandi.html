@@ -161,7 +161,7 @@
                     <th>Min ₹/Qtl</th>
                     <th>Max ₹/Qtl</th>
                     <th>Modal ₹/Qtl</th>
-                    <th>₹/kg</th>
+                    <th>₹/20kg</th>
                     <th>Trend</th>
                 </tr>
             </thead>
@@ -262,7 +262,6 @@ function renderTable(data){
     noData.style.display='none';
     document.getElementById('rowCount').textContent=data.length+' crops';
     data.forEach(r=>{
-        const kg=(r.modal/100).toFixed(1);
         tbody.innerHTML+=`
         <tr>
             <td>
@@ -273,7 +272,7 @@ function renderTable(data){
             <td>₹${r.min.toLocaleString('en-IN')}</td>
             <td>₹${r.max.toLocaleString('en-IN')}</td>
             <td class="price-modal">₹${r.modal.toLocaleString('en-IN')}</td>
-            <td>₹${kg}</td>
+            <td style="color:#e65100;font-weight:600;">₹${(r.modal/5).toFixed(0)}</td>
             <td>${trendHTML(r.trend)}</td>
         </tr>`;
     });
