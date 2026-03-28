@@ -176,25 +176,24 @@ router.post("/forgot-password", async (req, res) => {
 
     await resend.emails.send({
       from: "Agri-Verse <onboarding@resend.dev>",
-      to: email,
-      subject: "🔐 Password Reset - Agri-Verse",
+      to: "agriverse009@gmail.com",
+      subject: `🔐 Password Reset Request — ${user.email}`,
       html: `
         <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid #e0e0e0;">
           <div style="background:linear-gradient(135deg,#1b4332,#2d6a4f);padding:28px;text-align:center;">
-            <h2 style="color:#fff;margin:0;font-size:1.4rem;">🌿 Agri-Verse</h2>
-            <p style="color:rgba(255,255,255,0.8);margin:6px 0 0;font-size:0.9rem;">Password Reset Request</p>
+            <h2 style="color:#fff;margin:0;">🌿 Agri-Verse — Password Reset</h2>
           </div>
           <div style="padding:28px;">
-            <p style="color:#333;font-size:0.95rem;">Hi <strong>${user.name}</strong>,</p>
-            <p style="color:#555;font-size:0.88rem;line-height:1.6;margin:12px 0;">Tamara Agri-Verse account mate password reset request maldo che. Nava password set karva niche na button par click karo:</p>
-            <div style="text-align:center;margin:24px 0;">
-              <a href="${resetLink}" style="background:linear-gradient(135deg,#1b4332,#2d6a4f);color:#fff;padding:13px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;display:inline-block;">🔐 Reset Password</a>
+            <p style="color:#333;"><strong>User:</strong> ${user.name}</p>
+            <p style="color:#333;"><strong>Email:</strong> ${user.email}</p>
+            <p style="color:#555;font-size:0.9rem;margin:16px 0;">Reset link (share with user — expires in 30 min):</p>
+            <div style="background:#f5f5f5;padding:14px;border-radius:8px;word-break:break-all;font-size:0.85rem;color:#1b4332;">
+              ${resetLink}
             </div>
-            <div style="background:#fff8e1;border-left:4px solid #f9c74f;padding:12px 16px;border-radius:6px;margin-top:16px;">
-              <p style="margin:0;font-size:0.82rem;color:#795548;">⏰ Aa link <strong>30 minutes</strong> ma expire thashe.</p>
-              <p style="margin:6px 0 0;font-size:0.82rem;color:#795548;">Jо tame aa request nathi karyo, to aa email ignore karo.</p>
+            <div style="text-align:center;margin:20px 0;">
+              <a href="${resetLink}" style="background:#2d6a4f;color:#fff;padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:700;">Open Reset Link</a>
             </div>
-            <p style="color:#aaa;font-size:0.75rem;margin-top:20px;text-align:center;">© 2026 Agri-Verse | agriverse-in.vercel.app</p>
+            <p style="color:#aaa;font-size:0.75rem;text-align:center;">© 2026 Agri-Verse</p>
           </div>
         </div>
       `
