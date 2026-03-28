@@ -197,6 +197,11 @@
 
 <footer>
     <p>© 2026 Agri-Verse | <a href="index.html">Home</a> | <a href="index.html#contact">Contact</a></p>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
 const mandiData = [
     // ── OILSEEDS ──
     {crop:'Groundnut (Mungfali)',gu:'મગફળી',emoji:'🥜',cat:'Oilseeds',trend:1,
@@ -622,43 +627,6 @@ function filterTable(){
         // If city selected, only show crops available in that city
         const mcity=!city||!r.cityPrices||(r.cityPrices&&r.cityPrices[city]);
         return mq&&mc&&mcity;
-    });
-    renderTable(filtered);
-}
-
-document.addEventListener('DOMContentLoaded',function(){
-    const t=new Date();
-    document.getElementById('todayDate').textContent=t.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
-    document.getElementById('totalCount').textContent=mandiData.length;
-    setTimeout(()=>{
-        document.getElementById('loaderWrap').style.display='none';
-        document.getElementById('tableContainer').style.display='block';
-        renderTable(mandiData);
-    },800);
-});
-
-window.addEventListener('scroll',function(){
-            <td>
-                <span class="crop-name">${r.emoji} ${r.crop}</span>
-                <span class="crop-gu">${r.gu} · ${r.cities}</span>
-            </td>
-            <td><span class="badge-cat">${r.cat}</span></td>
-            <td>₹${r.min.toLocaleString('en-IN')}</td>
-            <td>₹${r.max.toLocaleString('en-IN')}</td>
-            <td class="price-modal">₹${r.modal.toLocaleString('en-IN')}</td>
-            <td>₹${kg}</td>
-            <td>${trendHTML(r.trend)}</td>
-        </tr>`;
-    });
-}
-
-function filterTable(){
-    const q=document.getElementById('searchInp').value.toLowerCase();
-    const cat=document.getElementById('catFilter').value;
-    filtered=mandiData.filter(r=>{
-        const mq=!q||r.crop.toLowerCase().includes(q)||r.gu.includes(q)||r.cities.toLowerCase().includes(q);
-        const mc=!cat||r.cat===cat;
-        return mq&&mc;
     });
     renderTable(filtered);
 }
