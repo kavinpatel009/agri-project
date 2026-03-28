@@ -120,6 +120,29 @@
         <i class="fas fa-search"></i>
         <input type="text" id="searchInp" placeholder="Crop search karo... (Groundnut, Jeeru, Tameta...)" oninput="filterTable()">
     </div>
+    <select class="filter-select" id="cityFilter" onchange="filterTable()">
+        <option value="">🗺️ All Cities</option>
+        <option>Rajkot</option>
+        <option>Junagadh</option>
+        <option>Gondal</option>
+        <option>Unjha</option>
+        <option>Mehsana</option>
+        <option>Ahmedabad</option>
+        <option>Anand</option>
+        <option>Surat</option>
+        <option>Vadodara</option>
+        <option>Surendranagar</option>
+        <option>Bhavnagar</option>
+        <option>Amreli</option>
+        <option>Morbi</option>
+        <option>Bharuch</option>
+        <option>Navsari</option>
+        <option>Porbandar</option>
+        <option>Palanpur</option>
+        <option>Deesa</option>
+        <option>Jamnagar</option>
+        <option>Botad</option>
+    </select>
     <select class="filter-select" id="catFilter" onchange="filterTable()">
         <option value="">All Categories</option>
         <option>Oilseeds</option>
@@ -128,12 +151,13 @@
         <option>Cereals</option>
         <option>Pulses</option>
         <option>Fruits</option>
+        <option>Cash Crops</option>
     </select>
 </div>
 
 <div class="stats-row">
-    <div class="stat-card"><div class="s-val" id="totalCount">35</div><div class="s-lbl">Crops Listed</div></div>
-    <div class="stat-card"><div class="s-val">16+</div><div class="s-lbl">Gujarat Mandis</div></div>
+    <div class="stat-card"><div class="s-val" id="totalCount">75</div><div class="s-lbl">Crops Listed</div></div>
+    <div class="stat-card"><div class="s-val">20</div><div class="s-lbl">Gujarat Mandis</div></div>
     <div class="stat-card"><div class="s-val" id="todayDate">—</div><div class="s-lbl">Price Date</div></div>
     <div class="stat-card"><div class="s-val">📡</div><div class="s-lbl">Agmarknet Source</div></div>
 </div>
@@ -161,7 +185,7 @@
                     <th>Min ₹/Qtl</th>
                     <th>Max ₹/Qtl</th>
                     <th>Modal ₹/Qtl</th>
-                    <th>₹/20kg</th>
+                    <th>₹/kg</th>
                     <th>Trend</th>
                 </tr>
             </thead>
@@ -173,97 +197,447 @@
 
 <footer>
     <p>© 2026 Agri-Verse | <a href="index.html">Home</a> | <a href="index.html#contact">Contact</a></p>
-    <p style="margin-top:6px;font-size:0.78rem;opacity:0.7;">Prices are reference only. Verify with APMC. Developed by Kavin Dobariya</p>
-</footer>
-
-<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-<script>
-// Dark Mode
-(function(){
-    const s=localStorage.getItem('agri-theme')||'light';
-    document.documentElement.setAttribute('data-theme',s);
-    document.addEventListener('DOMContentLoaded',function(){
-        const b=document.getElementById('darkToggle');
-        if(b) b.textContent=s==='dark'?'☀️':'🌙';
-    });
-})();
-function toggleDark(){
-    const d=document.documentElement.getAttribute('data-theme')==='dark';
-    document.documentElement.setAttribute('data-theme',d?'light':'dark');
-    document.getElementById('darkToggle').textContent=d?'🌙':'☀️';
-    localStorage.setItem('agri-theme',d?'light':'dark');
-}
-
-// ===== REAL GUJARAT MANDI DATA =====
-// Source: Agmarknet / CommodityOnline / KisanDeals (2025-2026)
 const mandiData = [
-    // OILSEEDS
-    {crop:'Groundnut (Mungfali)',gu:'મગફળી',emoji:'🥜',cat:'Oilseeds',min:5255,max:8750,modal:6654,trend:1,cities:'Junagadh · Rajkot · Amreli · Gondal · Morbi'},
-    {crop:'Groundnut G20',gu:'મગફળી G20',emoji:'🥜',cat:'Oilseeds',min:6100,max:6570,modal:6305,trend:0,cities:'Junagadh · Jasdan · Dhari'},
-    {crop:'Cotton (Kapas)',gu:'કપાસ',emoji:'☁️',cat:'Oilseeds',min:5605,max:9325,modal:7317,trend:1,cities:'Surendranagar · Rajkot · Morbi · Ahmedabad'},
-    {crop:'Castor Seed (Eranda)',gu:'એરંડા',emoji:'🌿',cat:'Oilseeds',min:5200,max:6500,modal:5800,trend:-1,cities:'Mehsana · Palanpur · Deesa · Unjha'},
-    {crop:'Sesame (Tal)',gu:'તલ',emoji:'🤍',cat:'Oilseeds',min:11000,max:16000,modal:13500,trend:1,cities:'Junagadh · Rajkot · Gondal · Amreli'},
-    {crop:'Mustard (Rai)',gu:'રાઈ',emoji:'🟡',cat:'Oilseeds',min:4800,max:5800,modal:5300,trend:0,cities:'Surendranagar · Mehsana · Viramgam'},
+    // ── OILSEEDS ──
+    {crop:'Groundnut (Mungfali)',gu:'મગફળી',emoji:'🥜',cat:'Oilseeds',trend:1,
+     min:5255,max:8750,modal:6654,
+     cityPrices:{
+       'Rajkot':{min:5800,max:7200,modal:6500},'Junagadh':{min:5500,max:8750,modal:6800},
+       'Gondal':{min:5600,max:7800,modal:6600},'Amreli':{min:5400,max:7500,modal:6400},
+       'Morbi':{min:5700,max:7000,modal:6350},'Jamnagar':{min:5500,max:7200,modal:6450},
+       'Surendranagar':{min:5600,max:7400,modal:6500},'Bhavnagar':{min:5500,max:7600,modal:6550},
+       'Porbandar':{min:5800,max:8000,modal:6700},'Botad':{min:5600,max:7300,modal:6400},
+     }},
+    {crop:'Groundnut G20',gu:'મગફળી G20',emoji:'🥜',cat:'Oilseeds',trend:0,
+     min:6100,max:6570,modal:6305,
+     cityPrices:{
+       'Rajkot':{min:6200,max:6570,modal:6400},'Junagadh':{min:6100,max:6500,modal:6305},
+       'Gondal':{min:6150,max:6550,modal:6350},'Amreli':{min:6100,max:6500,modal:6300},
+     }},
+    {crop:'Cotton (Kapas)',gu:'કપાસ',emoji:'☁️',cat:'Oilseeds',trend:1,
+     min:5605,max:9325,modal:7317,
+     cityPrices:{
+       'Rajkot':{min:6200,max:8500,modal:7400},'Surendranagar':{min:6000,max:9325,modal:7500},
+       'Morbi':{min:6100,max:8800,modal:7350},'Ahmedabad':{min:5800,max:8800,modal:7200},
+       'Vadodara':{min:6000,max:8600,modal:7300},'Bhavnagar':{min:6100,max:8900,modal:7400},
+       'Botad':{min:6000,max:8700,modal:7350},'Bharuch':{min:5800,max:8500,modal:7200},
+       'Amreli':{min:6000,max:8800,modal:7350},'Jamnagar':{min:6100,max:8600,modal:7300},
+       'Junagadh':{min:6000,max:8700,modal:7350},'Porbandar':{min:5900,max:8500,modal:7200},
+     }},
+    {crop:'Castor Seed (Eranda)',gu:'એરંડા',emoji:'🌿',cat:'Oilseeds',trend:-1,
+     min:5200,max:6500,modal:5800,
+     cityPrices:{
+       'Mehsana':{min:5300,max:6400,modal:5850},'Palanpur':{min:5200,max:6300,modal:5750},
+       'Deesa':{min:5250,max:6350,modal:5800},'Unjha':{min:5300,max:6500,modal:5900},
+       'Surendranagar':{min:5200,max:6200,modal:5700},'Amreli':{min:5300,max:6400,modal:5800},
+       'Rajkot':{min:5250,max:6300,modal:5750},'Morbi':{min:5200,max:6250,modal:5700},
+     }},
+    {crop:'Sesame (Tal)',gu:'તલ',emoji:'🤍',cat:'Oilseeds',trend:1,
+     min:11000,max:16000,modal:13500,
+     cityPrices:{
+       'Junagadh':{min:12000,max:16000,modal:14000},'Rajkot':{min:11500,max:15500,modal:13500},
+       'Gondal':{min:11800,max:15800,modal:13800},'Amreli':{min:12000,max:16000,modal:14000},
+       'Bhavnagar':{min:11500,max:15500,modal:13500},'Surendranagar':{min:11000,max:15000,modal:13000},
+     }},
+    {crop:'Mustard (Rai)',gu:'રાઈ',emoji:'🟡',cat:'Oilseeds',trend:0,
+     min:4800,max:5800,modal:5300,
+     cityPrices:{
+       'Mehsana':{min:4900,max:5800,modal:5350},'Surendranagar':{min:4800,max:5700,modal:5250},
+       'Viramgam':{min:4850,max:5750,modal:5300},'Palanpur':{min:4800,max:5700,modal:5250},
+     }},
+    {crop:'Soybean',gu:'સોયાબીન',emoji:'🟢',cat:'Oilseeds',trend:-1,
+     min:3800,max:5000,modal:4400,
+     cityPrices:{
+       'Vadodara':{min:3900,max:5000,modal:4500},'Anand':{min:3800,max:4900,modal:4400},
+       'Bharuch':{min:3850,max:4950,modal:4450},'Dahod':{min:3800,max:4800,modal:4350},
+     }},
+    {crop:'Sunflower (Surajmukhi)',gu:'સૂરજમુખી',emoji:'🌻',cat:'Oilseeds',trend:0,
+     min:4800,max:6000,modal:5400,
+     cityPrices:{
+       'Rajkot':{min:4900,max:6000,modal:5500},'Jamnagar':{min:4800,max:5900,modal:5400},
+       'Amreli':{min:4850,max:5950,modal:5450},
+     }},
 
-    // SPICES
-    {crop:'Cumin Seed (Jeeru)',gu:'જીરૂ',emoji:'🌿',cat:'Spices',min:17975,max:26175,modal:20000,trend:1,cities:'Unjha · Rajkot · Junagadh · Radhanpur · Harij'},
-    {crop:'Cumin - Unjha APMC',gu:'જીરૂ (ઊંઝા)',emoji:'🌿',cat:'Spices',min:18500,max:26175,modal:21750,trend:1,cities:'Unjha APMC (highest rate in Gujarat)'},
-    {crop:'Coriander (Dhana)',gu:'ધાણા',emoji:'🌿',cat:'Spices',min:5550,max:9800,modal:7675,trend:0,cities:'Mehsana · Palanpur · Deesa · Unjha'},
-    {crop:'Fennel (Variyali)',gu:'વરિયાળી',emoji:'🌿',cat:'Spices',min:10000,max:18000,modal:13000,trend:-1,cities:'Palanpur · Unjha · Deesa · Sami'},
-    {crop:'Garlic (Lasan)',gu:'લસણ',emoji:'🧄',cat:'Spices',min:4000,max:9000,modal:5500,trend:1,cities:'Anand · Rajkot · Gondal · Junagadh'},
-    {crop:'Turmeric (Haldar)',gu:'હળદર',emoji:'🟡',cat:'Spices',min:8000,max:14000,modal:10000,trend:0,cities:'Surat · Bharuch · Navsari'},
+    // ── SPICES ──
+    {crop:'Cumin Seed (Jeeru)',gu:'જીરૂ',emoji:'🌿',cat:'Spices',trend:1,
+     min:17975,max:26175,modal:20000,
+     cityPrices:{
+       'Unjha':{min:18500,max:26175,modal:21750},'Rajkot':{min:18000,max:25000,modal:20500},
+       'Junagadh':{min:17975,max:24500,modal:20000},'Radhanpur':{min:18000,max:24000,modal:20000},
+       'Palanpur':{min:18000,max:24500,modal:20200},'Deesa':{min:18000,max:24000,modal:20000},
+     }},
+    {crop:'Coriander (Dhana)',gu:'ધાણા',emoji:'🌿',cat:'Spices',trend:0,
+     min:5550,max:9800,modal:7675,
+     cityPrices:{
+       'Unjha':{min:6000,max:9800,modal:8000},'Mehsana':{min:5800,max:9500,modal:7800},
+       'Palanpur':{min:5600,max:9200,modal:7600},'Deesa':{min:5550,max:9000,modal:7500},
+     }},
+    {crop:'Fennel (Variyali)',gu:'વરિયાળી',emoji:'🌿',cat:'Spices',trend:-1,
+     min:10000,max:18000,modal:13000,
+     cityPrices:{
+       'Unjha':{min:11000,max:18000,modal:14000},'Palanpur':{min:10500,max:17000,modal:13500},
+       'Deesa':{min:10000,max:16500,modal:13000},'Sami':{min:10000,max:16000,modal:12800},
+     }},
+    {crop:'Garlic (Lasan)',gu:'લસણ',emoji:'🧄',cat:'Spices',trend:1,
+     min:4000,max:9000,modal:5500,
+     cityPrices:{
+       'Anand':{min:4500,max:9000,modal:6000},'Rajkot':{min:4000,max:8500,modal:5500},
+       'Gondal':{min:4200,max:8800,modal:5700},'Junagadh':{min:4300,max:8700,modal:5800},
+       'Mehsana':{min:4000,max:8000,modal:5300},
+     }},
+    {crop:'Turmeric (Haldar)',gu:'હળદર',emoji:'🟡',cat:'Spices',trend:0,
+     min:8000,max:14000,modal:10000,
+     cityPrices:{
+       'Surat':{min:8500,max:14000,modal:10500},'Bharuch':{min:8000,max:13500,modal:10000},
+       'Navsari':{min:8200,max:14000,modal:10200},
+     }},
+    {crop:'Dry Chilli (Lal Marcha)',gu:'સૂકા મરચા',emoji:'🌶️',cat:'Spices',trend:1,
+     min:8000,max:18000,modal:12000,
+     cityPrices:{
+       'Junagadh':{min:9000,max:18000,modal:13000},'Gondal':{min:8500,max:17000,modal:12500},
+       'Rajkot':{min:8000,max:16000,modal:12000},'Bhavnagar':{min:8200,max:16500,modal:12200},
+     }},
+    {crop:'Fenugreek (Methi)',gu:'મેથી',emoji:'🌿',cat:'Spices',trend:0,
+     min:4500,max:7000,modal:5500,
+     cityPrices:{
+       'Unjha':{min:5000,max:7000,modal:6000},'Mehsana':{min:4800,max:6800,modal:5800},
+       'Palanpur':{min:4500,max:6500,modal:5500},
+     }},
+    {crop:'Ajwain (Ajmo)',gu:'અજમો',emoji:'🌿',cat:'Spices',trend:1,
+     min:12000,max:22000,modal:16000,
+     cityPrices:{
+       'Unjha':{min:14000,max:22000,modal:18000},'Palanpur':{min:12500,max:20000,modal:16500},
+       'Sami':{min:12000,max:19000,modal:16000},
+     }},
+    {crop:'Ginger (Adu)',gu:'આદુ',emoji:'🫚',cat:'Spices',trend:1,
+     min:5000,max:15000,modal:8000,
+     cityPrices:{
+       'Surat':{min:6000,max:15000,modal:9000},'Navsari':{min:5500,max:14000,modal:8500},
+       'Bharuch':{min:5000,max:13000,modal:8000},'Valsad':{min:5500,max:14000,modal:8500},
+     }},
 
-    // VEGETABLES
-    {crop:'Tomato (Tameta)',gu:'ટામેટા',emoji:'🍅',cat:'Vegetables',min:1700,max:4200,modal:2997,trend:0,cities:'Gondal · Anand · Surat · Ahmedabad · Morbi'},
-    {crop:'Onion (Dungri)',gu:'ડુંગળી',emoji:'🧅',cat:'Vegetables',min:625,max:2200,modal:1186,trend:-1,cities:'Rajkot · Bhavnagar · Ahmedabad · Surat · Morbi'},
-    {crop:'Potato (Bateta)',gu:'બટાટા',emoji:'🥔',cat:'Vegetables',min:600,max:1600,modal:1000,trend:0,cities:'Ahmedabad · Nadiad · Anand · Kapadvanj'},
-    {crop:'Brinjal (Ringan)',gu:'રીંગણ',emoji:'🍆',cat:'Vegetables',min:400,max:1200,modal:700,trend:1,cities:'Surat · Vadodara · Bharuch · Navsari'},
-    {crop:'Okra (Bhindi)',gu:'ભીંડા',emoji:'🌿',cat:'Vegetables',min:600,max:2000,modal:1100,trend:0,cities:'Vadodara · Anand · Surat · Padra'},
-    {crop:'Cabbage (Kobi)',gu:'કોબી',emoji:'🥬',cat:'Vegetables',min:300,max:900,modal:550,trend:-1,cities:'Ahmedabad · Surat · Nadiad'},
-    {crop:'Cauliflower (Fulkobi)',gu:'ફૂલકોબી',emoji:'🥦',cat:'Vegetables',min:400,max:1200,modal:700,trend:0,cities:'Surat · Navsari · Bharuch · Bilimora'},
-    {crop:'Bitter Gourd (Karela)',gu:'કારેલા',emoji:'🌿',cat:'Vegetables',min:700,max:2000,modal:1200,trend:1,cities:'Bharuch · Ankleshwar · Vadodara'},
-    {crop:'Green Chilli (Marcha)',gu:'લીલા મરચા',emoji:'🌶️',cat:'Vegetables',min:1500,max:5000,modal:2500,trend:1,cities:'Surat · Vadodara · Anand · Navsari'},
+    // ── VEGETABLES ──
+    {crop:'Tomato (Tameta)',gu:'ટામેટા',emoji:'🍅',cat:'Vegetables',trend:0,
+     min:1700,max:4200,modal:2997,
+     cityPrices:{
+       'Gondal':{min:2000,max:4200,modal:3200},'Anand':{min:1800,max:4000,modal:3000},
+       'Surat':{min:1700,max:3800,modal:2800},'Ahmedabad':{min:1900,max:4000,modal:3000},
+       'Morbi':{min:1800,max:3800,modal:2900},'Rajkot':{min:1900,max:4000,modal:3000},
+       'Vadodara':{min:1800,max:3900,modal:2950},'Bharuch':{min:1700,max:3700,modal:2800},
+     }},
+    {crop:'Onion (Dungri)',gu:'ડુંગળી',emoji:'🧅',cat:'Vegetables',trend:-1,
+     min:625,max:2200,modal:1186,
+     cityPrices:{
+       'Rajkot':{min:700,max:2200,modal:1300},'Bhavnagar':{min:650,max:2000,modal:1200},
+       'Ahmedabad':{min:700,max:2100,modal:1250},'Surat':{min:625,max:2000,modal:1150},
+       'Morbi':{min:650,max:2000,modal:1186},'Vadodara':{min:700,max:2100,modal:1200},
+     }},
+    {crop:'Potato (Bateta)',gu:'બટાટા',emoji:'🥔',cat:'Vegetables',trend:0,
+     min:600,max:1600,modal:1000,
+     cityPrices:{
+       'Ahmedabad':{min:700,max:1600,modal:1100},'Nadiad':{min:650,max:1500,modal:1000},
+       'Anand':{min:700,max:1600,modal:1050},'Deesa':{min:600,max:1400,modal:950},
+       'Palanpur':{min:600,max:1400,modal:950},
+     }},
+    {crop:'Brinjal (Ringan)',gu:'રીંગણ',emoji:'🍆',cat:'Vegetables',trend:1,
+     min:400,max:1200,modal:700,
+     cityPrices:{
+       'Surat':{min:500,max:1200,modal:800},'Vadodara':{min:450,max:1100,modal:750},
+       'Bharuch':{min:400,max:1000,modal:700},'Navsari':{min:450,max:1100,modal:750},
+     }},
+    {crop:'Okra (Bhindi)',gu:'ભીંડા',emoji:'🌿',cat:'Vegetables',trend:0,
+     min:600,max:2000,modal:1100,
+     cityPrices:{
+       'Vadodara':{min:700,max:2000,modal:1200},'Anand':{min:650,max:1900,modal:1150},
+       'Surat':{min:600,max:1800,modal:1100},'Padra':{min:650,max:1900,modal:1100},
+     }},
+    {crop:'Green Chilli (Marcha)',gu:'લીલા મરચા',emoji:'🌶️',cat:'Vegetables',trend:1,
+     min:1500,max:5000,modal:2500,
+     cityPrices:{
+       'Surat':{min:2000,max:5000,modal:3000},'Vadodara':{min:1800,max:4500,modal:2800},
+       'Anand':{min:1700,max:4200,modal:2600},'Navsari':{min:1800,max:4500,modal:2800},
+     }},
+    {crop:'Cabbage (Kobi)',gu:'કોબી',emoji:'🥬',cat:'Vegetables',trend:-1,
+     min:300,max:900,modal:550,
+     cityPrices:{
+       'Ahmedabad':{min:350,max:900,modal:600},'Surat':{min:300,max:850,modal:550},
+       'Nadiad':{min:320,max:880,modal:560},
+     }},
+    {crop:'Cauliflower (Fulkobi)',gu:'ફૂલકોબી',emoji:'🥦',cat:'Vegetables',trend:0,
+     min:400,max:1200,modal:700,
+     cityPrices:{
+       'Surat':{min:500,max:1200,modal:800},'Navsari':{min:450,max:1100,modal:750},
+       'Bharuch':{min:400,max:1000,modal:700},'Bilimora':{min:450,max:1100,modal:750},
+     }},
+    {crop:'Bitter Gourd (Karela)',gu:'કારેલા',emoji:'🌿',cat:'Vegetables',trend:1,
+     min:700,max:2000,modal:1200,
+     cityPrices:{
+       'Bharuch':{min:800,max:2000,modal:1300},'Ankleshwar':{min:750,max:1900,modal:1250},
+       'Vadodara':{min:700,max:1800,modal:1200},
+     }},
+    {crop:'Bottle Gourd (Dudhi)',gu:'દૂધી',emoji:'🥒',cat:'Vegetables',trend:0,
+     min:300,max:900,modal:500,
+     cityPrices:{
+       'Surat':{min:350,max:900,modal:550},'Bharuch':{min:300,max:850,modal:500},
+       'Vadodara':{min:320,max:880,modal:520},'Anand':{min:310,max:870,modal:510},
+     }},
+    {crop:'Cucumber (Kakdi)',gu:'કાકડી',emoji:'🥒',cat:'Vegetables',trend:1,
+     min:400,max:1200,modal:700,
+     cityPrices:{
+       'Anand':{min:450,max:1200,modal:750},'Vadodara':{min:420,max:1150,modal:730},
+       'Surat':{min:400,max:1100,modal:700},'Bharuch':{min:400,max:1100,modal:700},
+     }},
+    {crop:'Capsicum (Shimla Mirch)',gu:'સીમલા મરચ',emoji:'🫑',cat:'Vegetables',trend:0,
+     min:1500,max:4000,modal:2500,
+     cityPrices:{
+       'Anand':{min:1800,max:4000,modal:2800},'Vadodara':{min:1600,max:3800,modal:2600},
+       'Surat':{min:1500,max:3600,modal:2500},
+     }},
+    {crop:'Drumstick (Saragvo)',gu:'સરગવો',emoji:'🌿',cat:'Vegetables',trend:1,
+     min:1000,max:3000,modal:1800,
+     cityPrices:{
+       'Surat':{min:1200,max:3000,modal:2000},'Junagadh':{min:1100,max:2800,modal:1900},
+       'Amreli':{min:1000,max:2600,modal:1800},'Bhavnagar':{min:1000,max:2700,modal:1850},
+     }},
+    {crop:'Spinach (Palak)',gu:'પાલક',emoji:'🥬',cat:'Vegetables',trend:1,
+     min:500,max:1500,modal:900,
+     cityPrices:{
+       'Ahmedabad':{min:600,max:1500,modal:1000},'Surat':{min:550,max:1400,modal:950},
+       'Vadodara':{min:500,max:1300,modal:900},'Rajkot':{min:520,max:1350,modal:920},
+     }},
 
-    // CEREALS
-    {crop:'Wheat (Ghau)',gu:'ઘઉં',emoji:'🌾',cat:'Cereals',min:2100,max:2600,modal:2300,trend:0,cities:'Rajkot · Ahmedabad · Mehsana · Viramgam (MSP ₹2275)'},
-    {crop:'Bajra (Pearl Millet)',gu:'બાજરો',emoji:'🌾',cat:'Cereals',min:1800,max:2400,modal:2100,trend:1,cities:'Surendranagar · Bhavnagar · Jamnagar (MSP ₹2625)'},
-    {crop:'Jowar (Sorghum)',gu:'જુવાર',emoji:'🌾',cat:'Cereals',min:1900,max:2500,modal:2200,trend:0,cities:'Jamnagar · Junagadh · Rajkot (MSP ₹3371)'},
-    {crop:'Maize (Makkai)',gu:'મકાઈ',emoji:'🌽',cat:'Cereals',min:1600,max:2200,modal:1900,trend:-1,cities:'Anand · Nadiad · Bharuch · Dahod'},
-    {crop:'Paddy / Rice (Dangar)',gu:'ડાંગર',emoji:'🍚',cat:'Cereals',min:2000,max:3800,modal:2800,trend:0,cities:'Bharuch · Navsari · Surat · Valsad'},
+    // ── CEREALS ──
+    {crop:'Wheat (Ghau)',gu:'ઘઉં',emoji:'🌾',cat:'Cereals',trend:0,
+     min:2100,max:2600,modal:2300,
+     cityPrices:{
+       'Rajkot':{min:2150,max:2600,modal:2350},'Ahmedabad':{min:2100,max:2550,modal:2300},
+       'Mehsana':{min:2100,max:2550,modal:2300},'Viramgam':{min:2100,max:2550,modal:2300},
+       'Vadodara':{min:2150,max:2600,modal:2350},'Surendranagar':{min:2100,max:2500,modal:2250},
+     }},
+    {crop:'Bajra (Pearl Millet)',gu:'બાજરો',emoji:'🌾',cat:'Cereals',trend:1,
+     min:1800,max:2400,modal:2100,
+     cityPrices:{
+       'Surendranagar':{min:1900,max:2400,modal:2150},'Bhavnagar':{min:1850,max:2350,modal:2100},
+       'Jamnagar':{min:1850,max:2350,modal:2100},'Rajkot':{min:1900,max:2400,modal:2150},
+       'Morbi':{min:1850,max:2350,modal:2100},'Mehsana':{min:1900,max:2400,modal:2150},
+       'Palanpur':{min:1850,max:2350,modal:2100},
+     }},
+    {crop:'Jowar (Sorghum)',gu:'જુવાર',emoji:'🌾',cat:'Cereals',trend:0,
+     min:1900,max:2500,modal:2200,
+     cityPrices:{
+       'Jamnagar':{min:2000,max:2500,modal:2250},'Junagadh':{min:1950,max:2450,modal:2200},
+       'Rajkot':{min:2000,max:2500,modal:2250},
+     }},
+    {crop:'Maize (Makkai)',gu:'મકાઈ',emoji:'🌽',cat:'Cereals',trend:-1,
+     min:1600,max:2200,modal:1900,
+     cityPrices:{
+       'Anand':{min:1700,max:2200,modal:1950},'Nadiad':{min:1650,max:2100,modal:1900},
+       'Bharuch':{min:1600,max:2050,modal:1850},'Dahod':{min:1600,max:2000,modal:1850},
+     }},
+    {crop:'Paddy / Rice (Dangar)',gu:'ડાંગર',emoji:'🍚',cat:'Cereals',trend:0,
+     min:2000,max:3800,modal:2800,
+     cityPrices:{
+       'Bharuch':{min:2200,max:3800,modal:2900},'Navsari':{min:2100,max:3600,modal:2800},
+       'Surat':{min:2000,max:3500,modal:2750},'Valsad':{min:2100,max:3700,modal:2850},
+     }},
+    {crop:'Ragi (Nachni)',gu:'નાચણી',emoji:'🌾',cat:'Cereals',trend:1,
+     min:3000,max:4000,modal:3500,
+     cityPrices:{
+       'Dang':{min:3200,max:4000,modal:3600},'Navsari':{min:3000,max:3800,modal:3500},
+       'Valsad':{min:3100,max:3900,modal:3500},
+     }},
 
-    // PULSES
-    {crop:'Chana (Chickpea)',gu:'ચણા',emoji:'🟡',cat:'Pulses',min:4800,max:6200,modal:5500,trend:1,cities:'Rajkot · Ahmedabad · Mehsana (MSP ₹5440)'},
-    {crop:'Moong (Green Gram)',gu:'મગ',emoji:'💚',cat:'Pulses',min:7000,max:9000,modal:7800,trend:1,cities:'Morbi · Rajkot · Jamnagar · Halvad'},
-    {crop:'Urad (Black Gram)',gu:'અડદ',emoji:'⚫',cat:'Pulses',min:6500,max:8500,modal:7200,trend:0,cities:'Surat · Vadodara · Bharuch · Anand'},
-    {crop:'Tur (Pigeon Pea)',gu:'તુવેર',emoji:'🟤',cat:'Pulses',min:6800,max:9000,modal:7800,trend:1,cities:'Vadodara · Bharuch · Anand (MSP ₹7550)'},
+    // ── PULSES ──
+    {crop:'Chana (Chickpea)',gu:'ચણા',emoji:'🟡',cat:'Pulses',trend:1,
+     min:4800,max:6200,modal:5500,
+     cityPrices:{
+       'Rajkot':{min:5000,max:6200,modal:5600},'Ahmedabad':{min:4900,max:6100,modal:5500},
+       'Mehsana':{min:4800,max:6000,modal:5400},'Surendranagar':{min:4900,max:6100,modal:5500},
+     }},
+    {crop:'Moong (Green Gram)',gu:'મગ',emoji:'💚',cat:'Pulses',trend:1,
+     min:7000,max:9000,modal:7800,
+     cityPrices:{
+       'Morbi':{min:7500,max:9000,modal:8000},'Rajkot':{min:7200,max:8800,modal:7900},
+       'Jamnagar':{min:7000,max:8600,modal:7800},'Halvad':{min:7200,max:8800,modal:7900},
+     }},
+    {crop:'Urad (Black Gram)',gu:'અડદ',emoji:'⚫',cat:'Pulses',trend:0,
+     min:6500,max:8500,modal:7200,
+     cityPrices:{
+       'Surat':{min:6800,max:8500,modal:7400},'Vadodara':{min:6700,max:8300,modal:7300},
+       'Bharuch':{min:6500,max:8200,modal:7200},'Anand':{min:6700,max:8400,modal:7300},
+     }},
+    {crop:'Tur (Pigeon Pea)',gu:'તુવેર',emoji:'🟤',cat:'Pulses',trend:1,
+     min:6800,max:9000,modal:7800,
+     cityPrices:{
+       'Vadodara':{min:7200,max:9000,modal:8000},'Bharuch':{min:7000,max:8800,modal:7900},
+       'Anand':{min:6900,max:8700,modal:7800},'Surat':{min:6800,max:8600,modal:7700},
+     }},
+    {crop:'Masoor (Red Lentil)',gu:'મસૂર',emoji:'🔴',cat:'Pulses',trend:0,
+     min:5000,max:6500,modal:5800,
+     cityPrices:{
+       'Ahmedabad':{min:5200,max:6500,modal:5900},'Rajkot':{min:5000,max:6300,modal:5800},
+       'Mehsana':{min:5100,max:6400,modal:5850},
+     }},
+    {crop:'Val (Field Bean)',gu:'વાલ',emoji:'🟢',cat:'Pulses',trend:1,
+     min:6000,max:9000,modal:7500,
+     cityPrices:{
+       'Surat':{min:6500,max:9000,modal:7800},'Bharuch':{min:6300,max:8800,modal:7600},
+       'Vadodara':{min:6200,max:8700,modal:7500},'Anand':{min:6300,max:8800,modal:7600},
+     }},
+    {crop:'Cowpea (Chora)',gu:'ચોળા',emoji:'🌿',cat:'Pulses',trend:0,
+     min:5000,max:7000,modal:6000,
+     cityPrices:{
+       'Surat':{min:5500,max:7000,modal:6200},'Bharuch':{min:5200,max:6800,modal:6000},
+       'Navsari':{min:5300,max:6900,modal:6100},
+     }},
 
-    // FRUITS
-    {crop:'Banana (Kela)',gu:'કેળા',emoji:'🍌',cat:'Fruits',min:800,max:2000,modal:1300,trend:0,cities:'Anand · Surat · Bharuch · Navsari'},
-    {crop:'Mango (Keri)',gu:'કેરી',emoji:'🥭',cat:'Fruits',min:2000,max:9000,modal:4500,trend:1,cities:'Junagadh · Surat · Valsad (Season: Mar-Jun)'},
-    {crop:'Sapota (Chiku)',gu:'ચીકુ',emoji:'🍂',cat:'Fruits',min:1200,max:3000,modal:1800,trend:0,cities:'Anand · Surat · Navsari · Bharuch'},
-    {crop:'Pomegranate (Dadam)',gu:'દાડમ',emoji:'❤️',cat:'Fruits',min:4000,max:10000,modal:6500,trend:0,cities:'Bhavnagar · Junagadh · Rajkot · Jamnagar'},
-    {crop:'Lemon (Limbu)',gu:'લીંબુ',emoji:'🍋',cat:'Fruits',min:1500,max:5000,modal:2800,trend:-1,cities:'Vadodara · Anand · Surat · Navsari'},
+    // ── FRUITS ──
+    {crop:'Banana (Kela)',gu:'કેળા',emoji:'🍌',cat:'Fruits',trend:0,
+     min:800,max:2000,modal:1300,
+     cityPrices:{
+       'Anand':{min:900,max:2000,modal:1400},'Surat':{min:850,max:1900,modal:1350},
+       'Bharuch':{min:800,max:1800,modal:1300},'Navsari':{min:850,max:1900,modal:1350},
+     }},
+    {crop:'Mango Kesar (Keri)',gu:'કેસર કેરી',emoji:'🥭',cat:'Fruits',trend:1,
+     min:5000,max:15000,modal:8000,
+     cityPrices:{
+       'Junagadh':{min:6000,max:15000,modal:9000},'Gir Somnath':{min:5500,max:14000,modal:8500},
+       'Amreli':{min:5000,max:13000,modal:8000},'Rajkot':{min:5500,max:14000,modal:8500},
+     }},
+    {crop:'Sapota (Chiku)',gu:'ચીકુ',emoji:'🍂',cat:'Fruits',trend:0,
+     min:1200,max:3000,modal:1800,
+     cityPrices:{
+       'Anand':{min:1400,max:3000,modal:2000},'Surat':{min:1300,max:2800,modal:1900},
+       'Navsari':{min:1200,max:2700,modal:1800},'Bharuch':{min:1300,max:2800,modal:1850},
+     }},
+    {crop:'Pomegranate (Dadam)',gu:'દાડમ',emoji:'❤️',cat:'Fruits',trend:0,
+     min:4000,max:10000,modal:6500,
+     cityPrices:{
+       'Bhavnagar':{min:5000,max:10000,modal:7000},'Junagadh':{min:4500,max:9500,modal:6800},
+       'Rajkot':{min:4500,max:9500,modal:6700},'Jamnagar':{min:4000,max:9000,modal:6500},
+     }},
+    {crop:'Lemon (Limbu)',gu:'લીંબુ',emoji:'🍋',cat:'Fruits',trend:-1,
+     min:1500,max:5000,modal:2800,
+     cityPrices:{
+       'Vadodara':{min:1800,max:5000,modal:3000},'Anand':{min:1700,max:4800,modal:2900},
+       'Surat':{min:1500,max:4500,modal:2800},'Navsari':{min:1600,max:4700,modal:2900},
+     }},
+    {crop:'Papaya (Papaya)',gu:'પપૈયા',emoji:'🍈',cat:'Fruits',trend:1,
+     min:600,max:2000,modal:1100,
+     cityPrices:{
+       'Anand':{min:700,max:2000,modal:1200},'Vadodara':{min:650,max:1900,modal:1150},
+       'Bharuch':{min:600,max:1800,modal:1100},'Surat':{min:650,max:1900,modal:1150},
+     }},
+    {crop:'Guava (Jamrukh)',gu:'જામફળ',emoji:'🍏',cat:'Fruits',trend:0,
+     min:1000,max:3000,modal:1800,
+     cityPrices:{
+       'Anand':{min:1200,max:3000,modal:2000},'Surat':{min:1100,max:2800,modal:1900},
+       'Nadiad':{min:1000,max:2700,modal:1800},'Vadodara':{min:1100,max:2800,modal:1900},
+     }},
+    {crop:'Coconut (Nariyal)',gu:'નારિયેળ',emoji:'🥥',cat:'Fruits',trend:0,
+     min:1500,max:4000,modal:2500,
+     cityPrices:{
+       'Surat':{min:1800,max:4000,modal:2700},'Navsari':{min:1700,max:3800,modal:2600},
+       'Valsad':{min:1600,max:3700,modal:2500},'Bharuch':{min:1500,max:3600,modal:2500},
+     }},
+    {crop:'Watermelon (Tarbuch)',gu:'તરબૂચ',emoji:'🍉',cat:'Fruits',trend:1,
+     min:500,max:1500,modal:900,
+     cityPrices:{
+       'Kutch':{min:600,max:1500,modal:1000},'Rajkot':{min:550,max:1400,modal:950},
+       'Surendranagar':{min:500,max:1300,modal:900},'Morbi':{min:520,max:1350,modal:920},
+     }},
+    {crop:'Grapes (Draksh)',gu:'દ્રાક્ષ',emoji:'🍇',cat:'Fruits',trend:0,
+     min:2000,max:6000,modal:3500,
+     cityPrices:{
+       'Vadodara':{min:2500,max:6000,modal:4000},'Anand':{min:2200,max:5500,modal:3700},
+       'Ahmedabad':{min:2000,max:5500,modal:3500},
+     }},
+
+    // ── CASH CROPS ──
+    {crop:'Sugarcane (Sherdee)',gu:'શેરડી',emoji:'🎋',cat:'Cash Crops',trend:0,
+     min:280,max:380,modal:320,
+     cityPrices:{
+       'Surat':{min:300,max:380,modal:330},'Bharuch':{min:290,max:370,modal:325},
+       'Anand':{min:285,max:365,modal:320},'Vadodara':{min:280,max:360,modal:315},
+     }},
+    {crop:'Tobacco (Tambaku)',gu:'તમાકુ',emoji:'🍂',cat:'Cash Crops',trend:-1,
+     min:3000,max:6000,modal:4500,
+     cityPrices:{
+       'Anand':{min:3500,max:6000,modal:4800},'Kheda':{min:3200,max:5800,modal:4600},
+       'Nadiad':{min:3000,max:5500,modal:4500},'Petlad':{min:3200,max:5800,modal:4600},
+     }},
 ];
 
 let filtered=[...mandiData];
 
+
 function trendHTML(t){
-    if(t===1) return '<span class="trend-up">▲ Rising</span>';
-    if(t===-1) return '<span class="trend-down">▼ Falling</span>';
+    if(t===1)return '<span class="trend-up">▲ Rising</span>';
+    if(t===-1)return '<span class="trend-down">▼ Falling</span>';
     return '<span class="trend-same">— Stable</span>';
 }
 
 function renderTable(data){
     const tbody=document.getElementById('mandiBody');
     const noData=document.getElementById('noData');
+    const selectedCity=document.getElementById('cityFilter').value;
     tbody.innerHTML='';
     if(!data.length){noData.style.display='block';document.getElementById('rowCount').textContent='0 results';return;}
     noData.style.display='none';
     document.getElementById('rowCount').textContent=data.length+' crops';
     data.forEach(r=>{
+        // Get city-specific or overall prices
+        let min=r.min, max=r.max, modal=r.modal;
+        let cityLabel='';
+        if(selectedCity && r.cityPrices && r.cityPrices[selectedCity]){
+            const cp=r.cityPrices[selectedCity];
+            min=cp.min; max=cp.max; modal=cp.modal;
+            cityLabel=`<span style="background:#e8f5e9;color:#2d6a4f;font-size:0.68rem;padding:2px 7px;border-radius:10px;font-weight:600;margin-left:4px;">📍${selectedCity}</span>`;
+        }
+        const kg=(modal/100).toFixed(1);
+        const availCities=r.cityPrices?Object.keys(r.cityPrices).join(' · '):'Gujarat';
         tbody.innerHTML+=`
         <tr>
+            <td>
+                <span class="crop-name">${r.emoji} ${r.crop} ${cityLabel}</span>
+                <span class="crop-gu">${r.gu} · ${availCities}</span>
+            </td>
+            <td><span class="badge-cat">${r.cat}</span></td>
+            <td>₹${min.toLocaleString('en-IN')}</td>
+            <td>₹${max.toLocaleString('en-IN')}</td>
+            <td class="price-modal">₹${modal.toLocaleString('en-IN')}</td>
+            <td>₹${kg}</td>
+            <td>${trendHTML(r.trend)}</td>
+        </tr>`;
+    });
+}
+
+function filterTable(){
+    const q=document.getElementById('searchInp').value.toLowerCase();
+    const cat=document.getElementById('catFilter').value;
+    const city=document.getElementById('cityFilter').value;
+    filtered=mandiData.filter(r=>{
+        const mq=!q||r.crop.toLowerCase().includes(q)||r.gu.includes(q);
+        const mc=!cat||r.cat===cat;
+        // If city selected, only show crops available in that city
+        const mcity=!city||!r.cityPrices||(r.cityPrices&&r.cityPrices[city]);
+        return mq&&mc&&mcity;
+    });
+    renderTable(filtered);
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+    const t=new Date();
+    document.getElementById('todayDate').textContent=t.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+    document.getElementById('totalCount').textContent=mandiData.length;
+    setTimeout(()=>{
+        document.getElementById('loaderWrap').style.display='none';
+        document.getElementById('tableContainer').style.display='block';
+        renderTable(mandiData);
+    },800);
+});
+
+window.addEventListener('scroll',function(){
             <td>
                 <span class="crop-name">${r.emoji} ${r.crop}</span>
                 <span class="crop-gu">${r.gu} · ${r.cities}</span>
@@ -272,7 +646,7 @@ function renderTable(data){
             <td>₹${r.min.toLocaleString('en-IN')}</td>
             <td>₹${r.max.toLocaleString('en-IN')}</td>
             <td class="price-modal">₹${r.modal.toLocaleString('en-IN')}</td>
-            <td style="color:#e65100;font-weight:600;">₹${(r.modal/5).toFixed(0)}</td>
+            <td>₹${kg}</td>
             <td>${trendHTML(r.trend)}</td>
         </tr>`;
     });
