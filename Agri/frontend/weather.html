@@ -358,6 +358,7 @@ function switchTab(tab, btn) {
     document.getElementById('tab-' + tab).classList.add('active');
     if (btn) btn.classList.add('active');
 }
+
 const DISTRICTS = [
     {name:'Ahmedabad',lat:23.03,lon:72.58},{name:'Rajkot',lat:22.30,lon:70.78},
     {name:'Junagadh',lat:21.52,lon:70.46},{name:'Surat',lat:21.17,lon:72.83},
@@ -377,6 +378,25 @@ const DISTRICTS = [
     {name:'Gir Somnath',lat:20.90,lon:70.38},{name:'Devbhumi Dwarka',lat:22.24,lon:69.00},
     {name:'Jamnagar',lat:22.47,lon:70.06},
 ];
+
+// ---- Cache (30 min) ----
+const CACHE_TTL = 30 * 60 * 1000;
+function cacheSet(key, data) {
+    try { localStorage.setItem(key, JSON.stringify({ts: Date.now(), data})); } catch(e){}
+}
+function cacheGet(key) {
+    try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (Date.now() - parsed.ts > CACHE_TTL) { localStorage.removeItem(key); return null; }
+        return parsed.data;
+    } catch(e) { return null; }
+}
+
+// ---- Current district for share ----
+let _currentDistrict = null;
+let _currentRain = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     const scroll = document.getElementById('districtScroll');
@@ -400,51 +420,60 @@ function requestNotifPermission() {
     }
 }
 
-function checkAndAlert(name, rain) {
-    const recent3 = rain.slice(-3).reduce((a,b)=>a+(b||0),0);
-    const maxDay = Math.max(...rain);
-    const banner = document.getElementById('alertBanner');
-    const alertText = document.getElementById('alertText');
-    if (maxDay >= 50) {
-        const msg = `⚠️ ${name}: Chhelaa 30 divas ma ${maxDay.toFixed(0)}mm peak rainfall nondhai chhe! Saavdhai rakho.`;
-        banner.style.display = 'flex';
-        alertText.textContent = msg;
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('Agri-Verse Rain Alert 🌧️', { body: msg, icon: 'favicon.png' });
-        }
-    } else if (recent3 >= 30) {
-        const msg = `🌧️ ${name}: Chhelaa 3 divas ma ${recent3.toFixed(0)}mm vatar padyo chhe. Khet taiyaar rakho.`;
-        banner.style.display = 'flex';
-        alertText.textContent = msg;
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('Agri-Verse Rain Alert 🌧️', { body: msg, icon: 'favicon.png' });
-        }
-    } else {
-        banner.style.display = 'none';
-    }
+function showSkeleton() {
+    const heights = [20,40,60,180,100,30,90,200,120,50,70,160,80,30,110,140,60,40,180,90,25,100,50,160,70,110,30,200,90,40];
+    let html = '<div class="skeleton-bars">';
+    heights.forEach(h => {
+        html += `<div style="display:flex;flex-direction:column;align-items:center;min-width:26px;gap:4px;justify-content:flex-end;height:220px;padding-bottom:32px;">
+            <div class="skel-bar" style="width:16px;height:${h}px;"></div>
+        </div>`;
+    });
+    html += '</div>';
+    document.getElementById('rainBars').innerHTML = html;
 }
 
 async function loadRain(district) {
+    _currentDistrict = district;
     document.getElementById('rainChartTitle').textContent = '⏳ Loading ' + district.name + '...';
-    document.getElementById('rainBars').innerHTML = '<div class="no-rain-msg"><i class="fas fa-spinner" style="font-size:2rem;color:#29b6f6;animation:spin 1s linear infinite;"></i><p style="margin-top:10px;">Fetching live data...</p></div>';
+    showSkeleton();
     document.getElementById('rainStats').style.display = 'none';
     document.getElementById('tempSection').style.display = 'none';
     document.getElementById('chartLegend').style.display = 'none';
     document.getElementById('alertBanner').style.display = 'none';
+    document.getElementById('cropAdvisory').style.display = 'none';
+    document.getElementById('weekCompare').style.display = 'none';
+    document.getElementById('shareBtn').style.display = 'none';
+
+    const cacheKey = `rain_${district.name}_${new Date().toISOString().slice(0,10)}`;
+    const cached = cacheGet(cacheKey);
+
     try {
-        const end = new Date().toISOString().slice(0,10);
-        const start = new Date(Date.now()-30*24*60*60*1000).toISOString().slice(0,10);
-        const forecastEnd = new Date(Date.now()+7*24*60*60*1000).toISOString().slice(0,10);
-        const [rainRes, tempRes] = await Promise.all([
-            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`),
-            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=temperature_2m_max,temperature_2m_min&start_date=${end}&end_date=${forecastEnd}&timezone=Asia/Kolkata`)
-        ]);
-        const rainData = await rainRes.json();
-        const tempData = await tempRes.json();
+        let rainData, tempData;
+        if (cached) {
+            rainData = cached.rainData;
+            tempData = cached.tempData;
+        } else {
+            const end = new Date().toISOString().slice(0,10);
+            const start = new Date(Date.now()-30*24*60*60*1000).toISOString().slice(0,10);
+            const forecastEnd = new Date(Date.now()+7*24*60*60*1000).toISOString().slice(0,10);
+            const [rainRes, tempRes] = await Promise.all([
+                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`),
+                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=temperature_2m_max,temperature_2m_min&start_date=${end}&end_date=${forecastEnd}&timezone=Asia/Kolkata`)
+            ]);
+            if (!rainRes.ok || !tempRes.ok) throw new Error('API error');
+            rainData = await rainRes.json();
+            tempData = await tempRes.json();
+            cacheSet(cacheKey, {rainData, tempData});
+        }
         renderRain(district.name, rainData.daily);
         renderTemp(tempData.daily);
     } catch(e) {
-        document.getElementById('rainBars').innerHTML = '<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>';
+        document.getElementById('rainBars').innerHTML = `
+            <div class="error-box" style="width:100%;">
+                <i class="fas fa-wifi" style="font-size:2rem;opacity:0.5;"></i>
+                <p style="margin-top:8px;">Data load thayu nahi. Internet check karo.</p>
+                <button class="retry-btn" onclick="loadRain(_currentDistrict)"><i class="fas fa-redo"></i> Retry</button>
+            </div>`;
     }
 }
 
@@ -457,6 +486,7 @@ function barClass(mm) {
 
 function renderRain(name, daily) {
     const dates = daily.time, rain = daily.precipitation_sum;
+    _currentRain = {name, dates, rain};
     const maxR = Math.max(...rain.filter(r=>r>0), 1);
     document.getElementById('rainChartTitle').textContent = '🌧️ ' + name + ' — Last 30 Days';
     document.getElementById('chartLegend').style.display = 'flex';
@@ -464,7 +494,8 @@ function renderRain(name, daily) {
     dates.forEach((d,i) => {
         const mm = rain[i]||0, h = Math.round((mm/maxR)*200);
         const dt = new Date(d), lbl = dt.getDate()+'/'+(dt.getMonth()+1);
-        html += `<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm">
+        html += `<div class="bar-col">
+            <div class="bar-tooltip">${lbl}: ${mm.toFixed(1)}mm</div>
             <div class="bar-val">${mm>1?mm.toFixed(0):''}</div>
             <div class="bar-inner ${barClass(mm)}" style="height:${Math.max(h,3)}px;"></div>
             <div class="bar-date">${lbl}</div>
@@ -472,11 +503,69 @@ function renderRain(name, daily) {
     });
     document.getElementById('rainBars').innerHTML = html;
     const total = rain.reduce((a,b)=>a+(b||0),0);
+    const maxDay = Math.max(...rain);
+    const rainyDays = rain.filter(r=>r>0.5).length;
     document.getElementById('stat-total').textContent = total.toFixed(1)+' mm';
-    document.getElementById('stat-max').textContent = Math.max(...rain).toFixed(1)+' mm';
-    document.getElementById('stat-days').textContent = rain.filter(r=>r>0.5).length+' days';
+    document.getElementById('stat-max').textContent = maxDay.toFixed(1)+' mm';
+    document.getElementById('stat-days').textContent = rainyDays+' days';
     document.getElementById('rainStats').style.display = 'grid';
+    document.getElementById('shareBtn').style.display = 'inline-flex';
     checkAndAlert(name, rain);
+    renderCropAdvisory(total, maxDay, rain);
+    renderWeekCompare(rain);
+}
+
+function checkAndAlert(name, rain) {
+    const recent3 = rain.slice(-3).reduce((a,b)=>a+(b||0),0);
+    const maxDay = Math.max(...rain);
+    const banner = document.getElementById('alertBanner');
+    const alertText = document.getElementById('alertText');
+    if (maxDay >= 50) {
+        const msg = `${name}: Chhelaa 30 divas ma ${maxDay.toFixed(0)}mm peak rainfall! Saavdhai rakho.`;
+        banner.style.display = 'flex'; alertText.textContent = msg;
+        if ('Notification' in window && Notification.permission === 'granted')
+            new Notification('Agri-Verse Rain Alert', { body: msg, icon: 'favicon.png' });
+    } else if (recent3 >= 30) {
+        const msg = `${name}: Chhelaa 3 divas ma ${recent3.toFixed(0)}mm vatar. Khet taiyaar rakho.`;
+        banner.style.display = 'flex'; alertText.textContent = msg;
+        if ('Notification' in window && Notification.permission === 'granted')
+            new Notification('Agri-Verse Rain Alert', { body: msg, icon: 'favicon.png' });
+    } else {
+        banner.style.display = 'none';
+    }
+}
+
+function renderCropAdvisory(total, maxDay, rain) {
+    const recent7 = rain.slice(-7).reduce((a,b)=>a+(b||0),0);
+    let advice = '';
+    if (maxDay >= 50) {
+        advice = 'Aaj khet ma jaasho nahi — vadhu vatar padyo chhe. Drainage thayi jaay tyaare nazar rakho. Dhaan / kapas ne wind damage thi bachaavo.';
+    } else if (recent7 >= 40) {
+        advice = 'Aa week ma saaro vatar padyo chhe. Sinchay ni jarur nathi. Khet ma khad nakho — vatar sathe vai jashe.';
+    } else if (recent7 >= 15) {
+        advice = 'Madhyam vatar. Bhajiya-mungfali mate saari stithi. Jamin ma bhejo check karo, sinchay avashyak lagse to karo.';
+    } else if (total < 20) {
+        advice = 'Chhelaa mahine ma bahuj ochho vatar. Sinchay jaruri chhe. Jal bachao paddhati (drip/sprinkler) vaparo.';
+    } else {
+        advice = 'Samaanya stithi. Paak pramane sinchay schedule rakho. Next 7 days nu temperature check karjo.';
+    }
+    document.getElementById('cropText').textContent = advice;
+    document.getElementById('cropAdvisory').style.display = 'block';
+}
+
+function renderWeekCompare(rain) {
+    const thisWeek = rain.slice(-7).reduce((a,b)=>a+(b||0),0);
+    const lastWeek = rain.slice(-14,-7).reduce((a,b)=>a+(b||0),0);
+    const maxVal = Math.max(thisWeek, lastWeek, 1);
+    const thisW = Math.round((thisWeek/maxVal)*100);
+    const lastW = Math.round((lastWeek/maxVal)*100);
+    document.getElementById('wc-this-bar').style.width = thisW+'%';
+    document.getElementById('wc-this-bar').textContent = thisWeek>5 ? thisWeek.toFixed(0)+'mm' : '';
+    document.getElementById('wc-last-bar').style.width = lastW+'%';
+    document.getElementById('wc-last-bar').textContent = lastWeek>5 ? lastWeek.toFixed(0)+'mm' : '';
+    document.getElementById('wc-this-mm').textContent = thisWeek.toFixed(1)+' mm';
+    document.getElementById('wc-last-mm').textContent = lastWeek.toFixed(1)+' mm';
+    document.getElementById('weekCompare').style.display = 'block';
 }
 
 function renderTemp(daily) {
@@ -497,6 +586,18 @@ function renderTemp(daily) {
     });
     document.getElementById('tempGrid').innerHTML = html;
     document.getElementById('tempSection').style.display = 'block';
+}
+
+function shareRainData() {
+    if (!_currentRain) return;
+    const {name, rain} = _currentRain;
+    const total = rain.reduce((a,b)=>a+(b||0),0);
+    const maxDay = Math.max(...rain);
+    const rainyDays = rain.filter(r=>r>0.5).length;
+    const thisWeek = rain.slice(-7).reduce((a,b)=>a+(b||0),0);
+    const msg = `🌧️ *Agri-Verse Rain Report — ${name}*\n\n📅 Chhelaa 30 divas:\n• Total vatar: ${total.toFixed(1)} mm\n• Peak day: ${maxDay.toFixed(1)} mm\n• Vatar na divas: ${rainyDays}\n• This week: ${thisWeek.toFixed(1)} mm\n\nAgri-Verse app thi juo: https://agri-verse.com`;
+    const url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
 }
 
 window.addEventListener('scroll', function(){ document.getElementById('backToTop').style.display = window.scrollY>300?'block':'none'; });
