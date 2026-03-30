@@ -98,24 +98,78 @@
         [data-theme="dark"] .section-head h2 { color:#81c784; }
         .section-head p { color:var(--gray); font-size:0.9rem; }
         .district-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:1.2rem; scrollbar-width:thin; }
-        .dist-btn { white-space:nowrap; padding:8px 16px; border-radius:25px; border:2px solid var(--border); background:var(--white); cursor:pointer; font-size:0.85rem; font-weight:600; color:var(--text); transition:all 0.25s; flex-shrink:0; font-family:'Poppins',sans-serif; }
+        .dist-btn { white-space:nowrap; padding:10px 18px; min-height:44px; border-radius:25px; border:2px solid var(--border); background:var(--white); cursor:pointer; font-size:0.85rem; font-weight:600; color:var(--text); transition:all 0.25s; flex-shrink:0; font-family:'Poppins',sans-serif; }
         .dist-btn.active { border-color:var(--green); background:var(--green); color:#fff; }
         .dist-btn:hover:not(.active) { border-color:var(--green-light); color:var(--green); }
         .rain-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; margin-bottom:1.5rem; border:1px solid var(--border); }
         .rain-card-title { font-size:1rem; font-weight:700; color:var(--green); margin-bottom:1.2rem; display:flex; align-items:center; gap:8px; }
         [data-theme="dark"] .rain-card-title { color:#81c784; }
-        .chart-bars { display:flex; align-items:flex-end; gap:5px; height:200px; overflow-x:auto; padding:0 4px 4px; }
-        .bar-col { display:flex; flex-direction:column; align-items:center; min-width:28px; }
+        .chart-bars { display:flex; align-items:flex-end; gap:4px; height:220px; overflow-x:auto; padding:0 4px 4px; position:relative; }
+        .bar-col { display:flex; flex-direction:column; align-items:center; min-width:26px; cursor:pointer; position:relative; }
+        .bar-col:hover .bar-inner { filter:brightness(1.25); }
+        .bar-col:hover .bar-tooltip { display:block; }
+        .bar-tooltip { display:none; position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#212121; color:#fff; font-size:0.7rem; white-space:nowrap; padding:4px 8px; border-radius:6px; z-index:10; pointer-events:none; }
+        [data-theme="dark"] .bar-tooltip { background:#e8f5e9; color:#212121; }
         .bar-val { font-size:0.6rem; color:var(--gray); margin-bottom:2px; height:14px; }
-        .bar-inner { width:18px; border-radius:4px 4px 0 0; background:linear-gradient(to top,#1b4332,#52b788); transition:height 0.5s ease; }
-        .bar-inner.zero { background:#e0e0e0; }
-        .bar-date { font-size:0.6rem; color:var(--gray); margin-top:4px; writing-mode:vertical-lr; transform:rotate(180deg); height:28px; }
+        .bar-inner { width:16px; border-radius:4px 4px 0 0; transition:height 0.6s cubic-bezier(.4,0,.2,1); }
+        .bar-inner.heavy  { background:linear-gradient(to top,#0d47a1,#29b6f6); }
+        .bar-inner.medium { background:linear-gradient(to top,#1b4332,#52b788); }
+        .bar-inner.light  { background:linear-gradient(to top,#33691e,#aed581); }
+        .bar-inner.zero   { background:#e0e0e0; }
+        [data-theme="dark"] .bar-inner.zero { background:#2d3e50; }
+        .bar-date { font-size:0.58rem; color:var(--gray); margin-top:4px; writing-mode:vertical-lr; transform:rotate(180deg); height:28px; }
         .no-rain-msg { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; color:var(--gray); gap:8px; font-size:0.95rem; }
         .rain-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1rem; }
         .rs-box { background:var(--detail-bg); border-radius:12px; padding:1.2rem; text-align:center; border:1px solid var(--border); }
         .rs-box h3 { font-size:1.5rem; font-weight:700; color:var(--green); }
         [data-theme="dark"] .rs-box h3 { color:#81c784; }
         .rs-box p { font-size:0.82rem; color:var(--gray); margin-top:4px; }
+        .chart-legend { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:10px; font-size:0.78rem; color:var(--gray); align-items:center; }
+        .legend-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:4px; }
+        /* Skeleton loader */
+        .skeleton-bars { display:flex; align-items:flex-end; gap:4px; height:220px; padding:0 4px 4px; }
+        .skel-bar { border-radius:4px 4px 0 0; background:var(--border); animation:skel-pulse 1.2s ease-in-out infinite; }
+        @keyframes skel-pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+        /* Temperature cards — dark mode fix */
+        .temp-section { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; margin-top:1.5rem; border:1px solid var(--border); display:none; }
+        .temp-section h3 { font-size:1rem; font-weight:700; color:var(--green); margin-bottom:1rem; }
+        [data-theme="dark"] .temp-section h3 { color:#81c784; }
+        .temp-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:10px; }
+        .temp-card { background:var(--detail-bg); border-radius:10px; padding:0.8rem 0.5rem; text-align:center; border:2px solid var(--border); }
+        [data-theme="dark"] .temp-card { border-color:#3a5068; }
+        .temp-card .tc-date { font-size:0.72rem; color:var(--gray); margin-bottom:4px; }
+        .temp-card .tc-max { font-size:1rem; font-weight:700; color:#e53935; }
+        [data-theme="dark"] .temp-card .tc-max { color:#ff7043; }
+        .temp-card .tc-min { font-size:0.82rem; color:#1976d2; }
+        [data-theme="dark"] .temp-card .tc-min { color:#64b5f6; }
+        /* Alert banner */
+        .alert-banner { background:linear-gradient(135deg,#b71c1c,#e53935); color:#fff; border-radius:12px; padding:1rem 1.2rem; margin-bottom:1.2rem; display:none; align-items:center; gap:10px; font-weight:600; font-size:0.92rem; }
+        .alert-banner i { font-size:1.4rem; flex-shrink:0; }
+        /* Crop advisory */
+        .crop-advisory { background:linear-gradient(135deg,#e8f5e9,#f1f8e9); border:1.5px solid #a5d6a7; border-radius:14px; padding:1.2rem 1.5rem; margin-top:1.2rem; display:none; }
+        [data-theme="dark"] .crop-advisory { background:linear-gradient(135deg,#1b2f1e,#1e2f14); border-color:#388e3c; }
+        .crop-advisory h4 { font-size:0.95rem; font-weight:700; color:#2e7d32; margin-bottom:0.5rem; }
+        [data-theme="dark"] .crop-advisory h4 { color:#81c784; }
+        .crop-advisory p { font-size:0.88rem; color:#388e3c; line-height:1.5; }
+        [data-theme="dark"] .crop-advisory p { color:#a5d6a7; }
+        /* Week comparison */
+        .week-compare { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; margin-top:1.5rem; border:1px solid var(--border); display:none; }
+        .week-compare h3 { font-size:1rem; font-weight:700; color:var(--green); margin-bottom:1rem; }
+        [data-theme="dark"] .week-compare h3 { color:#81c784; }
+        .wc-row { display:flex; gap:12px; align-items:center; margin-bottom:10px; }
+        .wc-label { font-size:0.82rem; color:var(--gray); width:80px; flex-shrink:0; }
+        .wc-bar-wrap { flex:1; background:var(--detail-bg); border-radius:6px; height:24px; overflow:hidden; border:1px solid var(--border); }
+        .wc-bar { height:100%; border-radius:6px; display:flex; align-items:center; padding-left:8px; font-size:0.75rem; font-weight:600; color:#fff; transition:width 0.8s ease; min-width:2px; }
+        .wc-bar.this { background:linear-gradient(to right,#1b4332,#52b788); }
+        .wc-bar.last { background:linear-gradient(to right,#0d47a1,#29b6f6); }
+        .wc-mm { font-size:0.82rem; color:var(--text); width:55px; text-align:right; flex-shrink:0; }
+        /* Share button */
+        .share-btn { display:inline-flex; align-items:center; gap:6px; margin-top:1rem; padding:10px 20px; background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; border:none; border-radius:25px; font-size:0.88rem; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.3s; }
+        .share-btn:hover { transform:translateY(-2px); opacity:0.9; }
+        /* Error / retry */
+        .error-box { text-align:center; padding:2rem; color:#e53935; }
+        .retry-btn { margin-top:12px; padding:10px 22px; background:#e53935; color:#fff; border:none; border-radius:20px; cursor:pointer; font-family:'Poppins',sans-serif; font-weight:600; font-size:0.88rem; }
+        .retry-btn:hover { background:#c62828; }
         .ai-loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem; gap:8px; }
         @keyframes spin { to { transform:rotate(360deg); } }
         .spin { animation:spin 1s linear infinite; }
@@ -226,19 +280,53 @@
     <div class="section-wrap">
         <div class="section-head">
             <h2>🌧️ Gujarat Rain Tracker</h2>
-            <p>Live 30-day rainfall — Open-Meteo API</p>
+            <p>Live 30-day rainfall + temperature — Open-Meteo API</p>
+        </div>
+        <div class="alert-banner" id="alertBanner">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="alertText">Heavy rainfall alert!</span>
         </div>
         <div class="district-scroll" id="districtScroll"></div>
         <div class="rain-card">
             <div class="rain-card-title"><i class="fas fa-chart-bar" style="color:#29b6f6;"></i><span id="rainChartTitle">Select a district to view rainfall</span></div>
+            <div class="chart-legend" id="chartLegend" style="display:none;">
+                <span><span class="legend-dot" style="background:#0d47a1;"></span>Heavy (&gt;20mm)</span>
+                <span><span class="legend-dot" style="background:#1b4332;"></span>Medium (5-20mm)</span>
+                <span><span class="legend-dot" style="background:#33691e;"></span>Light (&lt;5mm)</span>
+                <span><span class="legend-dot" style="background:#e0e0e0;"></span>No rain</span>
+            </div>
             <div class="chart-bars" id="rainBars">
                 <div class="no-rain-msg"><i class="fas fa-cloud-rain" style="font-size:2rem;opacity:0.4;"></i><p>Select a district above</p></div>
             </div>
+            <button class="share-btn" id="shareBtn" style="display:none;" onclick="shareRainData()">
+                <i class="fab fa-whatsapp"></i> Share on WhatsApp
+            </button>
         </div>
         <div class="rain-stats" id="rainStats" style="display:none;">
             <div class="rs-box"><h3 id="stat-total">--</h3><p>☁️ Total Rainfall</p></div>
             <div class="rs-box"><h3 id="stat-max">--</h3><p>⚡ Peak Day</p></div>
             <div class="rs-box"><h3 id="stat-days">--</h3><p>🌧️ Rainy Days</p></div>
+        </div>
+        <div class="crop-advisory" id="cropAdvisory">
+            <h4>🌾 Crop Advisory</h4>
+            <p id="cropText"></p>
+        </div>
+        <div class="week-compare" id="weekCompare">
+            <h3>📊 This Week vs Last Week</h3>
+            <div class="wc-row">
+                <span class="wc-label">This week</span>
+                <div class="wc-bar-wrap"><div class="wc-bar this" id="wc-this-bar"></div></div>
+                <span class="wc-mm" id="wc-this-mm">--</span>
+            </div>
+            <div class="wc-row">
+                <span class="wc-label">Last week</span>
+                <div class="wc-bar-wrap"><div class="wc-bar last" id="wc-last-bar"></div></div>
+                <span class="wc-mm" id="wc-last-mm">--</span>
+            </div>
+        </div>
+        <div class="temp-section" id="tempSection">
+            <h3>🌡️ Temperature Forecast (Next 7 Days)</h3>
+            <div class="temp-grid" id="tempGrid"></div>
         </div>
     </div>
 </div>
@@ -279,38 +367,108 @@ const DISTRICTS = [
     {name:'Amreli',lat:21.60,lon:71.22},{name:'Porbandar',lat:21.64,lon:69.60},
     {name:'Bharuch',lat:21.71,lon:72.99},{name:'Navsari',lat:20.95,lon:72.92},
     {name:'Morbi',lat:22.82,lon:70.84},{name:'Surendranagar',lat:22.73,lon:71.64},
+    {name:'Patan',lat:23.84,lon:72.12},{name:'Banaskantha',lat:24.17,lon:72.43},
+    {name:'Sabarkantha',lat:23.60,lon:73.02},{name:'Arvalli',lat:23.70,lon:73.17},
+    {name:'Mahisagar',lat:23.08,lon:73.55},{name:'Chhota Udaipur',lat:22.30,lon:74.02},
+    {name:'Panchmahal',lat:22.75,lon:73.58},{name:'Dahod',lat:22.84,lon:74.25},
+    {name:'Narmada',lat:21.87,lon:73.70},{name:'Tapi',lat:21.20,lon:73.32},
+    {name:'Valsad',lat:20.60,lon:72.93},{name:'Dang',lat:20.75,lon:73.70},
+    {name:'Kheda',lat:22.75,lon:72.68},{name:'Botad',lat:22.17,lon:71.67},
+    {name:'Gir Somnath',lat:20.90,lon:70.38},{name:'Devbhumi Dwarka',lat:22.24,lon:69.00},
+    {name:'Jamnagar',lat:22.47,lon:70.06},
 ];
+
 document.addEventListener('DOMContentLoaded', function() {
     const scroll = document.getElementById('districtScroll');
     if (!scroll) return;
     DISTRICTS.forEach(d => {
         const btn = document.createElement('button');
         btn.className = 'dist-btn'; btn.textContent = '📍 ' + d.name;
-        btn.onclick = () => { document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); loadRain(d); };
+        btn.onclick = () => {
+            document.querySelectorAll('.dist-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadRain(d);
+        };
         scroll.appendChild(btn);
     });
+    requestNotifPermission();
 });
+
+function requestNotifPermission() {
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+}
+
+function checkAndAlert(name, rain) {
+    const recent3 = rain.slice(-3).reduce((a,b)=>a+(b||0),0);
+    const maxDay = Math.max(...rain);
+    const banner = document.getElementById('alertBanner');
+    const alertText = document.getElementById('alertText');
+    if (maxDay >= 50) {
+        const msg = `⚠️ ${name}: Chhelaa 30 divas ma ${maxDay.toFixed(0)}mm peak rainfall nondhai chhe! Saavdhai rakho.`;
+        banner.style.display = 'flex';
+        alertText.textContent = msg;
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Agri-Verse Rain Alert 🌧️', { body: msg, icon: 'favicon.png' });
+        }
+    } else if (recent3 >= 30) {
+        const msg = `🌧️ ${name}: Chhelaa 3 divas ma ${recent3.toFixed(0)}mm vatar padyo chhe. Khet taiyaar rakho.`;
+        banner.style.display = 'flex';
+        alertText.textContent = msg;
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Agri-Verse Rain Alert 🌧️', { body: msg, icon: 'favicon.png' });
+        }
+    } else {
+        banner.style.display = 'none';
+    }
+}
+
 async function loadRain(district) {
     document.getElementById('rainChartTitle').textContent = '⏳ Loading ' + district.name + '...';
     document.getElementById('rainBars').innerHTML = '<div class="no-rain-msg"><i class="fas fa-spinner" style="font-size:2rem;color:#29b6f6;animation:spin 1s linear infinite;"></i><p style="margin-top:10px;">Fetching live data...</p></div>';
     document.getElementById('rainStats').style.display = 'none';
+    document.getElementById('tempSection').style.display = 'none';
+    document.getElementById('chartLegend').style.display = 'none';
+    document.getElementById('alertBanner').style.display = 'none';
     try {
         const end = new Date().toISOString().slice(0,10);
         const start = new Date(Date.now()-30*24*60*60*1000).toISOString().slice(0,10);
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`);
-        const data = await res.json();
-        renderRain(district.name, data.daily);
-    } catch(e) { document.getElementById('rainBars').innerHTML = '<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>'; }
+        const forecastEnd = new Date(Date.now()+7*24*60*60*1000).toISOString().slice(0,10);
+        const [rainRes, tempRes] = await Promise.all([
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=precipitation_sum&start_date=${start}&end_date=${end}&timezone=Asia/Kolkata`),
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${district.lat}&longitude=${district.lon}&daily=temperature_2m_max,temperature_2m_min&start_date=${end}&end_date=${forecastEnd}&timezone=Asia/Kolkata`)
+        ]);
+        const rainData = await rainRes.json();
+        const tempData = await tempRes.json();
+        renderRain(district.name, rainData.daily);
+        renderTemp(tempData.daily);
+    } catch(e) {
+        document.getElementById('rainBars').innerHTML = '<p style="color:#e53935;padding:1.5rem;text-align:center;">Failed to load. Please try again.</p>';
+    }
 }
+
+function barClass(mm) {
+    if (mm <= 0.5) return 'zero';
+    if (mm < 5)   return 'light';
+    if (mm < 20)  return 'medium';
+    return 'heavy';
+}
+
 function renderRain(name, daily) {
     const dates = daily.time, rain = daily.precipitation_sum;
     const maxR = Math.max(...rain.filter(r=>r>0), 1);
     document.getElementById('rainChartTitle').textContent = '🌧️ ' + name + ' — Last 30 Days';
+    document.getElementById('chartLegend').style.display = 'flex';
     let html = '';
     dates.forEach((d,i) => {
-        const mm = rain[i]||0, h = Math.round((mm/maxR)*180);
+        const mm = rain[i]||0, h = Math.round((mm/maxR)*200);
         const dt = new Date(d), lbl = dt.getDate()+'/'+(dt.getMonth()+1);
-        html += `<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm"><div class="bar-val">${mm>0.5?mm.toFixed(0):''}</div><div class="bar-inner ${mm<=0.5?'zero':''}" style="height:${Math.max(h,3)}px;"></div><div class="bar-date">${lbl}</div></div>`;
+        html += `<div class="bar-col" title="${lbl}: ${mm.toFixed(1)}mm">
+            <div class="bar-val">${mm>1?mm.toFixed(0):''}</div>
+            <div class="bar-inner ${barClass(mm)}" style="height:${Math.max(h,3)}px;"></div>
+            <div class="bar-date">${lbl}</div>
+        </div>`;
     });
     document.getElementById('rainBars').innerHTML = html;
     const total = rain.reduce((a,b)=>a+(b||0),0);
@@ -318,7 +476,29 @@ function renderRain(name, daily) {
     document.getElementById('stat-max').textContent = Math.max(...rain).toFixed(1)+' mm';
     document.getElementById('stat-days').textContent = rain.filter(r=>r>0.5).length+' days';
     document.getElementById('rainStats').style.display = 'grid';
+    checkAndAlert(name, rain);
 }
+
+function renderTemp(daily) {
+    if (!daily || !daily.time) return;
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    let html = '';
+    daily.time.forEach((d,i) => {
+        const dt = new Date(d);
+        const dayName = days[dt.getDay()];
+        const lbl = dt.getDate()+'/'+(dt.getMonth()+1);
+        const tmax = daily.temperature_2m_max[i]?.toFixed(1) ?? '--';
+        const tmin = daily.temperature_2m_min[i]?.toFixed(1) ?? '--';
+        html += `<div class="temp-card">
+            <div class="tc-date">${dayName} ${lbl}</div>
+            <div class="tc-max">${tmax}°C</div>
+            <div class="tc-min">${tmin}°C</div>
+        </div>`;
+    });
+    document.getElementById('tempGrid').innerHTML = html;
+    document.getElementById('tempSection').style.display = 'block';
+}
+
 window.addEventListener('scroll', function(){ document.getElementById('backToTop').style.display = window.scrollY>300?'block':'none'; });
 </script>
 <script src="nav.js"></script>
