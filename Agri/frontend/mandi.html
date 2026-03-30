@@ -16,11 +16,10 @@
         [data-theme="dark"]{--bg:#0f1923;--card-bg:#1a2535;--nav-bg:#111d2b;--text:#e8f5e9;--gray:#b0bec5;--border:#2d3e50;--shadow:0 4px 20px rgba(0,0,0,0.4);}
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
         body{background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;}
-        }
-        .mandi-hero{background:linear-gradient(135deg,#0f2d1a,#1b4332,#2d6a4f);padding:3rem 5% 2rem;text-align:center;color:white;position:relative;overflow:hidden;}
+        .mandi-hero{background:linear-gradient(135deg,#0f2d1a,#1b4332,#2d6a4f) !important;padding:3rem 5% 2rem;text-align:center;color:white !important;position:relative;overflow:hidden;}
         .mandi-hero::after{content:'📊';position:absolute;right:5%;top:50%;transform:translateY(-50%);font-size:8rem;opacity:0.06;}
-        .mandi-hero h1{font-size:2.2rem;font-weight:700;margin-bottom:0.4rem;}
-        .mandi-hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;margin-bottom:1rem;}
+        .mandi-hero h1{font-size:2.2rem;font-weight:700;margin-bottom:0.4rem;color:white !important;}
+        .mandi-hero p{color:rgba(255,255,255,0.75) !important;font-size:0.95rem;margin-bottom:1rem;}
         .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:5px 14px;border-radius:30px;font-size:0.8rem;color:rgba(255,255,255,0.85);margin-bottom:1rem;}
         .live-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:blink 1.2s infinite;}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
