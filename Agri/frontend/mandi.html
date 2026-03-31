@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root{--primary:#4CAF50;--primary-dark:#388E3C;--bg:#f0f4f0;--card-bg:#fff;--nav-bg:#1a2535;--text:#1b2e1b;--gray:#666;--border:#d8ebd8;--shadow:0 4px 20px rgba(0,0,0,0.08);}
-        [data-theme="dark"]{--bg:#0f1923;--card-bg:#1a2535;--nav-bg:#111d2b;--text:#e8f5e9;--gray:#b0bec5;--border:#2d3e50;--shadow:0 4px 20px rgba(0,0,0,0.4);}
+        :root{--primary:#4CAF50;--primary-dark:#388E3C;--bg:#f0f4f0;--card-bg:#fff;--text:#1b2e1b;--gray:#666;--border:#d8ebd8;--shadow:0 4px 20px rgba(0,0,0,0.08);}
+        [data-theme="dark"]{--bg:#0f1923;--card-bg:#1a2535;--text:#e8f5e9;--gray:#b0bec5;--border:#2d3e50;--shadow:0 4px 20px rgba(0,0,0,0.4);}
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
         body{background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;}
         .mandi-hero{background:linear-gradient(135deg,#0f2d1a,#1b4332,#2d6a4f) !important;padding:3rem 5% 2rem;text-align:center;color:white !important;position:relative;overflow:hidden;}
@@ -112,7 +112,7 @@
 <div class="mandi-hero">
     <div class="live-badge"><div class="live-dot"></div> Source: Agmarknet · CommodityOnline · KisanDeals</div>
     <h1>📊 Gujarat Mandi Bhav</h1>
-    <p>Groundnut, Cotton, Jeeru, Tameta, Dungri ane 55+ crops na current reference rates (₹/Quintal)</p>
+    <p>Groundnut, Cotton, Cumin, Tomato, Onion & 55+ crops — current reference rates (₹/Quintal)</p>
     <div class="source-btns">
         <a href="https://agmarknet.gov.in" target="_blank" class="source-btn"><i class="fas fa-landmark"></i> Agmarknet (Govt.)</a>
         <a href="https://www.commodityonline.com/mandiprices" target="_blank" class="source-btn"><i class="fas fa-chart-line"></i> CommodityOnline</a>
@@ -124,7 +124,7 @@
 <div class="controls">
     <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInp" placeholder="Crop search karo... (Groundnut, Jeeru, Tameta...)" oninput="filterTable()">
+        <input type="text" id="searchInp" placeholder="Search crops... (Groundnut, Cumin, Tomato...)" oninput="filterTable()">
     </div>
     <!-- FIX 1: All cities added with optgroup regions -->
     <select class="filter-select" id="cityFilter" onchange="filterTable()">
@@ -201,7 +201,7 @@
 
 <div class="disclaimer">
     <i class="fas fa-info-circle"></i>
-    <span><strong>Mahtvapurni Suchna:</strong> Aa bhav <strong>reference rates</strong> che — Agmarknet, CommodityOnline, KisanDeals par thi lidal che. Rojna bhav badalay che. Sachi live information mate upar na <strong>Source Links</strong> visit karo ya tamari local APMC mandi ma confirm karo.</span>
+    <span><strong>Important Notice:</strong> These are <strong>reference rates</strong> sourced from Agmarknet, CommodityOnline & KisanDeals. Prices change daily. For accurate live rates, visit the <strong>Source Links</strong> above or confirm with your local APMC mandi.</span>
 </div>
 
 <div class="table-wrap">
@@ -231,7 +231,7 @@
             </thead>
             <tbody id="mandiBody"></tbody>
         </table>
-        <div class="no-data" id="noData" style="display:none;">🌾 Koi result malyu nahi. Filters clear karo.</div>
+        <div class="no-data" id="noData" style="display:none;">🌾 No crops found. Please clear filters and try again.</div>
     </div>
 </div>
 
@@ -355,7 +355,7 @@ function renderTable(data) {
     tbody.innerHTML = '';
     if (!data.length) {
         noData.style.display='block';
-        document.getElementById('rowCount').textContent='0 crops milya';
+        document.getElementById('rowCount').textContent='0 crops found';
         document.getElementById('filteredCount').textContent='0';
         return;
     }
@@ -381,7 +381,7 @@ function renderTable(data) {
         const bestBadge = isBest ? ' 🏆' : '';
         tbody.innerHTML += `
         <tr class="${isBest?'best-price':''}">
-            <td><button class="fav-btn" onclick="toggleFav('${r.crop.replace(/'/g,"\\'")}') " title="${isFav?'Remove':'Add favourite'}">${isFav?'⭐':'☆'}</button></td>
+            <td><button class="fav-btn" onclick="toggleFav('${r.crop.replace(/'/g,"\\'")}') " title="${isFav?'Remove from favourites':'Add to favourites'}">${isFav?'⭐':'☆'}</button></td>
             <td>
                 <span class="crop-name">${r.emoji} ${r.crop}${bestBadge} ${cityLabel}</span>
                 <span class="crop-gu">${r.gu} · ${availCities}</span>
