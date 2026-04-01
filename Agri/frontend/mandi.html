@@ -375,7 +375,7 @@ function renderTable(data) {
             cityLabel=`<span style="background:#e8f5e9;color:#2d6a4f;font-size:0.68rem;padding:2px 7px;border-radius:10px;font-weight:600;margin-left:4px;">📍${selectedCity}</span>`;
         }
         const kg20 = Math.round((modal/100)*20).toLocaleString('en-IN');
-        const availCities = r.cityPrices ? Object.keys(r.cityPrices).join(' · ') : 'Gujarat';
+        const availCities = '';
         const isFav = favourites.includes(r.crop);
         const isBest = modal===minModal && data.length>1;
         const bestBadge = isBest ? ' 🏆' : '';
@@ -384,7 +384,6 @@ function renderTable(data) {
             <td><button class="fav-btn" onclick="toggleFav('${r.crop.replace(/'/g,"\\'")}') " title="${isFav?'Remove from favourites':'Add to favourites'}">${isFav?'⭐':'☆'}</button></td>
             <td>
                 <span class="crop-name">${r.emoji} ${r.crop}${bestBadge} ${cityLabel}</span>
-                <span class="crop-gu">${r.gu} · ${availCities}</span>
             </td>
             <td><span class="badge-cat">${r.cat}</span></td>
             <td>₹${min.toLocaleString('en-IN')}</td>
