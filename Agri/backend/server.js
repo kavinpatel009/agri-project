@@ -260,7 +260,7 @@ app.post("/api/chat", async (req, res) => {
     const prompt = `You are Agri Assistant for Agri-Verse, an Indian farming platform. Answer ONLY about farming: seeds, fertilizers, weather, mandi prices, crop diseases, irrigation, soil, tools. Keep answers SHORT (2-4 lines). Reply in same language as user (English/Gujarati/Hindi). If off-topic say: "Hu sirf kheti vishe madadrup chu!" User: ${message}`;
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`,
       { contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 300 } },
       { headers: { "Content-Type": "application/json" } }
     );
@@ -322,7 +322,7 @@ app.post("/api/crop-doctor", async (req, res) => {
     parts.push({ text: promptText });
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`,
       {
         system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
         contents: [{ parts }],
@@ -334,8 +334,12 @@ app.post("/api/crop-doctor", async (req, res) => {
     const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "Diagnosis unavailable.";
     res.json({ content: [{ type: "text", text }] });
   } catch (error) {
-    console.error("Crop Doctor error:", error.response?.data || error.message);
-    res.status(500).json({ error: "Crop Doctor service unavailable" });
+    const geminiError = error.response?.data?.error;
+    console.error("Crop Doctor error:", JSON.stringify(geminiError || error.message));
+    res.status(500).json({
+      error: "Crop Doctor service unavailable",
+      details: geminiError || error.message
+    });
   }
 });
 
