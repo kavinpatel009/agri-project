@@ -213,6 +213,7 @@
                         <th colspan="2" style="padding:10px 16px;text-align:left;font-size:0.9rem;">🌿 <span id="thCropG">Crop</span></th>
                         <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">Range (₹/100kg)</span></th>
                         <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">Modal Price</span></th>
+                        <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="th20kgG">₹/20kg</span></th>
                         <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thTrendG">Trend</span></th>
                         <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thChgG">Change%</span></th>
                         <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thUpdG">Updated</span></th>
@@ -978,7 +979,7 @@ function showMarketPrice() {
 
     if (!LIVE_DATA_LOADED) {
         // Show loading state
-        document.getElementById('priceTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:#2d6a4f;font-size:1rem;">🔄 Loading live mandi data...</td></tr>';
+        document.getElementById('priceTableBody').innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:#2d6a4f;font-size:1rem;">🔄 Loading live mandi data...</td></tr>';
         fetchLiveMandi();
     } else {
         setTimeout(() => { toggleView('grouped'); }, 10);
@@ -1109,6 +1110,7 @@ function toggleView(mode) {
                 <th colspan="2" style="padding:10px 16px;text-align:left;font-size:0.9rem;">🌿 <span id="thCropG">${L2.crop||'Crop'}</span></th>
                 <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thRangeG">${isGujarati?'રેન્જ (₹/100kg)':'Range (₹/100kg)'}</span></th>
                 <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="thModalG">${isGujarati?'સરેરાશ Modal':'Avg Modal'}</span></th>
+                <th style="padding:10px 16px;text-align:right;font-size:0.9rem;"><span id="th20kgG">${isGujarati?'₹/20kg':'₹/20kg'}</span></th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thTrendG">${L2.trend||'Trend'}</span></th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thChgG">${isGujarati?'ફેરફાર%':'Change%'}</span></th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;"><span id="thUpdG">${isGujarati?'અપડેટ':'Updated'}</span></th>
@@ -1120,6 +1122,7 @@ function toggleView(mode) {
                 <th onclick="sortTable('min')" style="padding:10px 16px;text-align:right;font-size:0.9rem;cursor:pointer;">${L2.min||'Min (₹/q)'} <span id="srt_min"></span></th>
                 <th onclick="sortTable('max')" style="padding:10px 16px;text-align:right;font-size:0.9rem;cursor:pointer;">${L2.max||'Max (₹/q)'} <span id="srt_max"></span></th>
                 <th onclick="sortTable('modal')" style="padding:10px 16px;text-align:right;font-size:0.9rem;cursor:pointer;">${L2.modal||'Modal (₹/q)'} <span id="srt_modal"></span></th>
+                <th style="padding:10px 16px;text-align:right;font-size:0.9rem;">${isGujarati?'₹/20kg':'₹/20kg'}</th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;">${L2.trend||'Trend'}</th>
                 <th onclick="sortTable('chg')" style="padding:10px 16px;text-align:center;font-size:0.9rem;cursor:pointer;">${isGujarati?'ફેરફાર%':'Change%'} <span id="srt_chg"></span></th>
                 <th style="padding:10px 16px;text-align:center;font-size:0.9rem;">${isGujarati?'અપડેટ':'Updated'}</th>
@@ -1200,7 +1203,7 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
     const pagedCrops = uniqueCrops.slice((pricePage-1)*PAGE_SIZE, pricePage*PAGE_SIZE);
 
     if (pagedCrops.length === 0) {
-        document.getElementById('priceTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results found.'}</td></tr>`;
+        document.getElementById('priceTableBody').innerHTML = `<tr><td colspan="9" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results found.'}</td></tr>`;
         return;
     }
 
@@ -1210,7 +1213,7 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
         const cropsInCat = Object.keys(catGroups[c]).filter(cr => pagedCrops.includes(cr));
         if (!cropsInCat.length) return;
 
-        html += `<tr><td colspan="8" style="background:#e8f5e9;padding:7px 16px;font-weight:700;color:#2d6a4f;font-size:0.95rem;">${CAT_LABEL[c]}</td></tr>`;
+        html += `<tr><td colspan="9" style="background:#e8f5e9;padding:7px 16px;font-weight:700;color:#2d6a4f;font-size:0.95rem;">${CAT_LABEL[c]}</td></tr>`;
 
         cropsInCat.forEach((cropName, idx) => {
             const rows = catGroups[c][cropName];
@@ -1231,13 +1234,14 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
                 </td>
                 <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.83rem;">₹${minAll.toLocaleString()} – ₹${maxAll.toLocaleString()}</td>
                 <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${avgModal.toLocaleString()} <span style='font-size:0.75rem;color:#888;font-weight:400;'>(₹${(avgModal/100).toFixed(1)}/kg)</span></td>
+                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#2d6a4f;font-size:0.9rem;">₹${Math.round(avgModal/100*20).toLocaleString()}</td>
                 <td style="padding:8px 16px;text-align:center;">${trendIcon[mainTrend]}</td>
                 <td style="padding:8px 16px;text-align:center;font-weight:700;color:${chgColor};font-size:0.88rem;">${chgSign}${avgChg}%</td>
                 <td style="padding:8px 16px;text-align:center;color:#999;font-size:0.78rem;">${today}</td>
             </tr>`;
 
             // City sub-rows (hidden by default)
-            html += `<tr id="cities_${uid}" style="display:none;"><td colspan="8" style="padding:0;background:#f0faf0;">
+            html += `<tr id="cities_${uid}" style="display:none;"><td colspan="9" style="padding:0;background:#f0faf0;">
                 <table style="width:100%;border-collapse:collapse;">`;
             rows.forEach((r,ri) => {
                 const rc = r.chg||0; const rcs = rc>0?'+':'';
@@ -1246,6 +1250,7 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
                     <td style="padding:6px 32px;color:#555;font-size:0.85rem;width:220px;">📍 ${r.market}</td>
                     <td style="padding:6px 16px;text-align:right;color:#777;font-size:0.82rem;">₹${r.min.toLocaleString()} – ₹${r.max.toLocaleString()}</td>
                     <td style="padding:6px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.85rem;">₹${r.modal.toLocaleString()} <span style='font-size:0.72rem;color:#888;font-weight:400;'>(₹${(r.modal/100).toFixed(1)}/kg)</span></td>
+                    <td style="padding:6px 16px;text-align:right;font-weight:700;color:#2d6a4f;font-size:0.85rem;">₹${Math.round(r.modal/100*20).toLocaleString()}</td>
                     <td style="padding:6px 16px;text-align:center;">${trendIcon[r.trend]}</td>
                     <td style="padding:6px 16px;text-align:center;font-weight:700;color:${rcc};font-size:0.82rem;">${rcs}${rc}%</td>
                     <td style="padding:6px 16px;text-align:center;color:#aaa;font-size:0.75rem;">${today}</td>
@@ -1255,7 +1260,7 @@ function renderGrouped(filtered, CAT_LABEL, trendIcon, today, L, city) {
         });
     });
 
-    document.getElementById('priceTableBody').innerHTML = html || `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results.'}</td></tr>`;
+    document.getElementById('priceTableBody').innerHTML = html || `<tr><td colspan="9" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results.'}</td></tr>`;
 }
 
 function renderFlat(filtered, CAT_LABEL, trendIcon, today, L) {
@@ -1271,7 +1276,7 @@ function renderFlat(filtered, CAT_LABEL, trendIcon, today, L) {
     const pageData = filtered.slice((pricePage-1)*PAGE_SIZE, pricePage*PAGE_SIZE);
 
     if (pageData.length === 0) {
-        document.getElementById('priceTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results found.'}</td></tr>`;
+        document.getElementById('priceTableBody').innerHTML = `<tr><td colspan="9" style="text-align:center;padding:2rem;color:#999;">${L.noData||'No results found.'}</td></tr>`;
         return;
     }
 
@@ -1281,7 +1286,7 @@ function renderFlat(filtered, CAT_LABEL, trendIcon, today, L) {
     let html = '';
     catOrder.forEach(c => {
         if (!groups[c]) return;
-        html += `<tr><td colspan="8" style="background:#e8f5e9;padding:7px 16px;font-weight:700;color:#2d6a4f;font-size:0.95rem;">${CAT_LABEL[c]}</td></tr>`;
+        html += `<tr><td colspan="9" style="background:#e8f5e9;padding:7px 16px;font-weight:700;color:#2d6a4f;font-size:0.95rem;">${CAT_LABEL[c]}</td></tr>`;
         groups[c].forEach((r,i) => {
             const chgColor = r.chg>0?'#43a047':r.chg<0?'#e53935':'#fb8c00';
             const chgSign  = r.chg>0?'+':'';
@@ -1292,6 +1297,7 @@ function renderFlat(filtered, CAT_LABEL, trendIcon, today, L) {
                 <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.9rem;">₹${r.min.toLocaleString()}</td>
                 <td style="padding:8px 16px;text-align:right;color:#555;font-size:0.9rem;">₹${r.max.toLocaleString()}</td>
                 <td style="padding:8px 16px;text-align:right;font-weight:700;color:#1b5e20;font-size:0.9rem;">₹${r.modal.toLocaleString()} <span style='font-size:0.75rem;color:#888;font-weight:400;'>(₹${(r.modal/100).toFixed(1)}/kg)</span></td>
+                <td style="padding:8px 16px;text-align:right;font-weight:700;color:#2d6a4f;font-size:0.9rem;">₹${Math.round(r.modal/100*20).toLocaleString()}</td>
                 <td style="padding:8px 16px;text-align:center;">${trendIcon[r.trend]}</td>
                 <td style="padding:8px 16px;text-align:center;font-weight:700;color:${chgColor};font-size:0.88rem;">${chgSign}${r.chg||0}%</td>
                 <td style="padding:8px 16px;text-align:center;color:#999;font-size:0.78rem;">${today}</td>
